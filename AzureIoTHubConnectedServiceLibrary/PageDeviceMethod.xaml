@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="AzureIoTHubConnectedService.PageDeviceMethod"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AzureIoTHubConnectedService"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Label Content="Method Name" Grid.Column="0" Grid.Row="0" />
+        <Label Content="Method Payload" Grid.Column="0" Grid.Row="1" />
+
+        <Label Content="Return Status" Grid.Column="0" Grid.Row="3" />
+
+        <Label Content="Return Payload" Grid.Column="0" Grid.Row="4" />
+
+        <TextBox Grid.Column="1" Grid.Row="0" Margin="5" Text="{Binding Path=DeviceMethodName, UpdateSourceTrigger=PropertyChanged}" />
+        <TextBox Grid.Column="1" Grid.Row="1" Margin="5" Text="{Binding Path=DeviceMethodPayload, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox Grid.Column="1" Grid.Row="3" Margin="5" Text="{Binding Path=DeviceMethodReturnStatus, Mode=OneWay}" IsReadOnly="True" IsReadOnlyCaretVisible="True"/>
+        <TextBox Grid.Column="1" Grid.Row="4" Margin="5" Text="{Binding Path=DeviceMethodReturnPayload, Mode=OneWay}" IsReadOnly="True" IsReadOnlyCaretVisible="True"/>
+
+        <Button Grid.Column="1" Grid.Row="2" Content="Send" Width="Auto" HorizontalAlignment="Right" Padding="10,3,10,3" Margin="5" Command="{Binding Path=ExecuteCmd}" CommandParameter="DeviceMethodExecute" />
+
+        <Label Grid.Row="5" Grid.ColumnSpan="2" Margin="0" Padding="0" Content="{Binding Path=ErrorMessage, Mode=OneWay}" VerticalAlignment="Top" HorizontalAlignment="Left" Background="Red"/>
+
+    </Grid>
+</UserControl>

@@ -1,0 +1,12 @@
+﻿<ResourceDictionary x:Uid="ResourceDictionary_1"
+                    x:Class="AzureIoTHubConnectedService.View.CommonResources"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style x:Uid="ItemContainerStyle"
+           x:Key="ItemContainerStyle"
+           TargetType="ListViewItem" >
+    </Style>
+
+
+</ResourceDictionary>

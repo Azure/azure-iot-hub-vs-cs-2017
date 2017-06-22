@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="AzureIoTHubConnectedService.PageDeviceTwin"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AzureIoTHubConnectedService"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TabControl Name="MainTab" Grid.Row="0" TabStripPlacement="Left" Padding="10" Margin="10"  SelectionChanged="MainTab_SelectionChanged">
+            <TabItem Header="Entire Twin" >
+                <TextBox Text="{Binding Path=DeviceTwin, Mode=OneWay}" IsReadOnly="True" IsReadOnlyCaretVisible="True" />
+            </TabItem>
+            <TabItem Header="Tags">
+                <TextBox Text="{Binding Path=DeviceTwinTags, Mode=OneWay}" IsReadOnly="True" IsReadOnlyCaretVisible="True" />
+            </TabItem>
+            <TabItem Header="Reported Properties">
+                <TextBox Text="{Binding Path=DeviceTwinReportedProperties, Mode=OneWay}" IsReadOnly="True" IsReadOnlyCaretVisible="True" />
+            </TabItem>
+            <TabItem Header="Desired Properties">
+                <TextBox Text="{Binding Path=DeviceTwinDesiredProperties, Mode=OneWay}" IsReadOnly="True" IsReadOnlyCaretVisible="True"/>
+            </TabItem>
+            <TabItem Header="Update Properties">
+                <Grid>
+                    <TextBox TextWrapping="NoWrap" AcceptsReturn="True" Text="{Binding Path=DeviceTwinUpdate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Name="ButtonUpdate" Content="Update" Margin="5" Padding="10,3,10,3" Width="Auto" HorizontalAlignment="Right" Command="{Binding Path=ExecuteCmd}" CommandParameter="DeviceTwinUpdateDesired" />
+            <Button Name="ButtonRefresh" Content="Refresh" Margin="5" Padding="10,3,10,3" Width="Auto" HorizontalAlignment="Right" Command="{Binding Path=ExecuteCmd}" CommandParameter="DeviceTwinRefresh" />
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="AzureIoTHubConnectedService.WizardPageSummaryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AzureIoTHubConnectedService"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300"
+             Name="SummaryView">
+    <Grid Name="MainGrid" VerticalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Content="Subscription" Grid.Column="0" Grid.Row="0" />
+        <Label Content="IoT Hub" Grid.Column="0" Grid.Row="1" />
+        <Label Content="IoT Hub Connection String" Grid.Column="0" Grid.Row="2" />
+        <Label Content="Device" Grid.Column="0" Grid.Row="3" />
+        <Label Content="Device Primary Connection String" Grid.Column="0" Grid.Row="3" Height="38" Margin="0,0,0,37" Grid.RowSpan="3" VerticalAlignment="Bottom" />
+        <Label Content="Device Secondary Connection String" Grid.Column="0" Grid.Row="5" />
+
+        <Label Content="{Binding Subscription}" Grid.Column="1" Grid.Row="0"/>
+        <Label Content="{Binding IoTHubName}" Grid.Column="1" Grid.Row="1"/>
+        <TextBox Text="{Binding IoTHubConnectionString, Mode=OneWay}" Grid.Column="1" Grid.Row="2" IsReadOnly="True" Margin="1" MinLines="2" TextWrapping="Wrap"/>
+        <Label Content="{Binding DeviceId}" Grid.Column="1" Grid.Row="3"/>
+        <TextBox Text="{Binding DevicePrimaryConnectionString, Mode=OneWay}" Grid.Column="1" Grid.Row="4" IsReadOnly="True" Margin="1" MinLines="2" TextWrapping="Wrap"/>
+        <TextBox Text="{Binding DeviceSecondaryConnectionString, Mode=OneWay}" Grid.Column="1" Grid.Row="5" IsReadOnly="True" Margin="1" MinLines="2" TextWrapping="Wrap"/>
+
+    </Grid>
+</UserControl>

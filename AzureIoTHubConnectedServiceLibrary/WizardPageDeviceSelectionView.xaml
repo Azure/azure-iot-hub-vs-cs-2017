@@ -1,0 +1,69 @@
+﻿<UserControl x:Class="AzureIoTHubConnectedService.WizardPageDeviceSelectionView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AzureIoTHubConnectedService"
+             mc:Ignorable="d" 
+             xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <ResourceDictionary x:Uid="ResourceDictionary_1">
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary x:Uid="ResourceDictionary_2" Source="CommonResources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+    </UserControl.Resources>
+    <Grid>
+        <Grid.Resources>
+            <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+            <CollectionViewSource Source="{Binding MainModel.Devices}" x:Key="SortedDevices">
+                <CollectionViewSource.SortDescriptions>
+                    <scm:SortDescription PropertyName="Id"/>
+                </CollectionViewSource.SortDescriptions>
+            </CollectionViewSource>
+        </Grid.Resources>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Name="TopPanel" Orientation="Horizontal" Grid.Row="0" />
+        <TabControl Name="Tabs" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Background="Transparent">
+            <TabItem Header="Select">
+                <ListBox Name="DevicesListBox" Margin="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" SelectedItem="{Binding MainModel.SelectedDevice}"  ItemsSource="{Binding Source={StaticResource SortedDevices}}" DisplayMemberPath="Id"/>
+            </TabItem>
+            <TabItem Header="New Device">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="35"/>
+                        <RowDefinition Height="35"/>
+                    </Grid.RowDefinitions>
+                    <Label Content="Device" Grid.Row="0" Grid.Column="0" Margin="5"/>
+                    <TextBox Name="TextBoxDeviceName" Grid.Row="0" Grid.Column="1" Margin="5" Text="{Binding Path=Create_DeviceName, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=Create_FieldsEnabled}"/>
+                    <Button Name="ButtonCreate" Content="Create" Grid.Row="1" Grid.Column="1" Margin="5" Click="Button_Click" IsEnabled="{Binding Path=Create_IsEnabled}" />
+                </Grid>
+
+            </TabItem>
+        </TabControl>
+        <ProgressBar Name="Progress" Grid.Row="2" Height="2" BorderThickness="0" VerticalAlignment="Bottom" IsIndeterminate="True" Visibility="{Binding Path=MainModel.IsBusy, Converter={StaticResource BoolToVis}}"/>
+
+        <GroupBox Grid.Row="3"  Header="Advanced Options" Padding="5">
+            <StackPanel>
+            <CheckBox Margin="2">Generate device twin sample code</CheckBox>
+            <CheckBox Margin="2">Generate direct method sample code</CheckBox>
+            </StackPanel>
+        </GroupBox>
+    </Grid>
+</UserControl>

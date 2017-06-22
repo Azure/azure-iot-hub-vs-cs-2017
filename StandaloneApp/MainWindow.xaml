@@ -1,0 +1,36 @@
+﻿<Window x:Class="StandaloneApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:StandaloneApp"
+        xmlns:iot="clr-namespace:AzureIoTHubConnectedService"
+        mc:Ignorable="d"
+        Title="Generic Azure IoT Hub Tools" Height="350" Width="525">
+    <TabControl>
+        <TabItem Header="Config">
+            <iot:PageHubConnectionString x:Name="Config" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+        </TabItem>
+        <TabItem Header="Summary">
+            <iot:WizardPageSummaryView x:Name="Summary" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+        </TabItem>
+        <TabItem Header="Hubs">
+            <iot:WizardPageHubSelectionView x:Name="HubSelection" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+        </TabItem>
+        <TabItem Header="Devices">
+            <iot:WizardPageDeviceSelectionView x:Name="DeviceSelection" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+        </TabItem>
+        <TabItem Header="C2D Message">
+            <iot:PageCloudToDeviceMsg x:Name="C2DMessage" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+        </TabItem>
+        <TabItem Header="D2C Messages">
+            <iot:PageReceiveMessages x:Name="D2CMessages" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+        </TabItem>
+        <TabItem Header="Device Method">
+            <iot:PageDeviceMethod x:Name="DeviceMethod" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+        </TabItem>
+        <TabItem Header="Device Twin">
+            <iot:PageDeviceTwin x:Name="DeviceTwin" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+        </TabItem>
+    </TabControl>
+</Window>
