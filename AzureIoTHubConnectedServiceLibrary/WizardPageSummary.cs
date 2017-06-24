@@ -17,7 +17,8 @@ namespace AzureIoTHubConnectedService
             this.Description = "Summary";
             this.IsEnabled = false;
 
-            this.View = new WizardPageSummaryView(wizard);
+            this.View = new WizardPageSummaryView();
+            this.View.DataContext = wizard;
         }
     }
 }

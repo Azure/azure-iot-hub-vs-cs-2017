@@ -25,23 +25,10 @@ namespace AzureIoTHubConnectedService
         {
             InitializeComponent();
         }
-        public WizardPageDeviceSelectionView(object model)
-        {
-            PageModel = model;
-
-            InitializeComponent();
-
-            DataContext = model;
-
-#pragma warning disable CS4014
-        }
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            PageModel.CreateNewDevice(this.TextBoxDeviceName.Text);
+            (DataContext as dynamic).CreateNewDevice(this.TextBoxDeviceName.Text);
         }
-
-        private dynamic PageModel;
 
         private void UserControl_SizeChanged(object sender, SizeChangedEventArgs e)
         {

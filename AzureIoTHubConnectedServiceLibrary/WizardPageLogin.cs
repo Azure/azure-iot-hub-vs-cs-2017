@@ -20,7 +20,8 @@ namespace AzureIoTHubConnectedService
             this.Description = "Login to Azure or Select TPM";
             this.MainModel = model;
 
-            this.View = new WizardPageLoginView(this, authenticator);
+            this.View = new WizardPageLoginView(authenticator);
+            this.View.DataContext = this;
         }
 
         public WizardMain MainModel

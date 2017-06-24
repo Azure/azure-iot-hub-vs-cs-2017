@@ -17,7 +17,8 @@ namespace AzureIoTHubConnectedService
             this.Description = "Provision Device with Connection String";
             this.IsEnabled = false;
 
-            this.View = new WizardPageInjectConnectionStringView(wizard);
+            this.View = new WizardPageInjectConnectionStringView();
+            this.View.DataContext = wizard;
         }
     }
 }

@@ -24,17 +24,5 @@ namespace AzureIoTHubConnectedService
         {
             InitializeComponent();
         }
-        
-        public WizardPageDeviceMethodView(object model)
-        {
-            InitializeComponent();
-
-            MainGrid.DataContext = model;
-        }
-
-        public void SetModel(object model)
-        {
-            MainGrid.DataContext = model;
-        }
     }
 }

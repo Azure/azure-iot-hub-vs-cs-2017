@@ -25,18 +25,6 @@ namespace AzureIoTHubConnectedService
             InitializeComponent();
         }
         
-        public WizardPageSummaryView(object model)
-        {
-            InitializeComponent();
-
-            DataContext = model;
-        }
-
-        public void SetModel(object model)
-        {
-            DataContext = model;
-        }
-
         private void SummaryView_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             dynamic d = DataContext;

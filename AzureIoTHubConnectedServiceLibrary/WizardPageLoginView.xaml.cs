@@ -20,13 +20,11 @@ namespace AzureIoTHubConnectedService
     /// </summary>
     public partial class WizardPageLoginView : UserControl
     {
-        public WizardPageLoginView(WizardPageLogin model, Authenticator authenticator)
+        public WizardPageLoginView(Authenticator authenticator)
         {
             InitializeComponent();
 
             m_Authenticator = authenticator;
-
-            DataContext = model;
         }
 
         private Authenticator m_Authenticator;

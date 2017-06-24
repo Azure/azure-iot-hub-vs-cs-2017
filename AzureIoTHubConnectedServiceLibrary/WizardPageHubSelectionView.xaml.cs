@@ -23,7 +23,7 @@ namespace AzureIoTHubConnectedService
     /// </summary>
     public partial class WizardPageHubSelectionView : UserControl
     {
-        public WizardPageHubSelectionView(WizardPageHubSelection model)
+        public WizardPageHubSelectionView(object model)
         {
             PageModel = model;
 
@@ -32,9 +32,7 @@ namespace AzureIoTHubConnectedService
             DataContext = model;
         }
 
-        private WizardPageHubSelection PageModel;
-
-        //private System.Threading.CancellationToken m_CancellationToken = new System.Threading.CancellationToken();
+        private dynamic PageModel;
 
         public void SelectHub(IAzureIoTHub hub)
         {

@@ -17,7 +17,8 @@ namespace AzureIoTHubConnectedService
             this.Description = "Device Method";
             this.IsEnabled = false;
 
-            this.View = new WizardPageDeviceMethodView(wizard);
+            this.View = new WizardPageDeviceMethodView();
+            this.View.DataContext = wizard;
         }
     }
 }
