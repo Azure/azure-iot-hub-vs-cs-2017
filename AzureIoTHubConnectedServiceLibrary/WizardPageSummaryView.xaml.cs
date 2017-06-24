@@ -27,8 +27,11 @@ namespace AzureIoTHubConnectedService
         
         private void SummaryView_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            dynamic d = DataContext;
-            d.SummaryVisible = (e.NewValue as bool?) ?? false;
+            if (DataContext != null)
+            {
+                dynamic d = DataContext;
+                d.SummaryVisible = (e.NewValue as bool?) ?? false;
+            }
         }
     }
 }

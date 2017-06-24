@@ -357,7 +357,6 @@
       <DependentUpon>PageTestDevice.xaml</DependentUpon>
     </Compile>
     <Compile Include="UtilityWindowDeviceTestTool.cs" />
-    <Compile Include="UtilityWindowDeviceTestToolControl.xaml.cs" />
     <Compile Include="WizardMainModel.cs" />
     <Compile Include="PageCloudToDeviceMsg.xaml.cs">
       <DependentUpon>PageCloudToDeviceMsg.xaml</DependentUpon>
@@ -373,15 +372,8 @@
     </Compile>
     <Compile Include="ResourceKeys.cs" />
     <Compile Include="UtilityWindowCloudToDeviceMsg.cs" />
-    <Compile Include="UtilityWindowCloudToDeviceMsgControl.xaml.cs" />
-    <Compile Include="UtilityWindowDeviceMethodControl.xaml.cs" />
     <Compile Include="UtilityWindowHubs.cs" />
-    <Compile Include="UtilityWindowDeviceTwinControl.xaml.cs" />
     <Compile Include="UtilityWindowSummary.cs" />
-    <Compile Include="UtilityWindowSummaryControl.xaml.cs" />
-    <Compile Include="UtilityWindowReceiveMsgsControl.xaml.cs" />
-    <Compile Include="UtilityWindowHubsControl.xaml.cs" />
-    <Compile Include="UtilityWindowDevicesControl.xaml.cs" />
     <Compile Include="UtilityWindowDeviceMethod.cs" />
     <Compile Include="UtilityWindowDeviceTwin.cs" />
     <Compile Include="UtilityWindowReceiveMsgs.cs" />
@@ -463,38 +455,6 @@
     <Page Include="PageReceiveMessages.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UtilityWindowCloudToDeviceMsgControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UtilityWindowDeviceMethodControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UtilityWindowDeviceTestToolControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UtilityWindowDeviceTwinControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UtilityWindowSummaryControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UtilityWindowReceiveMsgsControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UtilityWindowHubsControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="UtilityWindowDevicesControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="WizardPageDeviceSelectionView.xaml">
       <Generator>MSBuild:Compile</Generator>
