@@ -6,7 +6,8 @@
              xmlns:local="clr-namespace:AzureIoTHubConnectedService"
              mc:Ignorable="d" 
              xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300"
+             SizeChanged="UserControl_SizeChanged">
     <UserControl.Resources>
         <ResourceDictionary x:Uid="ResourceDictionary_1">
             <ResourceDictionary.MergedDictionaries>
@@ -15,7 +16,7 @@
         </ResourceDictionary>
 
     </UserControl.Resources>
-    <Grid>
+    <Grid Name="MainGrid" Height="200">
         <Grid.Resources>
             <BooleanToVisibilityConverter x:Key="BoolToVis"/>
             <CollectionViewSource Source="{Binding MainModel.Devices}" x:Key="SortedDevices">
@@ -34,10 +35,10 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Name="TopPanel" Orientation="Horizontal" Grid.Row="0" />
-        <TabControl Name="Tabs" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Background="Transparent">
+        <TabControl Name="Tabs" Grid.Row="1" Background="Transparent">
             <TabItem Header="Select">
-                <ListBox Name="DevicesListBox" Margin="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" SelectedItem="{Binding MainModel.SelectedDevice}"  ItemsSource="{Binding Source={StaticResource SortedDevices}}" DisplayMemberPath="Id"/>
+                <ListBox ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible" Name="DevicesListBox" Margin="10" SelectedItem="{Binding MainModel.SelectedDevice}"  ItemsSource="{Binding Source={StaticResource SortedDevices}}" DisplayMemberPath="Id">
+                </ListBox>
             </TabItem>
             <TabItem Header="New Device">
                 <Grid>
@@ -61,8 +62,8 @@
 
         <GroupBox Grid.Row="3"  Header="Advanced Options" Padding="5">
             <StackPanel>
-            <CheckBox Margin="2">Generate device twin sample code</CheckBox>
-            <CheckBox Margin="2">Generate direct method sample code</CheckBox>
+            <CheckBox Margin="2" IsChecked="{Binding MainModel.DeviceTwinEnabled}">Generate device twin sample code</CheckBox>
+            <CheckBox Margin="2" IsChecked="{Binding MainModel.DeviceMethodEnabled}">Generate direct method sample code</CheckBox>
             </StackPanel>
         </GroupBox>
     </Grid>

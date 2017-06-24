@@ -70,13 +70,28 @@ namespace AzureIoTHubConnectedService
 
         public string Create_DeviceName
         {
-            get { return _Create_DeviceName; }
-            set { _Create_DeviceName = value; Create_Validate(); OnPropertyChanged("Create_DeviceName"); }
+            get
+            {
+                return _Create_DeviceName;
+            }
+            set
+            {
+                _Create_DeviceName = value;
+                Create_Validate();
+                OnPropertyChanged("Create_DeviceName");
+            }
         }
 
         private void Create_Validate()
         {
-            Create_IsEnabled = (_Create_DeviceName != "" && _Create_FieldsEnabled);
+            // matching all alphanumeric characters + additional characters as defined in Azure IoT Hub documentation:
+            // https://docs.microsoft.com/en-us/rest/api/iothub/deviceapi
+            // A case-sensitive string (up to 128 char long) of ASCII 7-bit alphanumeric chars + {'-', ':', '.', '+', '%', '_', '#', '*', '?', '!', '(', ')', ',', '=', '@', ';', '$', '''}.
+            bool match = System.Text.RegularExpressions.Regex.IsMatch(_Create_DeviceName, @"^[a-zA-Z0-9_\-\:\.\+\%\#\*\?\!\(\)\,\=\@\;\$]+$");
+
+            Create_IsEnabled = (_Create_DeviceName != "" &&
+                                match &&
+                                _Create_FieldsEnabled);
         }
 
         private bool _Create_IsEnabled = false;

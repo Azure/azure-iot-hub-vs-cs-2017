@@ -5,18 +5,53 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AzureIoTHubConnectedService"
              xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
+             xmlns:resources="clr-namespace:AzureIoTHubConnectedService.View.Resources"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300"
+             SizeChanged="UserControl_SizeChanged">
     <UserControl.Resources>
         <ResourceDictionary x:Uid="ResourceDictionary_1">
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary x:Uid="ResourceDictionary_2" Source="CommonResources.xaml" />
-            </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="{x:Type TabItem}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type TabItem}">
+                            <Grid>
+                                <Border 
+                                Name="Border"
+                                Margin="0,0,-4,0" 
+                                Background="{StaticResource {x:Static resources:ResourceKeys.InnerTabInactiveBackgroundBrushKey}}"
+                                BorderThickness="1,1,1,1" >
+                                    
+                                    <ContentPresenter x:Name="ContentSite"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                    ContentSource="Header"
+                                    Margin="12,2,12,2"
+                                    RecognizesAccessKey="True"/>
+                                </Border>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Panel.ZIndex" Value="100" />
+                                    <!--<Setter TargetName="Border" Property="BorderThickness" Value="1,1,1,0" />-->
+                                    <Setter TargetName="Border" Property="Background" Value="{StaticResource {x:Static resources:ResourceKeys.InnerTabActiveBackgroundBrushKey}}" />
+                                    <Setter Property="Foreground" Value="{StaticResource {x:Static resources:ResourceKeys.InnerTabActiveTextBrushKey}}" />
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="False">
+                                    <Setter Property="Foreground" Value="{StaticResource {x:Static resources:ResourceKeys.InnerTabActiveTextBrushKey}}" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+
         </ResourceDictionary>
 
     </UserControl.Resources>
 
-    <Grid Name="MainGrid" VerticalAlignment="Stretch">
+    <Grid Name="MainGrid" Height="200">
         <Grid.Resources>
             <BooleanToVisibilityConverter x:Key="BoolToVis"/>
 
@@ -27,19 +62,23 @@
             </CollectionViewSource>
         </Grid.Resources>
 
-        <StackPanel Name="TopPanel" Orientation="Horizontal" />
-            <TabControl Name="Tabs" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Background="Transparent">
-                <TabItem Header="Select" >
-                <ListView Name="HubListView" HorizontalAlignment="Stretch" Margin="10" VerticalAlignment="Stretch" ItemsSource="{Binding Source={StaticResource SortedHubs}}" SelectedItem="{Binding MainModel.SelectedHub}" ItemContainerStyle="{StaticResource ItemContainerStyle}" >
-                        <ListView.View>
-                            <GridView >
-                            <GridViewColumn Header="Hub Name" DisplayMemberBinding="{Binding Path=Properties[IoTHubName]}"/>
-                                <GridViewColumn Header="Subscription" DisplayMemberBinding="{Binding Path=Properties[SubscriptionName]}" />
-                                <GridViewColumn Header="Region" DisplayMemberBinding="{Binding Path=Properties[Region]}" />
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
-                </TabItem>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <TabControl Name="Tabs" Grid.Row="0" Background="Transparent">
+            <TabItem Header="Select" >
+                    <ListView ScrollViewer.CanContentScroll="True" Name="HubListView" Margin="10" ItemsSource="{Binding Source={StaticResource SortedHubs}}" SelectedItem="{Binding MainModel.SelectedHub}" ItemContainerStyle="{StaticResource {x:Static resources:ResourceKeys.ThemedDialogListViewItemGridStyleKey}}" >
+                       
+                            <ListView.View>
+                            <GridView>
+                                    <GridViewColumn Header="Hub Name" DisplayMemberBinding="{Binding Path=Properties[IoTHubName]}"/>
+                                    <GridViewColumn Header="Subscription" DisplayMemberBinding="{Binding Path=Properties[SubscriptionName]}" />
+                                    <GridViewColumn Header="Region" DisplayMemberBinding="{Binding Path=Properties[Region]}" />
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+            </TabItem>
                 <TabItem Header="Create">
                     <Grid>
                         <Grid.ColumnDefinitions>

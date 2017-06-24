@@ -42,5 +42,10 @@ namespace AzureIoTHubConnectedService
         }
 
         private dynamic PageModel;
+
+        private void UserControl_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            MainGrid.Height = e.NewSize.Height;
+        }
     }
 }

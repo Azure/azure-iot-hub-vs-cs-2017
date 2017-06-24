@@ -13,6 +13,14 @@ namespace AzureIoTHubConnectedService.View
         public CommonResources()
         {
             this.InitializeComponent();
+            this.InitializeStyle();
+        }
+
+        private void InitializeStyle()
+        {
+            Style commonDialogStyle = (Style) this["ConnectedServicesCommonDialogStyle"];
+            var setter = new Setter(ThemedDialogStyleLoader.UseDefaultThemedDialogStylesProperty, true);
+            commonDialogStyle.Setters.Add(setter);
         }
     }
 }

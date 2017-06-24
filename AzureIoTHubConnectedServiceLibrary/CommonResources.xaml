@@ -6,48 +6,39 @@
                     xmlns:utils="clr-namespace:Microsoft.VisualStudio.PlatformUI;assembly=Microsoft.VisualStudio.Utilities"
                     xmlns:resources="clr-namespace:AzureIoTHubConnectedService.View.Resources">
 
- 
-    <Style x:Uid="ItemContainerStyle"
-           x:Key="ItemContainerStyle"
-           TargetType="ListViewItem"
-           BasedOn="{StaticResource {x:Static resources:ResourceKeys.ThemedDialogListViewItemGridStyleKey}}">
+    <utils:BrushToColorConverter x:Uid="BrushToColorConverter" x:Key="BrushToColorConverter" />
+
+    <Style x:Uid="Style_1"
+           x:Key="ConnectedServicesCommonDialogStyle"
+           TargetType="Window">
+        <Setter x:Uid="Setter_5" Property="ShowInTaskbar" Value="false" />
+        <Setter x:Uid="Setter_8" Property="ResizeMode" Value="CanResizeWithGrip" />
+        <Setter x:Uid="Setter_9" Property="FontFamily" Value="{DynamicResource VsFont.EnvironmentFontFamily}" />
+        <Setter x:Uid="Setter_10" Property="FontSize" Value="{DynamicResource VsFont.EnvironmentFontSize}" />
+        <Setter x:Uid="Setter_11" Property="Background" Value="{DynamicResource {x:Static resources:ResourceKeys.WindowPanelBrushKey}}" />
+        <Setter x:Uid="Setter_13" Property="Foreground" Value="{DynamicResource {x:Static resources:ResourceKeys.WindowPanelTextBrushKey}}" />
+        <Setter x:Uid="Setter_15" Property="theming:ImageThemingUtilities.ImageBackgroundColor" Value="{Binding Background, RelativeSource={RelativeSource Self}, Converter={StaticResource BrushToColorConverter}}" />
+        <Setter x:Uid="Setter_16" Property="theming:ImageThemingUtilities.ThemeScrollBars" Value="True" />
     </Style>
 
-   
-    <Style TargetType="{x:Type TabItem}">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type TabItem}">
-                    <Grid>
-                        <Border 
-                                Name="Border"
-                                Margin="0,0,-4,0" 
-                                Background="{StaticResource {x:Static resources:ResourceKeys.InnerTabInactiveBackgroundBrushKey}}"
-                                BorderThickness="1,1,1,1" >
-
-                            <ContentPresenter x:Name="ContentSite"
-                                    VerticalAlignment="Center"
-                                    HorizontalAlignment="Center"
-                                    ContentSource="Header"
-                                    Margin="12,2,12,2"
-                                    RecognizesAccessKey="True"/>
-                        </Border>
-                    </Grid>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="Panel.ZIndex" Value="100" />
-                            <!--<Setter TargetName="Border" Property="BorderThickness" Value="1,1,1,0" />-->
-                            <Setter TargetName="Border" Property="Background" Value="{StaticResource {x:Static resources:ResourceKeys.InnerTabActiveBackgroundBrushKey}}" />
-                            <Setter Property="Foreground" Value="{StaticResource {x:Static resources:ResourceKeys.InnerTabActiveTextBrushKey}}" />
-                        </Trigger>
-                        <Trigger Property="IsSelected" Value="False">
-                            <Setter Property="Foreground" Value="{StaticResource {x:Static resources:ResourceKeys.InnerTabActiveTextBrushKey}}" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
+    <Style x:Uid="Style_2"
+           x:Key="ConnectedServicesInteractiveDialogStyle"
+           TargetType="Window"
+           BasedOn="{StaticResource ConnectedServicesCommonDialogStyle}">
+        <Setter x:Uid="Setter_4" Property="Width" Value="804" />
+        <Setter x:Uid="Setter_12" Property="MinWidth" Value="804" />
+        <Setter x:Uid="Setter_6" Property="WindowStyle" Value="None" />
+        <Setter x:Uid="Setter_7" Property="AllowsTransparency" Value="true" />
     </Style>
 
-
+    <Style x:Uid="NavigationButtonStyle"
+           x:Key="NavigationButtonStyle"
+           TargetType="Button"
+           BasedOn="{StaticResource {x:Static resources:ResourceKeys.ThemedDialogButtonStyleKey}}">
+        <Setter x:Uid="Setter_17" Property="MinWidth" Value="75" />
+        <Setter x:Uid="Setter_18" Property="MinHeight" Value="23" />
+        <Setter x:Uid="Setter_19" Property="Margin" Value="6,0,0,0" />
+        <Setter x:Uid="Setter_20" Property="HorizontalAlignment" Value="Stretch" />
+        <Setter x:Uid="Setter_21" Property="VerticalAlignment" Value="Center" />
+    </Style>
 </ResourceDictionary>

@@ -16,16 +16,16 @@ using System.Windows.Shapes;
 namespace AzureIoTHubConnectedService
 {
     /// <summary>
-    /// Interaction logic for WizardPageDeviceMethodView.xaml
+    /// Interaction logic for WizardPageSummaryView.xaml
     /// </summary>
-    public partial class WizardPageDeviceMethodView : UserControl
+    public partial class WizardPageInjectConnectionStringView : UserControl
     {
-        public WizardPageDeviceMethodView()
+        public WizardPageInjectConnectionStringView()
         {
             InitializeComponent();
         }
         
-        public WizardPageDeviceMethodView(object model)
+        public WizardPageInjectConnectionStringView(object model)
         {
             InitializeComponent();
 

@@ -28,6 +28,11 @@ namespace AzureIoTHubConnectedService
         [Import]
         private IVsPackageInstallerServices PackageInstallerServices { get; set; }
 
+
+        protected abstract void GenerateDeviceMethodCode(ConnectedServiceHandlerHelper helper, DeviceMethodDescription[] methods);
+        protected abstract void GenerateDeviceTwinReportedCode(ConnectedServiceHandlerHelper helper, DeviceTwinProperty[] properties);
+        protected abstract void GenerateDeviceTwinDesiredCode(ConnectedServiceHandlerHelper helper, DeviceTwinProperty[] properties);
+
         public override async Task<AddServiceInstanceResult> AddServiceInstanceAsync(ConnectedServiceHandlerContext context, CancellationToken ct)
         {
             var cancel = context.ServiceInstance.Metadata["Cancel"];
@@ -60,8 +65,12 @@ namespace AzureIoTHubConnectedService
 
                 var ioTHubUri = context.ServiceInstance.Metadata["iotHubUri"] as string;
 
-                string twinReportedProps = context.ServiceInstance.Metadata["TwinReportedProps"] as string;
-                string deviceMethod = context.ServiceInstance.Metadata["DeviceMethod"] as string;
+                bool isDeviceProvisioned = ((context.ServiceInstance.Metadata["ProvisionedDevice"] as bool?) == true);
+
+                object methods = null;
+                try { methods = context.ServiceInstance.Metadata["DeviceMethods"]; } catch (Exception) {}
+                object properties = null;
+                try { properties = context.ServiceInstance.Metadata["DeviceTwinProperties"]; } catch (Exception) {}
 
                 handlerHelper.TokenReplacementValues.Add("iotHubUri", ioTHubUri);
 
@@ -72,12 +81,15 @@ namespace AzureIoTHubConnectedService
                 }
                 else
                 {
-                    handlerHelper.TokenReplacementValues.Add("deviceId", device.Id);
-                    handlerHelper.TokenReplacementValues.Add("deviceKey", device.Key);
+                    // just use %s so the connection string can be used as sprintf pattern in the sample code
+                    handlerHelper.TokenReplacementValues.Add("deviceId", isDeviceProvisioned ? "%s" : device.Id);
+                    handlerHelper.TokenReplacementValues.Add("deviceKey", isDeviceProvisioned ? "%s" : device.Key);
                     handlerHelper.TokenReplacementValues.Add("iotHubOwnerPrimaryKey", primaryKeys.IoTHubOwner);
                     handlerHelper.TokenReplacementValues.Add("servicePrimaryKey", primaryKeys.Service);
-                    handlerHelper.TokenReplacementValues.Add("twinReportedProps", twinReportedProps);
-                    handlerHelper.TokenReplacementValues.Add("deviceMethod", deviceMethod);
+
+                    GenerateDeviceMethodCode(handlerHelper, methods as DeviceMethodDescription[]);
+                    GenerateDeviceTwinDesiredCode(handlerHelper, properties as DeviceTwinProperty[]);
+                    GenerateDeviceTwinReportedCode(handlerHelper, properties as DeviceTwinProperty[]);
                 }
             }
 
@@ -150,6 +162,7 @@ namespace AzureIoTHubConnectedService
         }
 
         protected bool m_isLinuxProject = false;
+        protected bool m_is4x4Project = false;
     }
 
     internal class NuGetReference

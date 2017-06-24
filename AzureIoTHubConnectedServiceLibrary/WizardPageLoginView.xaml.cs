@@ -20,7 +20,7 @@ namespace AzureIoTHubConnectedService
     /// </summary>
     public partial class WizardPageLoginView : UserControl
     {
-        public WizardPageLoginView(object model, object authenticator)
+        public WizardPageLoginView(WizardPageLogin model, Authenticator authenticator)
         {
             InitializeComponent();
 
@@ -29,7 +29,7 @@ namespace AzureIoTHubConnectedService
             DataContext = model;
         }
 
-        private dynamic m_Authenticator;
+        private Authenticator m_Authenticator;
 
         private void MainGrid_Loaded(object sender, RoutedEventArgs e)
         {
@@ -41,6 +41,31 @@ namespace AzureIoTHubConnectedService
         private void Hyperlink_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
         {
             System.Diagnostics.Process.Start("http://aka.ms/tpmiothubcs");
+        }
+
+
+        private void rbHardcode_Checked(object sender, RoutedEventArgs e)
+        {
+            if (DataContext != null)
+            {
+                (DataContext as WizardPageLogin).MainModel.Mode = WizardMode.EmbedConnectionString;
+            }
+        }
+
+        private void rbProvision_Checked(object sender, RoutedEventArgs e)
+        {
+            if (DataContext != null)
+            {
+                (DataContext as WizardPageLogin).MainModel.Mode = WizardMode.ProvisionConnectionString;
+            }
+        }
+
+        private void rbUseTpm_Checked(object sender, RoutedEventArgs e)
+        {
+            if (DataContext != null)
+            {
+                (DataContext as WizardPageLogin).MainModel.Mode = WizardMode.UseTpm;
+            }
         }
     }
 

@@ -13,6 +13,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -25,29 +26,38 @@
             Please enter Device Twin properties to include in the sample code below:
         </TextBlock>
 
-        <TextBox Text="SampleProp1" Grid.Column="0" Grid.Row="1" TextWrapping="Wrap" IsReadOnly="False"  Margin="3"/>
-        <ComboBox Grid.Column="1" Grid.Row="1"  Margin="3" SelectedIndex="1">
-            <ComboBoxItem>Reported</ComboBoxItem>
-            <ComboBoxItem>Desired</ComboBoxItem>
-        </ComboBox>
-        <ComboBox Grid.Column="2" Grid.Row="1"  Margin="3" SelectedIndex="0">
-            <ComboBoxItem>String</ComboBoxItem>
-            <ComboBoxItem>Number</ComboBoxItem>
-            <ComboBoxItem>Boolean</ComboBoxItem>
-        </ComboBox>
+        <ListView Grid.ColumnSpan="3" Grid.Row="1" HorizontalAlignment="Stretch" Margin="10" VerticalAlignment="Stretch" ItemsSource="{Binding DeviceTwinProperties}" SelectedItem="{Binding DeviceTwinSelectedProperty}" >
+            <ListView.Resources>
+                <x:Array x:Key="PropertyTypes" Type="local:ComboBoxItemString">
+                    <local:ComboBoxItemString ValueString = "Desired" />
+                    <local:ComboBoxItemString ValueString = "Reported"/>
+                </x:Array>
+                <x:Array x:Key="PropertyDataTypes" Type="local:ComboBoxItemString">
+                    <local:ComboBoxItemString ValueString = "String" />
+                    <local:ComboBoxItemString ValueString = "Number"/>
+                    <local:ComboBoxItemString ValueString = "Boolean"/>
+                </x:Array>
+            </ListView.Resources>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox Text="{Binding PropertyName}" Grid.Column="0" TextWrapping="Wrap" IsReadOnly="False"  Margin="3"/>
+                        <ComboBox Grid.Column="1" Margin="3" SelectedValuePath="ValueString" DisplayMemberPath="ValueString" SelectedValue="{Binding PropertyType}" ItemsSource="{StaticResource PropertyTypes}">
+                        </ComboBox>
+                        <ComboBox Grid.Column="2" Margin="3" SelectedValuePath="ValueString" DisplayMemberPath="ValueString" SelectedValue="{Binding PropertyDataType}" ItemsSource="{StaticResource PropertyDataTypes}">
+                        </ComboBox>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
 
-        <TextBox Text="SampleProp2" Grid.Column="0" Grid.Row="2" TextWrapping="Wrap" Margin="3"/>
-        <ComboBox Grid.Column="1" Grid.Row="2" Margin="3" SelectedIndex="0">
-            <ComboBoxItem>Reported</ComboBoxItem>
-            <ComboBoxItem>Desired</ComboBoxItem>
-        </ComboBox>
-        <ComboBox Grid.Column="2" Grid.Row="2" Margin="3" SelectedIndex="1">
-            <ComboBoxItem>String</ComboBoxItem>
-            <ComboBoxItem>Number</ComboBoxItem>
-            <ComboBoxItem>Boolean</ComboBoxItem>
-        </ComboBox>
 
-        <Button Grid.Column="2" Grid.Row="3" Margin="3">Add</Button>
+        <Button Grid.Column="2" Grid.Row="4" Margin="3" Command="{Binding Path=ExecuteCmd}" CommandParameter="AddDeviceTwinProperty">Add</Button>
 
     </Grid>
 </UserControl>

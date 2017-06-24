@@ -43,6 +43,18 @@ namespace AzureIoTHubConnectedService
         {
             return new AzureIoTHubConnectedServiceHandlerHelper(context);
         }
+
+        protected override void GenerateDeviceMethodCode(ConnectedServiceHandlerHelper helper, DeviceMethodDescription[] methods)
+        {
+        }
+
+        protected override void GenerateDeviceTwinReportedCode(ConnectedServiceHandlerHelper helper, DeviceTwinProperty[] properties)
+        {
+        }
+
+        protected override void GenerateDeviceTwinDesiredCode(ConnectedServiceHandlerHelper helper, DeviceTwinProperty[] properties)
+        {
+        }
     }
 }
 

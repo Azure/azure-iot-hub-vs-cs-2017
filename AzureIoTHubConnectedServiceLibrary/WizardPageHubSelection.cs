@@ -94,7 +94,6 @@ namespace AzureIoTHubConnectedService
         {
             Create_FieldsEnabled = false;
 
-            // XXX - wrong place
             OnPropertyChanged("Create_InProgress");
 
             MainModel.CreateNewHub(Create_SubscriptionItem.SubscriptionName, Create_ResourceGroupName, Create_IoTHubName);

@@ -17,12 +17,19 @@ using Microsoft.Azure.Devices.Common;
 using Microsoft.Azure.Devices.Common.Security;
 using Microsoft.ServiceBus.Messaging;
 
-using System.Text;  
+using System.Text;
 
 
 
 namespace AzureIoTHubConnectedService
 {
+    public enum WizardMode
+    {
+        UseTpm,
+        EmbedConnectionString,
+        ProvisionConnectionString
+    }
+
     public partial class WizardMain : ConnectedServiceWizard
     {
         public WizardMain(IAzureIoTHubAccountManager accountManager, IServiceProvider serviceProvider, bool canUseTpm)
@@ -37,14 +44,20 @@ namespace AzureIoTHubConnectedService
             _PageDeviceSelection = new WizardPageDeviceSelection(this);
             _PageDeviceTwin = new WizardPageDeviceTwin(this);
             _PageDeviceMethod = new WizardPageDeviceMethod(this);
+            _PageInjectConnectionString = new WizardPageInjectConnectionString(this);
             _PageSummary = new WizardPageSummary(this);
 
             this.Pages.Add(_PageLogin);
             this.Pages.Add(_PageHubSelection);
             this.Pages.Add(_PageDeviceSelection);
-            this.Pages.Add(_PageDeviceTwin);
-            this.Pages.Add(_PageDeviceMethod);
+            this.Pages.Add(_PageInjectConnectionString);
             this.Pages.Add(_PageSummary);
+
+            _DeviceTwinProperties.Add(new DeviceTwinProperty("SampleProperty1", "Desired", "String"));
+            _DeviceTwinProperties.Add(new DeviceTwinProperty("SampleProperty2", "Reported", "String"));
+
+            _DeviceMethods.Add(new DeviceMethodDescription("SampleMethod1"));
+            _DeviceMethods.Add(new DeviceMethodDescription("SampleMethod2"));
         }
 
         private Authenticator Authenticator
@@ -112,8 +125,18 @@ namespace AzureIoTHubConnectedService
                   instance.Metadata.Add("Cancel", false);
                   instance.Metadata.Add("TPM", false);
                   instance.Metadata.Add("Device", m_SelectedDevice);
-                  instance.Metadata.Add("TwinReportedProps", DeviceTwinUpdate);
-                  instance.Metadata.Add("DeviceMethod", DeviceMethodName);
+                  instance.Metadata.Add("ProvisionedDevice", _WizardMode == WizardMode.ProvisionConnectionString);
+
+                  if (DeviceMethodEnabled)
+                  {
+                      instance.Metadata.Add("DeviceMethods", DeviceMethods.ToArray<DeviceMethodDescription>());
+                  }
+
+                  if (DeviceTwinEnabled)
+                  {
+                      instance.Metadata.Add("DeviceTwinProperties", DeviceTwinProperties.ToArray<DeviceTwinProperty>());
+                  }
+
                   return instance;
               });
         }
@@ -136,9 +159,9 @@ namespace AzureIoTHubConnectedService
                 // select hub automatically
                 _PageHubSelection.SelectHub(hub);
             }
-            catch (Exception /*ex*/)
+            catch (Exception ex)
             {
-                // XXX - error message
+                MessageBox.Show("Failed to create new IoT Hub: " + ex.Message);
             }
 
             DecrementBusyCounter();
@@ -148,11 +171,56 @@ namespace AzureIoTHubConnectedService
          * PUBLIC PROPERTIES
          *--------------------------------------------------------------------------------------------------------------------*/
 
+        public WizardMode Mode
+        {
+            get { return _WizardMode; }
+            set
+            {
+                _WizardMode = value;
+                ConfigurePages();
+            }
+        }
+
         public ObservableCollection<IAzureRMSubscription> Subscriptions
         {
             get { return _Subscriptions; }
             set { _Subscriptions = value; OnPropertyChanged("Subscriptions"); }
         }
+
+        public bool DeviceTwinEnabled {
+            get
+            {
+                return _DeviceMethodEnabled;
+            }
+            set
+            {
+                _DeviceMethodEnabled = value;
+            }
+        }
+        public bool DeviceMethodEnabled
+        {
+            get
+            {
+                return _DeviceTwinEnabled;
+            }
+            set
+            {
+                _DeviceTwinEnabled = value;
+            }
+        }
+    
+        public ObservableCollection<DeviceTwinProperty> DeviceTwinProperties { get { return _DeviceTwinProperties; } }
+
+        public ObservableCollection<DeviceMethodDescription> DeviceMethods { get { return _DeviceMethods; } }
+
+        public bool SummaryVisible
+        {
+            set
+            {
+                IsFinishEnabled = value;
+            }
+        }
+
 
         /*--------------------------------------------------------------------------------------------------------------------
          * INTERNAL IMPLEMENTATION
@@ -160,7 +228,6 @@ namespace AzureIoTHubConnectedService
 
         private async void HandleHubSelected()
         {
-            // XXX - how to handle cancellation token exactly??
             PrimaryKeys keys = await _SelectedHub.GetPrimaryKeysAsync(new CancellationToken());
 
             m_SelectedHubConnectionString = string.Format(CultureInfo.InvariantCulture,
@@ -182,8 +249,9 @@ namespace AzureIoTHubConnectedService
                 Hubs = new ObservableCollection<IAzureIoTHub>(await task);
                 Subscriptions = new ObservableCollection<IAzureRMSubscription>(Authenticator.Subscriptions);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                MessageBox.Show("Failed to query IoT hubs: " + ex.Message);
             }
 
             DecrementBusyCounter();
@@ -191,13 +259,28 @@ namespace AzureIoTHubConnectedService
 
         private void ConfigurePages()
         {
-            if (UseTPM)
+            if (Mode == WizardMode.ProvisionConnectionString)
+            {
+                if (this.Pages.IndexOf(_PageInjectConnectionString) < 0)
+                {
+                    int index = this.Pages.IndexOf(_PageSummary);
+                    this.Pages.Insert(index, _PageInjectConnectionString);
+                }
+            }
+            else
+            {
+                if (this.Pages.IndexOf(_PageInjectConnectionString) >= 0)
+                {
+                    this.Pages.Remove(_PageInjectConnectionString);
+                }
+            }
+
+            if (Mode == WizardMode.UseTpm)
             {
                 Authenticator.View.IsEnabled = false;
                 _PageHubSelection.IsEnabled = false;
                 _PageDeviceSelection.IsEnabled = false;
                 _PageSummary.IsEnabled = false;
-                IsFinishEnabled = true;
             }
             else
             {
@@ -205,12 +288,31 @@ namespace AzureIoTHubConnectedService
                 _PageHubSelection.IsEnabled = Authenticator.IsAuthenticated;
                 _PageDeviceSelection.IsEnabled = (IoTHubName != "");
                 _PageDeviceTwin.IsEnabled = (DeviceId != "");
+
                 _PageDeviceMethod.IsEnabled = (DeviceId != "");
+                _PageInjectConnectionString.IsEnabled = (DeviceId != "");
                 _PageSummary.IsEnabled = (DeviceId != "");
-                IsFinishEnabled = _PageSummary.IsEnabled;
             }
         }
 
+
+        public void ProvisionDevice()
+        {
+            _ProvisioningDevice = true;
+
+            try
+            {
+                DeviceProvisionerBase provisioner = null;
+
+                provisioner.ProvisionDevice(SelectedDevice.Id, SelectedDevice.Authentication.SymmetricKey.PrimaryKey);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to provision device: " + ex.Message);
+            }
+
+            _ProvisioningDevice = false;
+        }
 
         /*--------------------------------------------------------------------------------------------------------------------
          * INTERNAL DATA
@@ -220,12 +322,23 @@ namespace AzureIoTHubConnectedService
         private WizardPageDeviceSelection _PageDeviceSelection = null;
         private WizardPageDeviceTwin _PageDeviceTwin = null;
         private WizardPageDeviceMethod _PageDeviceMethod = null;
+        private WizardPageInjectConnectionString _PageInjectConnectionString = null;
         private WizardPageSummary _PageSummary = null;
 
+        private WizardMode _WizardMode = WizardMode.EmbedConnectionString;
         private ObservableCollection<IAzureRMSubscription> _Subscriptions = null;
 
         private IServiceProvider _ServiceProvider = null;
         private IAzureIoTHubAccountManager _IoTHubAccountManager = null;
         private Authenticator _Authenticator = null;
+
+        private bool _DeviceTwinEnabled = false;
+        private ObservableCollection<DeviceTwinProperty> _DeviceTwinProperties = new ObservableCollection<DeviceTwinProperty>();
+
+
+        private bool _DeviceMethodEnabled = false;
+        private ObservableCollection<DeviceMethodDescription> _DeviceMethods = new ObservableCollection<DeviceMethodDescription>();
+
+        private bool _ProvisioningDevice = false;
     }
 }

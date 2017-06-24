@@ -72,9 +72,6 @@ namespace AzureIoTHubConnectedService
                 Guid PackageToBeLoadedGuid =
                     new Guid(AzureIoTHubConnectedServicePackage.PackageGuidString);
                 shell.LoadPackage(ref PackageToBeLoadedGuid, out package);
-
-                // This should me improved, we should have a separate class for WizardMain, not depend on configurator
-                (package as AzureIoTHubConnectedServicePackage).MainModel = (configurator as WizardMain);
             }
 
             return Task.FromResult(configurator);

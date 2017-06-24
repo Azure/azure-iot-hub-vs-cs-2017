@@ -41,14 +41,21 @@
                 </Style>
             </StackPanel.Resources>
 
-            <RadioButton x:Name="rbDoNotTPM" IsChecked="{Binding MainModel.UseTPM, Converter={StaticResource RadioButtonCheckedConverter}, ConverterParameter={StaticResource False}}">
+            <RadioButton x:Name="rbHardcode" Checked="rbHardcode_Checked" IsChecked="True">
                 <StackPanel>
                     <TextBlock FontWeight="Bold" Text="Hardcode shared access key in application's code." Style="{StaticResource TextStyle}"/>
                     <TextBlock TextWrapping="Wrap" Text="The device-specific shared access key is retrieved from your Azure subscription and embedded in the source code." Style="{StaticResource TextStyle}"/>
                 </StackPanel>
             </RadioButton>
 
-            <RadioButton x:Name="rbUseTPM" IsChecked="{Binding MainModel.UseTPM, Converter={StaticResource RadioButtonCheckedConverter}, ConverterParameter={StaticResource True}}" IsEnabled="{Binding MainModel.CanUseTPM}">
+            <RadioButton x:Name="rbProvision" Checked="rbProvision_Checked">
+                <StackPanel>
+                    <TextBlock FontWeight="Bold" Text="Provision device with shared access key." Style="{StaticResource TextStyle}"/>
+                    <TextBlock TextWrapping="Wrap" Text="The device-specific shared access key is retrieved from your Azure subscription and stored on the device." Style="{StaticResource TextStyle}"/>
+                </StackPanel>
+            </RadioButton>
+
+            <RadioButton x:Name="rbUseTpm" Checked="rbUseTpm_Checked" IsEnabled="{Binding MainModel.CanUseTPM}">
                 <StackPanel>
                     <TextBlock FontWeight="Bold" TextWrapping="Wrap" Text="(Experimental) Use Azure device credentials stored in the TPM." Style="{StaticResource TextStyle}"/>
                     <TextBlock TextWrapping="Wrap" Text="Requires device provisioning using WebB or IoT Dashboard." Style="{StaticResource TextStyle}"/>

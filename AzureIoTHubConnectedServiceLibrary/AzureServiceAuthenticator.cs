@@ -157,15 +157,7 @@ namespace AzureIoTHubConnectedService
 
         public async Task<IAzureIoTHub> CreateIoTHub(IAzureIoTHubAccountManager accountManager, string subscriptionName, string rgName, string hubName, CancellationToken cancellationToken)
         {
-            IEnumerator<IAzureRMSubscription> e = Subscriptions.GetEnumerator();
-            // XXX - just get first subscription
-            while (e.MoveNext())
-            {
-                if (e.Current.SubscriptionName == subscriptionName)
-                    break;
-            }
-
-            IAzureRMSubscription subscription = e.Current;
+            IAzureRMSubscription subscription = (from a in Subscriptions where a.SubscriptionName == subscriptionName select a).First<IAzureRMSubscription>();
             Account account = await this.GetAccountAsync();
             Debug.Assert(account != null && !account.NeedsReauthentication);
 

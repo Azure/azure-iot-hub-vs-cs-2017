@@ -25,10 +25,17 @@
             Please enter Direct Method names below which should be supported by your device below:
         </TextBlock>
 
-        <TextBox Text="SampleMethod1" Grid.ColumnSpan="3" Grid.Row="1" Margin="3"/>
-        <TextBox Text="SampleMethod2" Grid.ColumnSpan="3" Grid.Row="2" Margin="3"/>
+        <ListView Grid.ColumnSpan="3" Grid.Row="1" HorizontalAlignment="Stretch" Margin="10" VerticalAlignment="Stretch" ItemsSource="{Binding DeviceMethods}" >
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <TextBox Text="{Binding Name}" Grid.Column="0" TextWrapping="Wrap" IsReadOnly="False"  Margin="3"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
 
-        <Button Grid.Column="2" Grid.Row="3" Margin="3">Add</Button>
+        <Button Grid.Column="2" Grid.Row="3" Margin="3" Command="{Binding Path=ExecuteCmd}" CommandParameter="AddDeviceMethod">Add</Button>
 
     </Grid>
 </UserControl>

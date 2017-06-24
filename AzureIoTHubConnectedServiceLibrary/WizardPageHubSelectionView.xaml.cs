@@ -14,6 +14,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using Microsoft.VisualStudio.WindowsAzure.Authentication;
+
 namespace AzureIoTHubConnectedService
 {
     /// <summary>
@@ -21,12 +23,7 @@ namespace AzureIoTHubConnectedService
     /// </summary>
     public partial class WizardPageHubSelectionView : UserControl
     {
-        public WizardPageHubSelectionView()
-        {
-            InitializeComponent();
-        }
-
-        public WizardPageHubSelectionView(object model)
+        public WizardPageHubSelectionView(WizardPageHubSelection model)
         {
             PageModel = model;
 
@@ -35,11 +32,11 @@ namespace AzureIoTHubConnectedService
             DataContext = model;
         }
 
-        private dynamic PageModel;
+        private WizardPageHubSelection PageModel;
 
         //private System.Threading.CancellationToken m_CancellationToken = new System.Threading.CancellationToken();
 
-        public void SelectHub(object hub)
+        public void SelectHub(IAzureIoTHub hub)
         {
             HubListView.SelectedItem = hub;
             Tabs.SelectedIndex = 0;
@@ -48,6 +45,10 @@ namespace AzureIoTHubConnectedService
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             this.PageModel.CreateNewHub();
+        }
+        private void UserControl_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            MainGrid.Height = e.NewSize.Height;
         }
     }
 }

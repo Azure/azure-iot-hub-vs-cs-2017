@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace AzureIoTHubConnectedService
 {
-    internal class SelectedDevice
+    internal abstract class DeviceProvisionerBase
     {
-        public string Id;
-        public string Key;
+        internal abstract void ProvisionDevice(string deviceId, string sharedAccessKey);
     }
 }
