@@ -19,7 +19,8 @@ namespace AzureIoTHubConnectedService
             this.Title = "Azure IoT Hub";
             this.Legend = "IoT Hub";
             this.Description = "Select or Create IoT Hub";
-            this.View = new WizardPageHubSelectionView(this);
+            this.View = new WizardPageHubSelectionView();
+            this.View.DataContext = this;
             this.MainModel = wizard;
         }
 

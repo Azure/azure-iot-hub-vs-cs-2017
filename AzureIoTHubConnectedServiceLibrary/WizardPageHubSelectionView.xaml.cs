@@ -14,8 +14,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-using Microsoft.VisualStudio.WindowsAzure.Authentication;
-
 namespace AzureIoTHubConnectedService
 {
     /// <summary>
@@ -23,13 +21,9 @@ namespace AzureIoTHubConnectedService
     /// </summary>
     public partial class WizardPageHubSelectionView : UserControl
     {
-        public WizardPageHubSelectionView(object model)
+        public WizardPageHubSelectionView()
         {
-            PageModel = model;
-
             InitializeComponent();
-
-            DataContext = model;
         }
 
         private dynamic PageModel;
@@ -42,7 +36,7 @@ namespace AzureIoTHubConnectedService
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            this.PageModel.CreateNewHub();
+            (this.DataContext as dynamic).CreateNewHub();
         }
         private void UserControl_SizeChanged(object sender, SizeChangedEventArgs e)
         {
