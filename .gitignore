@@ -54,3 +54,4 @@ packages/
 Debug/
 Generated Files/
 *_Win32_Debug*/
+.vs/
