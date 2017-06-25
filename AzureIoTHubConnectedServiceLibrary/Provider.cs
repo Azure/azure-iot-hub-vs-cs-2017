@@ -63,7 +63,6 @@ namespace AzureIoTHubConnectedService
 
             configurator = new WizardMain(this.IoTHubAccountManager, this.ServiceProvider, (projectKind == CsProjectType));
 
-
             // Load our package here to trigger telemetry event. This is exactly when user chooses our extension.
             IVsShell shell = Microsoft.VisualStudio.Shell.Package.GetGlobalService(typeof(SVsShell)) as IVsShell;
             if (shell != null)
@@ -72,6 +71,9 @@ namespace AzureIoTHubConnectedService
                 Guid PackageToBeLoadedGuid =
                     new Guid(AzureIoTHubConnectedServicePackage.PackageGuidString);
                 shell.LoadPackage(ref PackageToBeLoadedGuid, out package);
+
+                // This should me improved, we should have a separate class for WizardMain, not depend on configurator
+                (package as AzureIoTHubConnectedServicePackage).MainModel = (configurator as WizardMain);
             }
 
             return Task.FromResult(configurator);
