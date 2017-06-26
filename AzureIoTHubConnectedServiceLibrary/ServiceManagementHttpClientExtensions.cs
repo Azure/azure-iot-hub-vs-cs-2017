@@ -146,5 +146,27 @@ namespace AzureIoTHubConnectedService
 
             return null;
         }
+        public static async Task<ResourceGroup> CreateResourceGroupAsync(this ServiceManagementHttpClient client, string rgName, CancellationToken cancellationToken)
+        {
+
+            string subscriptionId = client.SubscriptionId;
+
+            var description = new
+            {
+                location = "East US"
+            };
+
+            var content = new StringContent(JsonConvert.SerializeObject(description), Encoding.UTF8, "application/json");
+            var requestUri = string.Format("https://management.azure.com/subscriptions/{0}/resourcegroups/{1}?api-version=2017-05-10", subscriptionId, rgName);
+            var result = client.PutAsync(requestUri, content).Result;
+
+            if (!result.IsSuccessStatusCode)
+            {
+                Console.WriteLine("Failed {0}", result.Content.ReadAsStringAsync().Result);
+                return null;
+            }
+
+            return new ResourceGroup(rgName, "East US");
+        }
     }
 }

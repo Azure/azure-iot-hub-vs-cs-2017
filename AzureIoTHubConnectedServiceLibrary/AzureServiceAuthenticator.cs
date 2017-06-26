@@ -178,5 +178,14 @@ namespace AzureIoTHubConnectedService
 
             return await accountManager.CreateIoTHubAsync(subscription, this.serviceProvider, account, rgName, hubName, cancellationToken);
         }
+
+        public async Task<ResourceGroup> CreateResourceGroup(IAzureIoTHubAccountManager accountManager, string subscriptionName, string rgName, CancellationToken cancellationToken)
+        {
+            IAzureRMSubscription subscription = (from a in Subscriptions where a.SubscriptionName == subscriptionName select a).First<IAzureRMSubscription>();
+            Account account = await this.GetAccountAsync();
+            Debug.Assert(account != null && !account.NeedsReauthentication);
+
+            return await accountManager.CreateResourceGroupAsync(subscription, this.serviceProvider, account, rgName, cancellationToken);
+        }
     }
 }

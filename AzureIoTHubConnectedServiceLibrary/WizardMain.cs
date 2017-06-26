@@ -151,6 +151,12 @@ namespace AzureIoTHubConnectedService
 
             try
             {
+                // check if resource group exists
+                if (!ResourceGroups.Any<ResourceGroup> (rg => (rg.Name == resourceGroupName)))
+                {
+                    ResourceGroup group = await Authenticator.CreateResourceGroup(_IoTHubAccountManager, subscriptionName, resourceGroupName, new CancellationToken());
+                }
+
                 IAzureIoTHub hub = await Authenticator.CreateIoTHub(_IoTHubAccountManager, subscriptionName, resourceGroupName, iotHubName, new CancellationToken());
 
                 // insert hub into the list
