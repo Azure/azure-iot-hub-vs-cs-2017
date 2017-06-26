@@ -167,6 +167,13 @@ namespace AzureIoTHubConnectedService
             DecrementBusyCounter();
         }
 
+        public async void QueryResourceGroups(string subscriptionName)
+        {
+            List<ResourceGroup> response = await Authenticator.GetResourceGroups(_IoTHubAccountManager, subscriptionName, new CancellationToken());
+
+            ResourceGroups = new ObservableCollection<ResourceGroup>(response);
+        }
+
         /*--------------------------------------------------------------------------------------------------------------------
          * PUBLIC PROPERTIES
          *--------------------------------------------------------------------------------------------------------------------*/
@@ -185,6 +192,12 @@ namespace AzureIoTHubConnectedService
         {
             get { return _Subscriptions; }
             set { _Subscriptions = value; OnPropertyChanged("Subscriptions"); }
+        }
+
+        public ObservableCollection<ResourceGroup> ResourceGroups
+        {
+            get { return _ResourceGroups; }
+            set { _ResourceGroups = value; OnPropertyChanged("ResourceGroups"); }
         }
 
         public bool DeviceTwinEnabled {
@@ -327,6 +340,7 @@ namespace AzureIoTHubConnectedService
 
         private WizardMode _WizardMode = WizardMode.EmbedConnectionString;
         private ObservableCollection<IAzureRMSubscription> _Subscriptions = null;
+        private ObservableCollection<ResourceGroup> _ResourceGroups = null;
 
         private IServiceProvider _ServiceProvider = null;
         private IAzureIoTHubAccountManager _IoTHubAccountManager = null;

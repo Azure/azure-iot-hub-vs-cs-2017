@@ -155,6 +155,21 @@ namespace AzureIoTHubConnectedService
             return iotHubAccounts;
         }
 
+        public async Task<List<ResourceGroup>> GetResourceGroups(IAzureIoTHubAccountManager accountManager, string subscriptionName, CancellationToken cancellationToken)
+        {
+            IEnumerable<IAzureRMSubscription> subscriptions = await this.GetAzureRMSubscriptions().ConfigureAwait(false);
+            List<ResourceGroup> groups = null;
+            foreach (IAzureRMSubscription subscription in subscriptions)
+            {
+                if (subscription.SubscriptionName == subscriptionName)
+                {
+                    groups = (await accountManager.EnumerateResourceGroupsAsync(subscription, cancellationToken).ConfigureAwait(false)).ToList<ResourceGroup>();
+                }
+            }
+
+            return groups;
+        }
+
         public async Task<IAzureIoTHub> CreateIoTHub(IAzureIoTHubAccountManager accountManager, string subscriptionName, string rgName, string hubName, CancellationToken cancellationToken)
         {
             IAzureRMSubscription subscription = (from a in Subscriptions where a.SubscriptionName == subscriptionName select a).First<IAzureRMSubscription>();

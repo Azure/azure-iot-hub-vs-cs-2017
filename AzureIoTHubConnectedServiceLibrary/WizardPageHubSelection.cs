@@ -76,7 +76,7 @@ namespace AzureIoTHubConnectedService
         public IAzureRMSubscription Create_SubscriptionItem
         {
             get { return _Create_SubscriptionItem; }
-            set { _Create_SubscriptionItem = value; Create_Validate(); OnPropertyChanged("Create_SubscriptionName"); }
+            set { _Create_SubscriptionItem = value; Create_Validate(); OnPropertyChanged("Create_SubscriptionName"); MainModel.QueryResourceGroups(_Create_SubscriptionItem.SubscriptionName); }
         }
 
         public string Create_IoTHubName
@@ -88,7 +88,7 @@ namespace AzureIoTHubConnectedService
         public string Create_ResourceGroupName
         {
             get { return _Create_ResourceGroupName; }
-            set { _Create_ResourceGroupName = value; Create_Validate(); OnPropertyChanged("Create_ResourceGroupName"); }
+            set { _Create_ResourceGroupName = value; Create_Validate(); OnPropertyChanged("Create_ResourceGroupName");  }
         }
 
         internal void CreateNewHub()

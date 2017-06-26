@@ -96,7 +96,7 @@
                         <Label Content="Subscription" Grid.Row="0" Grid.Column="0" Margin="5" />
                         <ComboBox Name="SubscriptionCombo" Grid.Row="0" Grid.Column="1" Margin="5" SelectedItem="{Binding Path=Create_SubscriptionItem, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=Create_FieldsEnabled}" ItemsSource="{Binding MainModel.Subscriptions}" SelectedValuePath="SubscriptionName" DisplayMemberPath="SubscriptionName"/>
                         <Label Content="Resource Group" Grid.Row="1" Grid.Column="0" Margin="5" />
-                        <ComboBox Name="ResourceGroupCombo" Grid.Row="1" Grid.Column="1" Margin="5" IsEditable="True" Text="{Binding Path=Create_ResourceGroupName, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=Create_FieldsEnabled}"/>
+                    <ComboBox Name="ResourceGroupCombo" Grid.Row="1" Grid.Column="1" Margin="5" IsEditable="True" Text="{Binding Path=Create_ResourceGroupName, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=Create_FieldsEnabled}" ItemsSource="{Binding MainModel.ResourceGroups}" DisplayMemberPath="Name" />
                         <Label Content="IoT Hub Name" Grid.Row="2" Grid.Column="0" Margin="5"/>
                         <TextBox Name="IoTHubNameText" Grid.Row="2" Grid.Column="1" Margin="5" Text="{Binding Path=Create_IoTHubName, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=Create_FieldsEnabled}"/>
                         <Button Name="CreateButton" Content="Create" Grid.Row="3" Grid.Column="1" Margin="5" Click="Button_Click" IsEnabled="{Binding Path=Create_IsEnabled}" />

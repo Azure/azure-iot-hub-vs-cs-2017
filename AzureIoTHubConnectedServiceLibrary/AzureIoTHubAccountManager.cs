@@ -34,6 +34,17 @@ namespace AzureIoTHubConnectedService
             return response.Accounts.Select(p => new IoTHubResource(subscription, p)).ToList();
         }
 
+        public async Task<IEnumerable<ResourceGroup>> EnumerateResourceGroupsAsync(IAzureRMSubscription subscription, CancellationToken cancellationToken)
+        {
+            var builder = new ServiceManagementHttpClientBuilder(subscription);
+
+            var client = await builder.CreateAsync().ConfigureAwait(false);
+
+            ResourceGroupListResponse response = await ServiceManagementHttpClientExtensions.GetResourceGroupsAsync(client, cancellationToken).ConfigureAwait(false);
+
+            return response.Accounts.Select(p => new ResourceGroup(p.Name, p.Location) ).ToList();
+        }
+
         public async Task<IAzureIoTHub> CreateIoTHubAsync(IAzureRMSubscription subscription, IServiceProvider serviceProvider, Account userAccount, string rgName, string hubName, CancellationToken cancellationToken)
         {
             var builder = new ServiceManagementHttpClientBuilder(subscription);

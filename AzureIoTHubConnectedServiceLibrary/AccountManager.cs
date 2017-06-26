@@ -13,6 +13,7 @@ namespace AzureIoTHubConnectedService
     public interface IAzureIoTHubAccountManager
     {
         Task<IEnumerable<IAzureIoTHub>> EnumerateIoTHubAccountsAsync(IAzureRMSubscription subscription, CancellationToken cancellationToken);
+        Task<IEnumerable<ResourceGroup>> EnumerateResourceGroupsAsync(IAzureRMSubscription subscription, CancellationToken cancellationToken);
 
         Task<IAzureIoTHub> CreateIoTHubAsync(IAzureRMSubscription subscription, IServiceProvider serviceProvider, Account userAccount, string rgName, string hubName, CancellationToken cancellationToken);
     }

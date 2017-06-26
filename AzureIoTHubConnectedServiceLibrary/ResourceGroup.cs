@@ -6,8 +6,13 @@ using System.Runtime.Serialization;
 namespace AzureIoTHubConnectedService
 {
     [DataContract]
-    internal class ResourceGroup
+    public class ResourceGroup
     {
+        public ResourceGroup(string name, string location)
+        {
+            Name = name;
+            Location = location;
+        }
         [DataMember(Name = "name")]
         public string Name { get; set; }
 

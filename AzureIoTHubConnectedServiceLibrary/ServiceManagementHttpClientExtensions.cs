@@ -63,6 +63,19 @@ namespace AzureIoTHubConnectedService
             return client.GetAsync<IoTHubListResponse>(relativeUrl, cancellationToken);
         }
 
+        public static Task<ResourceGroupListResponse> GetResourceGroupsAsync(this ServiceManagementHttpClient client, CancellationToken cancellationToken)
+        {
+            string relativeUrl = string.Format(CultureInfo.InvariantCulture,
+                                               "/subscriptions/{0}/resourcegroups?api-version=2017-05-10",
+                                               client.SubscriptionId);
+
+            //Task<HttpResponseMessage> msg = client.GetAsync(relativeUrl, cancellationToken);
+
+            //msg.Wait();
+
+            return client.GetAsync<ResourceGroupListResponse>(relativeUrl, cancellationToken);
+        }
+
         public static async Task<IoTHub> GetIoTHubDetailsAsync(this ServiceManagementHttpClient client, IoTHub iotHubAccount, CancellationToken cancellationToken)
         {
             /// POST:
