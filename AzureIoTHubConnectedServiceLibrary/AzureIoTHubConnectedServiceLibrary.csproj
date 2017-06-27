@@ -359,7 +359,7 @@
     </Compile>
     <Compile Include="UtilityWindowDeviceTestTool.cs" />
     <Compile Include="WizardMainExtras.cs" />
-    <Compile Include="WizardMainModel.cs" />
+    <Compile Include="WizardMainGeneric.cs" />
     <Compile Include="PageCloudToDeviceMsg.xaml.cs">
       <DependentUpon>PageCloudToDeviceMsg.xaml</DependentUpon>
     </Compile>
@@ -381,7 +381,7 @@
     <Compile Include="UtilityWindowReceiveMsgs.cs" />
     <Compile Include="UtilityWindowCommand.cs" />
     <Compile Include="UtilityWindowDevices.cs" />
-    <Compile Include="WizardMain.cs" />
+    <Compile Include="WizardMainVisualStudio.cs" />
     <Compile Include="AzureIoTHubConnectedServicePackage.cs" />
     <Compile Include="AzureResource.cs" />
     <Compile Include="DeviceIdentity.cs" />

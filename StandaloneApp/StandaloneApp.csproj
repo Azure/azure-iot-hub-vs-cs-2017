@@ -134,8 +134,8 @@
     <Compile Include="..\AzureIoTHubConnectedServiceLibrary\WizardMainExtras.cs">
       <Link>WizardMainExtras.cs</Link>
     </Compile>
-    <Compile Include="..\AzureIoTHubConnectedServiceLibrary\WizardMainModel.cs">
-      <Link>WizardMainModel.cs</Link>
+    <Compile Include="..\AzureIoTHubConnectedServiceLibrary\WizardMainGeneric.cs">
+      <Link>WizardMainGeneric.cs</Link>
     </Compile>
     <Compile Include="..\AzureIoTHubConnectedServiceLibrary\WizardPageDeviceSelectionView.xaml.cs">
       <Link>WizardPageDeviceSelectionView.xaml.cs</Link>
