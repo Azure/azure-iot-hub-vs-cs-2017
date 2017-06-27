@@ -1,20 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using System.Windows.Input;
-using System.ComponentModel;
 using System.Collections.ObjectModel;
-using System.Threading;
 using System.Globalization;
 
 using Microsoft.Azure.Devices;
-using Microsoft.Azure.Devices.Common;
-using Microsoft.Azure.Devices.Common.Security;
-using Microsoft.ServiceBus.Messaging;
-
 
 namespace AzureIoTHubConnectedService
 {
@@ -233,10 +223,43 @@ namespace AzureIoTHubConnectedService
         // DEVICE TWIN RELATED PROPERTIES
         //--------------------------------------------------------------------------------------------------------------------
 
+        public bool DeviceTwinEnabled
+        {
+            get
+            {
+                return _DeviceMethodEnabled;
+            }
+            set
+            {
+                _DeviceMethodEnabled = value;
+            }
+        }
+
+        public ObservableCollection<DeviceTwinProperty> DeviceTwinProperties { get { return _DeviceTwinProperties; } }
+
+        private bool _DeviceTwinEnabled = false;
+        private ObservableCollection<DeviceTwinProperty> _DeviceTwinProperties = new ObservableCollection<DeviceTwinProperty>();
+
         //--------------------------------------------------------------------------------------------------------------------
         // DEVICE METHOD RELATED PROPERTIES
         //--------------------------------------------------------------------------------------------------------------------
 
+        public bool DeviceMethodEnabled
+        {
+            get
+            {
+                return _DeviceTwinEnabled;
+            }
+            set
+            {
+                _DeviceTwinEnabled = value;
+            }
+        }
+
+        public ObservableCollection<DeviceMethodDescription> DeviceMethods { get { return _DeviceMethods; } }
+
+        private bool _DeviceMethodEnabled = false;
+        private ObservableCollection<DeviceMethodDescription> _DeviceMethods = new ObservableCollection<DeviceMethodDescription>();
 
         //--------------------------------------------------------------------------------------------------------------------
         // NEW IOT HUB CREATION RELATED CODE

@@ -206,31 +206,6 @@ namespace AzureIoTHubConnectedService
             set { _ResourceGroups = value; OnPropertyChanged("ResourceGroups"); }
         }
 
-        public bool DeviceTwinEnabled {
-            get
-            {
-                return _DeviceMethodEnabled;
-            }
-            set
-            {
-                _DeviceMethodEnabled = value;
-            }
-        }
-        public bool DeviceMethodEnabled
-        {
-            get
-            {
-                return _DeviceTwinEnabled;
-            }
-            set
-            {
-                _DeviceTwinEnabled = value;
-            }
-        }
-    
-        public ObservableCollection<DeviceTwinProperty> DeviceTwinProperties { get { return _DeviceTwinProperties; } }
-
-        public ObservableCollection<DeviceMethodDescription> DeviceMethods { get { return _DeviceMethods; } }
 
         public bool SummaryVisible
         {
@@ -351,13 +326,6 @@ namespace AzureIoTHubConnectedService
         private IServiceProvider _ServiceProvider = null;
         private IAzureIoTHubAccountManager _IoTHubAccountManager = null;
         private Authenticator _Authenticator = null;
-
-        private bool _DeviceTwinEnabled = false;
-        private ObservableCollection<DeviceTwinProperty> _DeviceTwinProperties = new ObservableCollection<DeviceTwinProperty>();
-
-
-        private bool _DeviceMethodEnabled = false;
-        private ObservableCollection<DeviceMethodDescription> _DeviceMethods = new ObservableCollection<DeviceMethodDescription>();
 
         private bool _ProvisioningDevice = false;
     }
