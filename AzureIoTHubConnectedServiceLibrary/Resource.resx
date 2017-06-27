@@ -171,4 +171,136 @@
   <data name="Tier" xml:space="preserve">
     <value>Tier</value>
   </data>
+  <data name="WizardPageTitle" xml:space="preserve">
+    <value>Azure IoT Hub</value>
+  </data>
+  <data name="WizardPageLoginLegend" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="WizardPageLoginDescription" xml:space="preserve">
+    <value>Login to Azure</value>
+  </data>
+  <data name="WizardPageDeviceSelectionLegend" xml:space="preserve">
+    <value>Device</value>
+  </data>
+  <data name="WizardPageDeviceSelectionDescription" xml:space="preserve">
+    <value>Select an existing device or create a new one</value>
+  </data>
+  <data name="WizardPageHubSelectionLegend" xml:space="preserve">
+    <value>IoT Hub</value>
+  </data>
+  <data name="WizardPageHubSelectionDescription" xml:space="preserve">
+    <value>Select an existing IoT hub or create a new one</value>
+  </data>
+  <data name="WizardPageInjectConnectionStringLegend" xml:space="preserve">
+    <value>Provision Device</value>
+  </data>
+  <data name="WizardPageInjectConnectionStringDescription" xml:space="preserve">
+    <value>Store device id and shared key on your device</value>
+  </data>
+  <data name="WizardPageSummaryLegend" xml:space="preserve">
+    <value>Summary</value>
+  </data>
+  <data name="WizardPageSummaryDescription" xml:space="preserve">
+    <value>Summary</value>
+  </data>
+  <data name="ExtensionDescription" xml:space="preserve">
+    <value>Easily and securely connect your devices to Azure IoT Hub. You can send device-to-cloud and device-to-cloud messages, plus utilize device management capabilities to reliably update devices</value>
+  </data>
+  <data name="ButtonCreate" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="CreateHubName" xml:space="preserve">
+    <value>IoT Hub Name</value>
+  </data>
+  <data name="CreateHubResourceGroup" xml:space="preserve">
+    <value>Resource Group</value>
+  </data>
+  <data name="CreateHubSubscription" xml:space="preserve">
+    <value>Subscription</value>
+  </data>
+  <data name="DeviceOptionDeviceTwin" xml:space="preserve">
+    <value>Generate device twin sample code</value>
+  </data>
+  <data name="DeviceOptionDirectMethod" xml:space="preserve">
+    <value>Generate direct method sample code</value>
+  </data>
+  <data name="DeviceOptionReceivingMsgs" xml:space="preserve">
+    <value>Generate sample code that receives messages</value>
+  </data>
+  <data name="DeviceOptionSendingMsgs" xml:space="preserve">
+    <value>Generate sample code to send messages</value>
+  </data>
+  <data name="HubListHeaderName" xml:space="preserve">
+    <value>Hub Name</value>
+  </data>
+  <data name="HubListHeaderRegion" xml:space="preserve">
+    <value>Region</value>
+  </data>
+  <data name="HubListHeaderSubscription" xml:space="preserve">
+    <value>Subscription</value>
+  </data>
+  <data name="LabelAdvancedOptions" xml:space="preserve">
+    <value>Advanced Options</value>
+  </data>
+  <data name="LabelDeviceId" xml:space="preserve">
+    <value>Device ID</value>
+  </data>
+  <data name="ProvisionButton" xml:space="preserve">
+    <value>Provision Device</value>
+  </data>
+  <data name="ProvisionDeviceId" xml:space="preserve">
+    <value>Device ID (stored on the device)</value>
+  </data>
+  <data name="ProvisionDeviceKey" xml:space="preserve">
+    <value>Device shared key (stored on the device)</value>
+  </data>
+  <data name="ProvisionHubUri" xml:space="preserve">
+    <value>IoT Hub URI (stored in application code)</value>
+  </data>
+  <data name="SummaryDevice" xml:space="preserve">
+    <value>Device</value>
+  </data>
+  <data name="SummaryDevicePrimaryConnectionString" xml:space="preserve">
+    <value>Device Primary Connection String</value>
+  </data>
+  <data name="SummaryDeviceSecondaryConnectionString" xml:space="preserve">
+    <value>Device Secondary Connection String</value>
+  </data>
+  <data name="SummaryIoTHub" xml:space="preserve">
+    <value>IoT Hub</value>
+  </data>
+  <data name="SummaryIoTHubConnectionString" xml:space="preserve">
+    <value>IoT Hub Connection String</value>
+  </data>
+  <data name="SummarySubscription" xml:space="preserve">
+    <value>Subscription</value>
+  </data>
+  <data name="TabHeaderCreate" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="TabHeaderNewDevice" xml:space="preserve">
+    <value>New Device</value>
+  </data>
+  <data name="TabHeaderSelect" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="WizardOptionHardcode" xml:space="preserve">
+    <value>Hardcode shared access key in application's code.</value>
+  </data>
+  <data name="WizardOptionHardcodeDescription" xml:space="preserve">
+    <value>The device-specific shared access key is retrieved from your Azure subscription and embedded in the source code.</value>
+  </data>
+  <data name="WizardOptionProvision" xml:space="preserve">
+    <value>Provision device.</value>
+  </data>
+  <data name="WizardOptionProvisionDescription" xml:space="preserve">
+    <value>The device-specific shared access key is retrieved from your Azure subscription and stored on the device.</value>
+  </data>
+  <data name="WizardOptionTpm" xml:space="preserve">
+    <value>(Experimental) Use Azure device credentials stored in the TPM.</value>
+  </data>
+  <data name="WizardOptionTpmDescription" xml:space="preserve">
+    <value>Requires device provisioning using WebB or IoT Dashboard.</value>
+  </data>
 </root>
