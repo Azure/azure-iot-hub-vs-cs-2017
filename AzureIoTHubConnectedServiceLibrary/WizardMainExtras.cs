@@ -12,6 +12,95 @@ namespace AzureIoTHubConnectedService
 {
     public partial class WizardMain
     {
+        /// <summary>
+        /// Check if command can be executed
+        /// </summary>
+        /// <param name="parameter"></param>
+        partial void CanExecuteExtras(object parameter)
+        {
+            string p = parameter as string;
+
+            if (this.SelectedDevice == null)
+                _CanExecute = false;
+
+            if (p == "ReceiveMsgStart")
+            {
+                _CanExecute = !_IsMonitoring;
+            }
+            else if (p == "ReceiveMsgEnd")
+            {
+                _CanExecute = _IsMonitoring;
+            }
+            else if (p == "ReceiveMsgClear")
+            {
+                _CanExecute = true;
+            }
+            else if (p == "CloudToDeviceSend")
+            {
+                _CanExecute = (CloudToDeviceContent != "") && !_CloudToDeviceSending;
+            }
+            else if (p == "DeviceTwinUpdateDesired")
+            {
+                _CanExecute = (DeviceTwinUpdate != "") && !_DeviceTwinUpdating;
+            }
+            else if (p == "DeviceTwinRefresh")
+            {
+                _CanExecute = !_DeviceTwinUpdating;
+            }
+            else if (p == "DeviceMethodExecute")
+            {
+                _CanExecute = (DeviceMethodName != "") && !_DeviceMethodExecuting;
+            }
+            else
+            {
+                _CanExecute = false;
+            }
+        }
+
+        /// <summary>
+        /// Execute command
+        /// </summary>
+        /// <param name="parameter"></param>
+        partial void ExecuteExtras(object parameter)
+        {
+            string p = parameter as string;
+
+            if (p == "ReceiveMsgStart")
+            {
+                _MonitorCancellationTokenSource = new CancellationTokenSource();
+                MonitorEventHubAsync(_MonitorCancellationTokenSource.Token, "$Default");
+            }
+            else if (p == "ReceiveMsgEnd")
+            {
+                if (_MonitorCancellationTokenSource != null)
+                {
+                    _MonitorCancellationTokenSource.Cancel();
+                    _MonitorCancellationTokenSource.Dispose();
+                    _MonitorCancellationTokenSource = null;
+                }
+            }
+            else if (p == "ReceiveMsgClear")
+            {
+                this.ReceiveMsgOutput = "";
+            }
+            else if (p == "DeviceTwinUpdateDesired")
+            {
+                DeviceTwinUpdateDesired();
+            }
+            else if (p == "DeviceTwinRefresh")
+            {
+                GetDeviceTwinData();
+            }
+            else if (p == "CloudToDeviceSend")
+            {
+                CloudToDeviceSend();
+            }
+            else if (p == "DeviceMethodExecute")
+            {
+                DeviceMethodExecute();
+            }
+        }
+
         //--------------------------------------------------------------------------------------------------------------------
         // DEVICE METHOD EXECUTION RELATED CODE
         //--------------------------------------------------------------------------------------------------------------------

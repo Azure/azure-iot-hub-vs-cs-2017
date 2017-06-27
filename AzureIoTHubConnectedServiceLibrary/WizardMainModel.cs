@@ -335,40 +335,14 @@ namespace AzureIoTHubConnectedService
         {
             string p = parameter as string;
 
-            if (this.SelectedDevice == null)
+            if (p == "XXX")
+            {
                 return false;
-
-            if (p == "ReceiveMsgStart")
-            {
-                return !_IsMonitoring;
-            }
-            else if (p == "ReceiveMsgEnd")
-            {
-                return _IsMonitoring;
-            }
-            else if (p == "ReceiveMsgClear")
-            {
-                return true;
-            }
-            else if (p == "CloudToDeviceSend")
-            {
-                return (CloudToDeviceContent != "") && !_CloudToDeviceSending;
-            }
-            else if (p == "DeviceTwinUpdateDesired")
-            {
-                return (DeviceTwinUpdate != "") && !_DeviceTwinUpdating;
-            }
-            else if (p == "DeviceTwinRefresh")
-            {
-                return !_DeviceTwinUpdating;
-            }
-            else if (p == "DeviceMethodExecute")
-            {
-                return (DeviceMethodName != "") && !_DeviceMethodExecuting;
             }
             else
             {
-                return false;
+                CanExecuteExtras(parameter);
+                return _CanExecute;
             }
         }
 
@@ -377,41 +351,20 @@ namespace AzureIoTHubConnectedService
             InvokeCanExecuteChanged();;
             string p = parameter as string;
 
-            if (p == "ReceiveMsgStart")
+            if (p == "XXX")
             {
-                _MonitorCancellationTokenSource = new CancellationTokenSource();
-                MonitorEventHubAsync(_MonitorCancellationTokenSource.Token, "$Default");
+                // XXX - execute command
             }
-            else if (p == "ReceiveMsgEnd")
+            else
             {
-                if (_MonitorCancellationTokenSource != null)
-                {
-                    _MonitorCancellationTokenSource.Cancel();
-                    _MonitorCancellationTokenSource.Dispose();
-                    _MonitorCancellationTokenSource = null;
-                }
-            }
-            else if (p == "ReceiveMsgClear")
-            {
-                this.ReceiveMsgOutput = "";
-            }
-            else if (p == "DeviceTwinUpdateDesired")
-            {
-                DeviceTwinUpdateDesired();
-            }
-            else if (p == "DeviceTwinRefresh")
-            {
-                GetDeviceTwinData();
-            }
-            else if (p == "CloudToDeviceSend")
-            {
-                CloudToDeviceSend();
-            }
-            else if (p == "DeviceMethodExecute")
-            {
-                DeviceMethodExecute();
+                ExecuteExtras(parameter);
             }
         }
+
+        bool _CanExecute = false;
+
+        partial void CanExecuteExtras(object parameter);
+        partial void ExecuteExtras(object parameter);
 
         public event EventHandler CanExecuteChanged;
 
