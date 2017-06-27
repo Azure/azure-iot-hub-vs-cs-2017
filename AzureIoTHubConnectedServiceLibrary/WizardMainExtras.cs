@@ -263,7 +263,7 @@ namespace AzureIoTHubConnectedService
             try
             {
                 string selectedDevice = SelectedDevice.Id;
-                eventHubClient = EventHubClient.CreateFromConnectionString(m_SelectedHubConnectionString, "messages/events");
+                eventHubClient = EventHubClient.CreateFromConnectionString(_SelectedHubConnectionString, "messages/events");
                 ReceiveMsgOutput = "Receiving events...\r\n";
                 int eventHubPartitionsCount = eventHubClient.GetRuntimeInformation().PartitionCount;
                 string partition = EventHubPartitionKeyResolver.ResolveToPartition(selectedDevice, eventHubPartitionsCount);

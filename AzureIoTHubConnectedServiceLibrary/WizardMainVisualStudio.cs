@@ -132,7 +132,7 @@ namespace AzureIoTHubConnectedService
                   instance.Metadata.Add("IoTHubAccount", _SelectedHub);
                   instance.Metadata.Add("Cancel", false);
                   instance.Metadata.Add("TPM", false);
-                  instance.Metadata.Add("Device", m_SelectedDevice);
+                  instance.Metadata.Add("Device", _SelectedDeviceXXX);
                   instance.Metadata.Add("ProvisionedDevice", _WizardMode == WizardMode.ProvisionConnectionString);
 
                   if (DeviceMethodEnabled)
@@ -192,6 +192,9 @@ namespace AzureIoTHubConnectedService
          * PUBLIC PROPERTIES
          *--------------------------------------------------------------------------------------------------------------------*/
 
+        /// <summary>
+        /// Selected wizard mode
+        /// </summary>
         public WizardMode Mode
         {
             get { return _WizardMode; }
@@ -201,6 +204,23 @@ namespace AzureIoTHubConnectedService
                 ConfigurePages();
             }
         }
+
+        /// <summary>
+        /// Can TPM option be used?
+        /// </summary>
+        public bool CanUseTPM
+        {
+            get
+            {
+                return _CanUseTPM;
+            }
+            set
+            {
+                _CanUseTPM = value;
+            }
+        }
+
+        private bool _CanUseTPM = false;
 
         public ObservableCollection<IAzureRMSubscription> Subscriptions
         {
@@ -225,7 +245,7 @@ namespace AzureIoTHubConnectedService
         {
             PrimaryKeys keys = await _SelectedHub.GetPrimaryKeysAsync(new CancellationToken());
 
-            m_SelectedHubConnectionString = string.Format(CultureInfo.InvariantCulture,
+            _SelectedHubConnectionString = string.Format(CultureInfo.InvariantCulture,
                 "HostName={0};SharedAccessKeyName=iothubowner;SharedAccessKey={1}",
                 _SelectedHub.Properties["iotHubUri"], keys.IoTHubOwner);
 
@@ -290,7 +310,7 @@ namespace AzureIoTHubConnectedService
             }
         }
 
-
+        // XXX - should go to generic??
         public void ProvisionDevice()
         {
             _ProvisioningDevice = true;
@@ -321,6 +341,9 @@ namespace AzureIoTHubConnectedService
         private WizardPageSummary _PageSummary = null;
 
         private WizardMode _WizardMode = WizardMode.EmbedConnectionString;
+
+        // XXX - do we need it here?
+
         private ObservableCollection<IAzureRMSubscription> _Subscriptions = null;
 
         private IServiceProvider _ServiceProvider = null;

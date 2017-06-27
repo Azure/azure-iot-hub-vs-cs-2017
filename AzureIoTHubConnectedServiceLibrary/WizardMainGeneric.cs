@@ -13,17 +13,6 @@ namespace AzureIoTHubConnectedService
         /*--------------------------------------------------------------------------------------------------------------------
          * PUBLIC PROPERTIES
          *--------------------------------------------------------------------------------------------------------------------*/
-        public bool CanUseTPM
-        {
-            get
-            {
-                return _CanUseTPM;
-            }
-            set
-            {
-                _CanUseTPM = value;
-            }
-        }
 
         /// <summary>
         /// Is there any operation pending?
@@ -31,17 +20,6 @@ namespace AzureIoTHubConnectedService
         public bool IsBusy
         {
             get { return (_IsBusy > 0); }
-        }
-
-        public bool UseTPM
-        {
-            get { return _UseTPM; }
-            set
-            {
-                _UseTPM = value;
-                // XXX
-                //ConfigurePages();
-            }
         }
 
         /// <summary>
@@ -112,12 +90,12 @@ namespace AzureIoTHubConnectedService
         /// </summary>
         public string IoTHubConnectionString
         {
-            get { return m_SelectedHubConnectionString; }
+            get { return _SelectedHubConnectionString; }
             set
             {
-                m_SelectedHubConnectionString = value;
+                _SelectedHubConnectionString = value;
 
-                if (m_SelectedHubConnectionString != "")
+                if (_SelectedHubConnectionString != "")
                 {
                     PopulateDevices();
                 }
@@ -133,7 +111,7 @@ namespace AzureIoTHubConnectedService
             get
             {
                 string[] separators = { "HostName=" };
-                string[] temp = m_SelectedHubConnectionString.Split(separators, StringSplitOptions.None);
+                string[] temp = _SelectedHubConnectionString.Split(separators, StringSplitOptions.None);
                 if (temp.Length == 2)
                 {
                     return temp[1].Split(';')[0];
@@ -173,13 +151,13 @@ namespace AzureIoTHubConnectedService
                 if (_SelectedDevice != null)
                 {
                     // XXX - clean up m_SelectedDevice
-                    m_SelectedDevice = new SelectedDevice { Id = value.Id, Key = value.Authentication.SymmetricKey.PrimaryKey };
+                    _SelectedDeviceXXX = new SelectedDevice { Id = value.Id, Key = value.Authentication.SymmetricKey.PrimaryKey };
 
-                    m_SelectedDevicePrimaryConnectionString = string.Format(CultureInfo.InvariantCulture,
+                    _SelectedDevicePrimaryConnectionString = string.Format(CultureInfo.InvariantCulture,
                         "HostName={0};DeviceId={1};SharedAccessKey={2}",
                         SelectedHubHost, value.Id, value.Authentication.SymmetricKey.PrimaryKey);
 
-                    m_SelectedDeviceSecondaryConnectionString = string.Format(CultureInfo.InvariantCulture,
+                    _SelectedDeviceSecondaryConnectionString = string.Format(CultureInfo.InvariantCulture,
                         "HostName={0};DeviceId={1};SharedAccessKey={2}",
                         SelectedHubHost, value.Id, value.Authentication.SymmetricKey.SecondaryKey);
 
@@ -188,9 +166,9 @@ namespace AzureIoTHubConnectedService
                 }
                 else
                 {
-                    m_SelectedDevice = null;
-                    m_SelectedDevicePrimaryConnectionString = "";
-                    m_SelectedDeviceSecondaryConnectionString = "";
+                    _SelectedDeviceXXX = null;
+                    _SelectedDevicePrimaryConnectionString = "";
+                    _SelectedDeviceSecondaryConnectionString = "";
                 }
 
                 OnPropertyChanged("Subscription");
@@ -214,7 +192,7 @@ namespace AzureIoTHubConnectedService
         /// </summary>
         public string DeviceId
         {
-            get { return (null != m_SelectedDevice) ? m_SelectedDevice.Id : ""; }
+            get { return (null != _SelectedDeviceXXX) ? _SelectedDeviceXXX.Id : ""; }
         }
 
         /// <summary>
@@ -222,7 +200,7 @@ namespace AzureIoTHubConnectedService
         /// </summary>
         public string DevicePrimaryConnectionString
         {
-            get { return m_SelectedDevicePrimaryConnectionString; }
+            get { return _SelectedDevicePrimaryConnectionString; }
         }
 
         /// <summary>
@@ -230,7 +208,7 @@ namespace AzureIoTHubConnectedService
         /// </summary>
         public string DeviceSecondaryConnectionString
         {
-            get { return m_SelectedDeviceSecondaryConnectionString; }
+            get { return _SelectedDeviceSecondaryConnectionString; }
         }
 
         //--------------------------------------------------------------------------------------------------------------------
@@ -335,7 +313,7 @@ namespace AzureIoTHubConnectedService
 
             try
             {
-                _RegistryManager = RegistryManager.CreateFromConnectionString(m_SelectedHubConnectionString);
+                _RegistryManager = RegistryManager.CreateFromConnectionString(_SelectedHubConnectionString);
                 var devicesTask = _RegistryManager.GetDevicesAsync(1000);
 
                 Devices = new ObservableCollection<Device>(await devicesTask);
@@ -417,12 +395,10 @@ namespace AzureIoTHubConnectedService
          * INTERNAL DATA
          *--------------------------------------------------------------------------------------------------------------------*/
 
-        private string m_SelectedHubConnectionString = "";
-        private string m_SelectedDevicePrimaryConnectionString = "";
-        private string m_SelectedDeviceSecondaryConnectionString = "";
-        private SelectedDevice m_SelectedDevice = null;
-        private bool _UseTPM = false;
-        private bool _CanUseTPM = false;
+        private string _SelectedHubConnectionString = "";
+        private string _SelectedDevicePrimaryConnectionString = "";
+        private string _SelectedDeviceSecondaryConnectionString = "";
+        private SelectedDevice _SelectedDeviceXXX = null;
         private int _IsBusy = 0;
         private string _ErrorMessage = "";
         private ObservableCollection<IAzureIoTHub> _Hubs = null;
