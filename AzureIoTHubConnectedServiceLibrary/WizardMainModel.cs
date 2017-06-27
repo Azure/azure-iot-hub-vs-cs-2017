@@ -26,7 +26,6 @@ namespace AzureIoTHubConnectedService
 
         public async void CreateNewDevice(string deviceId)
         {
-            bool success = false;
             IncrementBusyCounter();
 
             try
@@ -35,7 +34,6 @@ namespace AzureIoTHubConnectedService
                 //Microsoft.VisualStudio.Telemetry.TelemetryService.DefaultSession.PostEvent("vs/iothubcs/DeviceCreated");
 
                 AddDevice(device);
-                success = true;
             }
             catch (Exception /*ex*/)
             {
@@ -61,6 +59,9 @@ namespace AzureIoTHubConnectedService
             }
         }
 
+        /// <summary>
+        /// Is there any operation pending?
+        /// </summary>
         public bool IsBusy
         {
             get { return (_IsBusy > 0); }
@@ -77,18 +78,108 @@ namespace AzureIoTHubConnectedService
             }
         }
 
+        /// <summary>
+        /// Observable collection of IoT Hubs
+        /// </summary>
         public ObservableCollection<IAzureIoTHub> Hubs
         {
             get { return _Hubs; }
             set { _Hubs = value; OnPropertyChanged("Hubs"); }
         }
 
+
+        //--------------------------------------------------------------------------------------------------------------------
+        // PROPERTIES BELOW ARE RELATED TO CURRENTLY SELECTED HUB
+        //--------------------------------------------------------------------------------------------------------------------
+
+        /// <summary>
+        /// Currently selected IoT Hub
+        /// </summary>
+        public IAzureIoTHub SelectedHub
+        {
+            get
+            {
+                return _SelectedHub;
+            }
+            set
+            {
+                _SelectedHub = value;
+                HandleHubSelected();
+            }
+        }
+
+        /// <summary>
+        /// Subscription name of selected Iot hub.
+        /// Empty string if no hub selected.
+        /// </summary>
+        public string Subscription
+        {
+            get { return (null != _SelectedHub) ? _SelectedHub.Properties["SubscriptionName"] : ""; }
+        }
+
+        /// <summary>
+        /// Selected IoT hub name.
+        /// Empty string if no hub selected.
+        /// </summary>
+        public string IoTHubName
+        {
+            get { return (null != _SelectedHub) ? _SelectedHub.Properties["IoTHubName"] : ""; }
+        }
+
+        /// <summary>
+        /// Selected IoT hub connection string (primary).
+        /// Empty string if no hub selected.
+        /// </summary>
+        public string IoTHubConnectionString
+        {
+            get { return m_SelectedHubConnectionString; }
+            set
+            {
+                m_SelectedHubConnectionString = value;
+
+                if (m_SelectedHubConnectionString != "")
+                {
+                    PopulateDevices();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Selected IoT hub host name.
+        /// Empty string if no hub selected.
+        /// </summary>
+        public string SelectedHubHost
+        {
+            get
+            {
+                string[] separators = { "HostName=" };
+                string[] temp = m_SelectedHubConnectionString.Split(separators, StringSplitOptions.None);
+                if (temp.Length == 2)
+                {
+                    return temp[1].Split(';')[0];
+                }
+
+                return "";
+            }
+        }
+
+        /// <summary>
+        /// Observable collection of devices registered on currently selected IoT Hub.
+        /// Null if no hub selected.
+        /// </summary>
         public ObservableCollection<Device> Devices
         {
             get { return _Devices; }
             set { _Devices = value; OnPropertyChanged("Devices"); }
         }
 
+        //--------------------------------------------------------------------------------------------------------------------
+        // PROPERTIES BELOW ARE RELATED TO CURRENTLY SELECTED DEVICE
+        //--------------------------------------------------------------------------------------------------------------------
+
+        /// <summary>
+        /// Currently selected device.
+        /// </summary>
         public Device SelectedDevice
         {
             get
@@ -138,86 +229,33 @@ namespace AzureIoTHubConnectedService
             }
         }
 
-        public IAzureIoTHub SelectedHub
-        {
-            get
-            {
-                return _SelectedHub;
-            }
-            set
-            {
-                _SelectedHub = value;
-                HandleHubSelected();
-            }
-        }
-
-        public string Subscription
-        {
-            get { return (null != _SelectedHub) ? _SelectedHub.Properties["SubscriptionName"] : ""; }
-        }
-
-        public string IoTHubName
-        {
-            get { return (null != _SelectedHub) ? _SelectedHub.Properties["IoTHubName"] : ""; }
-        }
-
-        public string IoTHubConnectionString
-        {
-            get { return m_SelectedHubConnectionString; }
-            set
-            {
-                m_SelectedHubConnectionString = value;
-
-                if (m_SelectedHubConnectionString != "")
-                {
-                    PopulateDevices();
-                }
-            }
-        }
-
-        public string SelectedHubHost
-        {
-            get
-            {
-                string[] separators = { "HostName=" };
-                string[] temp = m_SelectedHubConnectionString.Split(separators, StringSplitOptions.None);
-                if (temp.Length == 2)
-                {
-                    return temp[1].Split(';')[0];
-                }
-
-                return "";
-            }
-        }
-
+        /// <summary>
+        /// Currently selected device id
+        /// </summary>
         public string DeviceId
         {
             get { return (null != m_SelectedDevice) ? m_SelectedDevice.Id : ""; }
         }
 
+        /// <summary>
+        /// Currently selected device's connection string (primary).
+        /// </summary>
         public string DevicePrimaryConnectionString
         {
             get { return m_SelectedDevicePrimaryConnectionString; }
         }
 
+        /// <summary>
+        /// Currently selected device's connection string (secondary).
+        /// </summary>
         public string DeviceSecondaryConnectionString
         {
             get { return m_SelectedDeviceSecondaryConnectionString; }
         }
 
-        public ICommand ExecuteCmd
-        {
-            get
-            {
-                return this;
-            }
-        }
-
-        public string ReceiveMsgOutput
-        {
-            set { _ReceiveMsgOutput = value; OnPropertyChanged("ReceiveMsgOutput"); }
-            get { return _ReceiveMsgOutput; }
-        }
+        //--------------------------------------------------------------------------------------------------------------------
+        // DEVICE TWIN RELATED PROPERTIES
+        //--------------------------------------------------------------------------------------------------------------------
 
         public string DeviceTwin
         {
@@ -249,9 +287,32 @@ namespace AzureIoTHubConnectedService
             {
                 _DeviceTwinUpdate = value;
                 OnPropertyChanged("DeviceTwinUpdate");
-                InvokeCanExecuteChanged();;
+                InvokeCanExecuteChanged(); ;
             }
             get { return _DeviceTwinUpdate; }
+        }
+
+
+        //--------------------------------------------------------------------------------------------------------------------
+        // DEVICE METHOD RELATED PROPERTIES
+        //--------------------------------------------------------------------------------------------------------------------
+
+        //--------------------------------------------------------------------------------------------------------------------
+        //--------------------------------------------------------------------------------------------------------------------
+        //--------------------------------------------------------------------------------------------------------------------
+
+        public ICommand ExecuteCmd
+        {
+            get
+            {
+                return this;
+            }
+        }
+
+        public string ReceiveMsgOutput
+        {
+            set { _ReceiveMsgOutput = value; OnPropertyChanged("ReceiveMsgOutput"); }
+            get { return _ReceiveMsgOutput; }
         }
 
         public string DeviceMethodName
