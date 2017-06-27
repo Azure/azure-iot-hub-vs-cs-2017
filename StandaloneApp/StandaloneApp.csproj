@@ -131,6 +131,9 @@
     <Compile Include="..\AzureIoTHubConnectedServiceLibrary\Resource.Designer.cs">
       <Link>Resource.Designer.cs</Link>
     </Compile>
+    <Compile Include="..\AzureIoTHubConnectedServiceLibrary\ResourceGroup.cs">
+      <Link>Properties\ResourceGroup.cs</Link>
+    </Compile>
     <Compile Include="..\AzureIoTHubConnectedServiceLibrary\WizardMainExtras.cs">
       <Link>WizardMainExtras.cs</Link>
     </Compile>

@@ -53,6 +53,20 @@ namespace AzureIoTHubConnectedService
             set { _Hubs = value; OnPropertyChanged("Hubs"); }
         }
 
+        //--------------------------------------------------------------------------------------------------------------------
+        // RESOURCE GROUPS
+        //--------------------------------------------------------------------------------------------------------------------
+
+        /// <summary>
+        /// List of available resource groups for currently selected subscription
+        /// </summary>
+        public ObservableCollection<ResourceGroup> ResourceGroups
+        {
+            get { return _ResourceGroups; }
+            set { _ResourceGroups = value; OnPropertyChanged("ResourceGroups"); }
+        }
+
+        private ObservableCollection<ResourceGroup> _ResourceGroups = null;
 
         //--------------------------------------------------------------------------------------------------------------------
         // PROPERTIES BELOW ARE RELATED TO CURRENTLY SELECTED HUB

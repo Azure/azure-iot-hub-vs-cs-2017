@@ -6,18 +6,9 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using AzureIoTHubConnectedService;
 using Microsoft.VisualStudio.ConnectedServices;
-using Microsoft.Azure.Devices;
 using System.Globalization;
 using Microsoft.VisualStudio.WindowsAzure.Authentication;
-using System.Windows.Input;
-
-using Microsoft.Azure.Devices.Common;
-using Microsoft.Azure.Devices.Common.Security;
-using Microsoft.ServiceBus.Messaging;
-
-using System.Text;
 
 
 
@@ -30,6 +21,9 @@ namespace AzureIoTHubConnectedService
         ProvisionConnectionString
     }
 
+    /// <summary>
+    /// This part of the class implements all stuff related to Visual Studio & Connected Services framework
+    /// </summary>
     public partial class WizardMain : ConnectedServiceWizard
     {
         public WizardMain(IAzureIoTHubAccountManager accountManager, IServiceProvider serviceProvider, bool canUseTpm)
@@ -53,11 +47,13 @@ namespace AzureIoTHubConnectedService
             this.Pages.Add(_PageInjectConnectionString);
             this.Pages.Add(_PageSummary);
 
+            // XXX - this shoudl be moved to generic
             _DeviceTwinProperties.Add(new DeviceTwinProperty("SampleProperty1", "Desired", "String"));
             _DeviceTwinProperties.Add(new DeviceTwinProperty("SampleProperty2", "Reported", "String"));
 
             _DeviceMethods.Add(new DeviceMethodDescription("SampleMethod1"));
             _DeviceMethods.Add(new DeviceMethodDescription("SampleMethod2"));
+            // XXX - <<<
         }
 
         private Authenticator Authenticator
@@ -93,20 +89,32 @@ namespace AzureIoTHubConnectedService
             }
         }
 
+        // XXX - check why we need it
         private void OnAuthenticatorAuthenticationChanged(object sender, AuthenticationChangedEventArgs e)
         {
         }
 
         private void OnAuthenticatorPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-
             if (e.PropertyName == nameof(Authenticator.IsAuthenticated))
             {
-                PopulateHubs();
+                if (Authenticator.IsAuthenticated)
+                {
+                    PopulateHubs();
+                }
+                else
+                {
+                    // XXX - clear hubs
+                }
+
                 ConfigurePages();
             }
         }
 
+        /// <summary>
+        /// Creates and returnes instace of the service to Connected Services framework.
+        /// </summary>
+        /// <returns></returns>
         public override Task<ConnectedServiceInstance> GetFinishedServiceInstanceAsync()
         {
             return Task.Run<ConnectedServiceInstance>(() =>
@@ -199,13 +207,6 @@ namespace AzureIoTHubConnectedService
             get { return _Subscriptions; }
             set { _Subscriptions = value; OnPropertyChanged("Subscriptions"); }
         }
-
-        public ObservableCollection<ResourceGroup> ResourceGroups
-        {
-            get { return _ResourceGroups; }
-            set { _ResourceGroups = value; OnPropertyChanged("ResourceGroups"); }
-        }
-
 
         public bool SummaryVisible
         {
@@ -321,7 +322,6 @@ namespace AzureIoTHubConnectedService
 
         private WizardMode _WizardMode = WizardMode.EmbedConnectionString;
         private ObservableCollection<IAzureRMSubscription> _Subscriptions = null;
-        private ObservableCollection<ResourceGroup> _ResourceGroups = null;
 
         private IServiceProvider _ServiceProvider = null;
         private IAzureIoTHubAccountManager _IoTHubAccountManager = null;
