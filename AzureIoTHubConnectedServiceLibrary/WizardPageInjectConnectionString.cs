@@ -12,9 +12,9 @@ namespace AzureIoTHubConnectedService
     {
         internal WizardPageInjectConnectionString(WizardMain wizard)
         {
-            this.Title = "Azure IoT Hub";
-            this.Legend = "Provision Device";
-            this.Description = "Provision Device with Connection String";
+            this.Title = Resource.WizardPageTitle;
+            this.Legend = Resource.WizardPageInjectConnectionStringLegend;
+            this.Description = Resource.WizardPageInjectConnectionStringDescription;
             this.IsEnabled = false;
 
             this.View = new WizardPageInjectConnectionStringView();

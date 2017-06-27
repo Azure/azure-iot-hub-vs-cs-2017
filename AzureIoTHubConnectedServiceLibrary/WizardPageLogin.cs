@@ -15,9 +15,9 @@ namespace AzureIoTHubConnectedService
     {
         public WizardPageLogin(WizardMain model, Authenticator authenticator)
         {
-            this.Title = "Azure IoT Hub";
-            this.Legend = "Login";
-            this.Description = "Login to Azure or Select TPM";
+            this.Title = Resource.WizardPageTitle;
+            this.Legend = Resource.WizardPageLoginLegend;
+            this.Description = Resource.WizardPageLoginDescription;
             this.MainModel = model;
 
             this.View = new WizardPageLoginView(authenticator);

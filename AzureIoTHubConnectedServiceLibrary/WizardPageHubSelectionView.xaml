@@ -67,19 +67,19 @@
         </Grid.RowDefinitions>
 
         <TabControl Name="Tabs" Grid.Row="0" Background="Transparent">
-            <TabItem Header="Select" >
+            <TabItem Header="{x:Static local:Resource.TabHeaderSelect}"  >
                     <ListView ScrollViewer.CanContentScroll="True" Name="HubListView" Margin="10" ItemsSource="{Binding Source={StaticResource SortedHubs}}" SelectedItem="{Binding MainModel.SelectedHub}" ItemContainerStyle="{StaticResource {x:Static resources:ResourceKeys.ThemedDialogListViewItemGridStyleKey}}" >
                        
-                            <ListView.View>
-                            <GridView>
-                                    <GridViewColumn Header="Hub Name" DisplayMemberBinding="{Binding Path=Properties[IoTHubName]}"/>
-                                    <GridViewColumn Header="Subscription" DisplayMemberBinding="{Binding Path=Properties[SubscriptionName]}" />
-                                    <GridViewColumn Header="Region" DisplayMemberBinding="{Binding Path=Properties[Region]}" />
-                                </GridView>
-                            </ListView.View>
-                        </ListView>
+                        <ListView.View>
+                           <GridView>
+                                <GridViewColumn Header="{x:Static local:Resource.HubListHeaderName}" DisplayMemberBinding="{Binding Path=Properties[IoTHubName]}"/>
+                                <GridViewColumn Header="{x:Static local:Resource.HubListHeaderSubscription}" DisplayMemberBinding="{Binding Path=Properties[SubscriptionName]}" />
+                            <GridViewColumn Header="{x:Static local:Resource.HubListHeaderRegion}" DisplayMemberBinding="{Binding Path=Properties[Region]}" />
+                           </GridView>
+                        </ListView.View>
+                    </ListView>
             </TabItem>
-                <TabItem Header="Create">
+            <TabItem Header="{x:Static local:Resource.TabHeaderCreate}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
@@ -93,13 +93,13 @@
                             <RowDefinition Height="35"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <Label Content="Subscription" Grid.Row="0" Grid.Column="0" Margin="5" />
+                        <Label Content="{x:Static local:Resource.CreateHubSubscription}" Grid.Row="0" Grid.Column="0" Margin="5" />
                         <ComboBox Name="SubscriptionCombo" Grid.Row="0" Grid.Column="1" Margin="5" SelectedItem="{Binding Path=Create_SubscriptionItem, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=Create_FieldsEnabled}" ItemsSource="{Binding MainModel.Subscriptions}" SelectedValuePath="SubscriptionName" DisplayMemberPath="SubscriptionName"/>
-                        <Label Content="Resource Group" Grid.Row="1" Grid.Column="0" Margin="5" />
-                    <ComboBox Name="ResourceGroupCombo" Grid.Row="1" Grid.Column="1" Margin="5" IsEditable="True" Text="{Binding Path=Create_ResourceGroupName, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=Create_FieldsEnabled}" ItemsSource="{Binding MainModel.ResourceGroups}" DisplayMemberPath="Name" />
-                        <Label Content="IoT Hub Name" Grid.Row="2" Grid.Column="0" Margin="5"/>
+                        <Label Content="{x:Static local:Resource.CreateHubResourceGroup}" Grid.Row="1" Grid.Column="0" Margin="5" />
+                        <ComboBox Name="ResourceGroupCombo" Grid.Row="1" Grid.Column="1" Margin="5" IsEditable="True" Text="{Binding Path=Create_ResourceGroupName, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=Create_FieldsEnabled}"/>
+                        <Label Content="{x:Static local:Resource.CreateHubName}" Grid.Row="2" Grid.Column="0" Margin="5"/>
                         <TextBox Name="IoTHubNameText" Grid.Row="2" Grid.Column="1" Margin="5" Text="{Binding Path=Create_IoTHubName, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=Create_FieldsEnabled}"/>
-                        <Button Name="CreateButton" Content="Create" Grid.Row="3" Grid.Column="1" Margin="5" Click="Button_Click" IsEnabled="{Binding Path=Create_IsEnabled}" />
+                        <Button Name="CreateButton" Content="{x:Static local:Resource.ButtonCreate}" Grid.Row="3" Grid.Column="1" Margin="5" Click="Button_Click" IsEnabled="{Binding Path=Create_IsEnabled}" />
                     </Grid>
                 </TabItem>
             </TabControl>

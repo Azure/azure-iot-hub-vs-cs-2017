@@ -12,9 +12,9 @@ namespace AzureIoTHubConnectedService
     {
         internal WizardPageSummary(WizardMain wizard)
         {
-            this.Title = "Azure IoT Hub";
-            this.Legend = "Summary";
-            this.Description = "Summary";
+            this.Title = Resource.WizardPageTitle;
+            this.Legend = Resource.WizardPageSummaryLegend;
+            this.Description = Resource.WizardPageSummaryDescription;
             this.IsEnabled = false;
 
             this.View = new WizardPageSummaryView();

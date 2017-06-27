@@ -15,9 +15,9 @@ namespace AzureIoTHubConnectedService
     {
         internal WizardPageDeviceSelection(WizardMain wizard)
         {
-            this.Title = "Azure IoT Hub";
-            this.Legend = "Device";
-            this.Description = "Select or Create Device";
+            this.Title = Resource.WizardPageTitle;
+            this.Legend = Resource.WizardPageDeviceSelectionLegend;
+            this.Description = Resource.WizardPageDeviceSelectionDescription;
             this.View = new WizardPageDeviceSelectionView();
             this.View.DataContext = this;
             this.IsEnabled = false;

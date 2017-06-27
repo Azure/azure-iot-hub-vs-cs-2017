@@ -12,7 +12,7 @@ namespace AzureIoTHubConnectedService
     {
         internal WizardPageDeviceMethod(WizardMain wizard)
         {
-            this.Title = "Azure IoT Hub";
+            this.Title = Resource.WizardPageTitle;
             this.Legend = "Device Method";
             this.Description = "Device Method";
             this.IsEnabled = false;

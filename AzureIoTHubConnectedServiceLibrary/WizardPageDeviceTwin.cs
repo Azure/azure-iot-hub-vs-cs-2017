@@ -12,7 +12,7 @@ namespace AzureIoTHubConnectedService
     {
         internal WizardPageDeviceTwin(WizardMain wizard)
         {
-            this.Title = "Azure IoT Hub";
+            this.Title = Resource.WizardPageTitle;
             this.Legend = "Device Twin";
             this.Description = "Device Twin";
             this.IsEnabled = false;

@@ -23,12 +23,12 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Label Content="Subscription" Grid.Column="0" Grid.Row="0" />
-        <Label Content="IoT Hub" Grid.Column="0" Grid.Row="1" />
-        <Label Content="IoT Hub Connection String" Grid.Column="0" Grid.Row="2" />
-        <Label Content="Device" Grid.Column="0" Grid.Row="3" />
-        <Label Content="Device Primary Connection String" Grid.Column="0" Grid.Row="3" Height="38" Margin="0,0,0,37" Grid.RowSpan="3" VerticalAlignment="Bottom" />
-        <Label Content="Device Secondary Connection String" Grid.Column="0" Grid.Row="5" />
+        <Label Content="{x:Static local:Resource.SummarySubscription}" Grid.Column="0" Grid.Row="0" />
+        <Label Content="{x:Static local:Resource.SummaryIoTHub}" Grid.Column="0" Grid.Row="1" />
+        <Label Content="{x:Static local:Resource.SummaryIoTHubConnectionString}" Grid.Column="0" Grid.Row="2" />
+        <Label Content="{x:Static local:Resource.SummaryDevice}" Grid.Column="0" Grid.Row="3" />
+        <Label Content="{x:Static local:Resource.SummaryDevicePrimaryConnectionString}" Grid.Column="0" Grid.Row="3" Height="38" Margin="0,0,0,37" Grid.RowSpan="3" VerticalAlignment="Bottom" />
+        <Label Content="{x:Static local:Resource.SummaryDeviceSecondaryConnectionString}" Grid.Column="0" Grid.Row="5" />
 
         <Label Content="{Binding Subscription}" Grid.Column="1" Grid.Row="0"/>
         <Label Content="{Binding IoTHubName}" Grid.Column="1" Grid.Row="1"/>

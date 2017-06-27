@@ -43,22 +43,22 @@
 
             <RadioButton x:Name="rbHardcode" Checked="rbHardcode_Checked" IsChecked="True">
                 <StackPanel>
-                    <TextBlock FontWeight="Bold" Text="Hardcode shared access key in application's code." Style="{StaticResource TextStyle}"/>
-                    <TextBlock TextWrapping="Wrap" Text="The device-specific shared access key is retrieved from your Azure subscription and embedded in the source code." Style="{StaticResource TextStyle}"/>
+                    <TextBlock FontWeight="Bold" Text="{x:Static local:Resource.WizardOptionHardcode}" Style="{StaticResource TextStyle}"/>
+                    <TextBlock TextWrapping="Wrap" Text="{x:Static local:Resource.WizardOptionHardcodeDescription}" Style="{StaticResource TextStyle}"/>
                 </StackPanel>
             </RadioButton>
 
             <RadioButton x:Name="rbProvision" Checked="rbProvision_Checked">
                 <StackPanel>
-                    <TextBlock FontWeight="Bold" Text="Provision device with shared access key." Style="{StaticResource TextStyle}"/>
-                    <TextBlock TextWrapping="Wrap" Text="The device-specific shared access key is retrieved from your Azure subscription and stored on the device." Style="{StaticResource TextStyle}"/>
+                    <TextBlock FontWeight="Bold" Text="{x:Static local:Resource.WizardOptionProvision}" Style="{StaticResource TextStyle}"/>
+                    <TextBlock TextWrapping="Wrap" Text="{x:Static local:Resource.WizardOptionProvisionDescription}" Style="{StaticResource TextStyle}"/>
                 </StackPanel>
             </RadioButton>
 
             <RadioButton x:Name="rbUseTpm" Checked="rbUseTpm_Checked" IsEnabled="{Binding MainModel.CanUseTPM}">
                 <StackPanel>
-                    <TextBlock FontWeight="Bold" TextWrapping="Wrap" Text="(Experimental) Use Azure device credentials stored in the TPM." Style="{StaticResource TextStyle}"/>
-                    <TextBlock TextWrapping="Wrap" Text="Requires device provisioning using WebB or IoT Dashboard." Style="{StaticResource TextStyle}"/>
+                    <TextBlock FontWeight="Bold" TextWrapping="Wrap" Text="{x:Static local:Resource.WizardOptionTpm}" Style="{StaticResource TextStyle}"/>
+                    <TextBlock TextWrapping="Wrap" Text="{x:Static local:Resource.WizardOptionTpmDescription}" Style="{StaticResource TextStyle}"/>
                     <TextBlock ><Hyperlink RequestNavigate="Hyperlink_RequestNavigate" NavigateUri="http://aka.ms/tpmiothubcs">Click here for more detail</Hyperlink></TextBlock>
                 </StackPanel>
             </RadioButton>

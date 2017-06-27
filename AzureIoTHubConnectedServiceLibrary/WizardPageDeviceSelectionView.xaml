@@ -36,11 +36,11 @@
         </Grid.RowDefinitions>
 
         <TabControl Name="Tabs" Grid.Row="1" Background="Transparent">
-            <TabItem Header="Select">
+            <TabItem Header="{x:Static local:Resource.TabHeaderSelect}">
                 <ListBox ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible" Name="DevicesListBox" Margin="10" SelectedItem="{Binding MainModel.SelectedDevice}"  ItemsSource="{Binding Source={StaticResource SortedDevices}}" DisplayMemberPath="Id">
                 </ListBox>
             </TabItem>
-            <TabItem Header="New Device">
+            <TabItem Header="{x:Static local:Resource.TabHeaderNewDevice}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
@@ -51,19 +51,21 @@
                         <RowDefinition Height="35"/>
                         <RowDefinition Height="35"/>
                     </Grid.RowDefinitions>
-                    <Label Content="Device" Grid.Row="0" Grid.Column="0" Margin="5"/>
+                    <Label Content="{x:Static local:Resource.LabelDeviceId}" Grid.Row="0" Grid.Column="0" Margin="5"/>
                     <TextBox Name="TextBoxDeviceName" Grid.Row="0" Grid.Column="1" Margin="5" Text="{Binding Path=Create_DeviceName, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=Create_FieldsEnabled}"/>
-                    <Button Name="ButtonCreate" Content="Create" Grid.Row="1" Grid.Column="1" Margin="5" Click="Button_Click" IsEnabled="{Binding Path=Create_IsEnabled}" />
+                    <Button Name="ButtonCreate" Content="{x:Static local:Resource.ButtonCreate}" Grid.Row="1" Grid.Column="1" Margin="5" Click="Button_Click" IsEnabled="{Binding Path=Create_IsEnabled}" />
                 </Grid>
 
             </TabItem>
         </TabControl>
         <ProgressBar Name="Progress" Grid.Row="2" Height="2" BorderThickness="0" VerticalAlignment="Bottom" IsIndeterminate="True" Visibility="{Binding Path=MainModel.IsBusy, Converter={StaticResource BoolToVis}}"/>
 
-        <GroupBox Grid.Row="3"  Header="Advanced Options" Padding="5">
+        <GroupBox Grid.Row="3"  Header="{x:Static local:Resource.LabelAdvancedOptions}" Padding="5">
             <StackPanel>
-            <CheckBox Margin="2" IsChecked="{Binding MainModel.DeviceTwinEnabled}">Generate device twin sample code</CheckBox>
-            <CheckBox Margin="2" IsChecked="{Binding MainModel.DeviceMethodEnabled}">Generate direct method sample code</CheckBox>
+                <CheckBox Margin="2" IsChecked="true" Content="{x:Static local:Resource.DeviceOptionSendingMsgs}" IsEnabled="False" />
+                <CheckBox Margin="2" IsChecked="true" Content="{x:Static local:Resource.DeviceOptionReceivingMsgs}" IsEnabled="False"/>
+                <CheckBox Margin="2" IsChecked="{Binding MainModel.DeviceTwinEnabled}" Content="{x:Static local:Resource.DeviceOptionDeviceTwin}" />
+                <CheckBox Margin="2" IsChecked="{Binding MainModel.DeviceMethodEnabled}" Content="{x:Static local:Resource.DeviceOptionDirectMethod}" />
             </StackPanel>
         </GroupBox>
     </Grid>
