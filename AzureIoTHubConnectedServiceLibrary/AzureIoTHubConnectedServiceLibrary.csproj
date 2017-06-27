@@ -358,6 +358,7 @@
       <DependentUpon>PageTestDevice.xaml</DependentUpon>
     </Compile>
     <Compile Include="UtilityWindowDeviceTestTool.cs" />
+    <Compile Include="WizardMainExtras.cs" />
     <Compile Include="WizardMainModel.cs" />
     <Compile Include="PageCloudToDeviceMsg.xaml.cs">
       <DependentUpon>PageCloudToDeviceMsg.xaml</DependentUpon>
