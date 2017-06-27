@@ -122,6 +122,9 @@
       <Link>PageReceiveMessages.xaml.cs</Link>
       <DependentUpon>PageReceiveMessages.xaml</DependentUpon>
     </Compile>
+    <Compile Include="..\AzureIoTHubConnectedServiceLibrary\Resource.Designer.cs">
+      <Link>Resource.Designer.cs</Link>
+    </Compile>
     <Compile Include="..\AzureIoTHubConnectedServiceLibrary\WizardMainModel.cs">
       <Link>WizardMainModel.cs</Link>
     </Compile>
@@ -220,6 +223,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="..\AzureIoTHubConnectedServiceLibrary\Resource.resx">
+      <Link>Resource.resx</Link>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
