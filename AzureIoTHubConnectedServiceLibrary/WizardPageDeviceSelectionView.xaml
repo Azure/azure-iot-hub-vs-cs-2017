@@ -52,8 +52,8 @@
                         <RowDefinition Height="35"/>
                     </Grid.RowDefinitions>
                     <Label Content="{x:Static local:Resource.LabelDeviceId}" Grid.Row="0" Grid.Column="0" Margin="5"/>
-                    <TextBox Name="TextBoxDeviceName" Grid.Row="0" Grid.Column="1" Margin="5" Text="{Binding Path=Create_DeviceName, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=Create_FieldsEnabled}"/>
-                    <Button Name="ButtonCreate" Content="{x:Static local:Resource.ButtonCreate}" Grid.Row="1" Grid.Column="1" Margin="5" Click="Button_Click" IsEnabled="{Binding Path=Create_IsEnabled}" />
+                    <TextBox Name="TextBoxDeviceName" Grid.Row="0" Grid.Column="1" Margin="5" Text="{Binding Path=NewDevice_Name, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=Create_FieldsEnabled}"/>
+                    <Button Name="ButtonCreate" Content="{x:Static local:Resource.ButtonCreate}" Grid.Row="1" Grid.Column="1" Margin="5" Command="{Binding Path=ExecuteCmd}" CommandParameter="CreateNewDevice" />
                 </Grid>
 
             </TabItem>

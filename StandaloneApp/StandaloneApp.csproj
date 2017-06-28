@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{0F1E679C-68B2-4531-BA50-8C22C281A361}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>StandaloneApp</RootNamespace>
+    <RootNamespace>AzureIoTHubConnectedService</RootNamespace>
     <AssemblyName>StandaloneApp</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

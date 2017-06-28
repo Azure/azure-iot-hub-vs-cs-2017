@@ -3,7 +3,7 @@
 using System.Windows.Input;
 using System.Collections.ObjectModel;
 using System.Globalization;
-
+using System.Windows;
 using Microsoft.Azure.Devices;
 
 namespace AzureIoTHubConnectedService
@@ -271,25 +271,97 @@ namespace AzureIoTHubConnectedService
         // NEW DEVICE CREATION RELATED CODE
         //--------------------------------------------------------------------------------------------------------------------
 
-        public async void CreateNewDevice(string deviceId)
+        public void ClearCreate(bool switchTab)
         {
+            NewDevice_FieldsEnabled = true;
+            NewDevice_Name = "";
+
+            // XXX - fix this
+            //if (switchTab)
+            //{
+            //    (this.View as WizardPageDeviceSelectionView).Tabs.SelectedIndex = 0;
+            //}
+        }
+
+        public bool NewDevice_CanCreate
+        {
+            get
+            {
+                return _NewDevice_CanCreate;
+            }
+            set
+            {
+                _NewDevice_CanCreate = value;
+                OnPropertyChanged("NewDevice_CanCreate");
+                InvokeCanExecuteChanged();
+            }
+        }
+
+        public bool NewDevice_FieldsEnabled
+        {
+            get
+            {
+                return _NewDevice_FieldsEnabled;
+            }
+            set
+            {
+                _NewDevice_FieldsEnabled = value;
+                OnPropertyChanged("NewDevice_FieldsEnabled");
+                NewDevice_Validate();
+            }
+        }
+
+        public string NewDevice_Name
+        {
+            get
+            {
+                return _NewDevice_Name;
+            }
+            set
+            {
+                _NewDevice_Name = value;
+                NewDevice_Validate();
+                OnPropertyChanged("NewDevice_Name");
+            }
+        }
+
+        private void NewDevice_Validate()
+        {
+            // matching all alphanumeric characters + additional characters as defined in Azure IoT Hub documentation:
+            // https://docs.microsoft.com/en-us/rest/api/iothub/deviceapi
+            // A case-sensitive string (up to 128 char long) of ASCII 7-bit alphanumeric chars + {'-', ':', '.', '+', '%', '_', '#', '*', '?', '!', '(', ')', ',', '=', '@', ';', '$', '''}.
+            bool match = System.Text.RegularExpressions.Regex.IsMatch(_NewDevice_Name, @"^[a-zA-Z0-9_\-\:\.\+\%\#\*\?\!\(\)\,\=\@\;\$]+$");
+
+            NewDevice_CanCreate = (_NewDevice_Name != "" &&
+                                match &&
+                                _NewDevice_FieldsEnabled);
+        }
+
+        public async void CreateNewDevice()
+        {
+            NewDevice_FieldsEnabled = false;
             IncrementBusyCounter();
 
             try
             {
-                var device = await _RegistryManager.AddDeviceAsync(new Device(deviceId));
+                var device = await _RegistryManager.AddDeviceAsync(new Device(NewDevice_Name));
                 //Microsoft.VisualStudio.Telemetry.TelemetryService.DefaultSession.PostEvent("vs/iothubcs/DeviceCreated");
 
                 AddDevice(device);
             }
-            catch (Exception /*ex*/)
+            catch (Exception ex)
             {
-                //await context.Logger.WriteMessageAsync(LoggerMessageCategory.Warning, Resource.DeviceCreationFailure, deviceId);
-                //Microsoft.VisualStudio.Telemetry.TelemetryService.DefaultSession.PostEvent("vs/iothubcs/FailureDeviceCreation");
+                MessageBox.Show("Failed to create new device: " + ex.Message);
+                Microsoft.VisualStudio.Telemetry.TelemetryService.DefaultSession.PostEvent("vs/iothubcs/FailureDeviceCreation");
             }
 
             DecrementBusyCounter();
+            NewDevice_FieldsEnabled = true;
         }
+
+        private bool _NewDevice_CanCreate = false;
+        private bool _NewDevice_FieldsEnabled = true;
+        private string _NewDevice_Name = "";
 
         //--------------------------------------------------------------------------------------------------------------------
         //--------------------------------------------------------------------------------------------------------------------
@@ -359,9 +431,9 @@ namespace AzureIoTHubConnectedService
         {
             string p = parameter as string;
 
-            if (p == "XXX")
+            if (p == "CreateNewDevice")
             {
-                return false;
+                return NewDevice_CanCreate;
             }
             else
             {
@@ -375,9 +447,9 @@ namespace AzureIoTHubConnectedService
             InvokeCanExecuteChanged();;
             string p = parameter as string;
 
-            if (p == "XXX")
+            if (p == "CreateNewDevice")
             {
-                // XXX - execute command
+                CreateNewDevice();
             }
             else
             {

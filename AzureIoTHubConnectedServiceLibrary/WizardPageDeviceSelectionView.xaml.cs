@@ -25,11 +25,6 @@ namespace AzureIoTHubConnectedService
         {
             InitializeComponent();
         }
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            (DataContext as dynamic).CreateNewDevice(this.TextBoxDeviceName.Text);
-        }
-
         private void UserControl_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             MainGrid.Height = e.NewSize.Height;
