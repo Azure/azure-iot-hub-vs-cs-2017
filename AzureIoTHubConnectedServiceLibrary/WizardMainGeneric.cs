@@ -268,85 +268,86 @@ namespace AzureIoTHubConnectedService
 
         public void ClearCreate()
         {
-            Create_FieldsEnabled = true;
-            Create_IoTHubName = "";
-            Create_ResourceGroupName = "";
+            NewHub_FieldsEnabled = true;
+            NewHub_Name = "";
+            NewHub_ResourceGroupName = "";
         }
 
-        public bool Create_IsEnabled
+        public bool NewHub_CanCreate
         {
             get
             {
-                return _Create_IsEnabled;
+                return _NewHub_CanCreate;
             }
             set
             {
-                _Create_IsEnabled = value;
-                OnPropertyChanged("Create_IsEnabled");
+                _NewHub_CanCreate = value;
+                OnPropertyChanged("NewHub_CanCreate");
+                InvokeCanExecuteChanged();
             }
         }
 
-        public bool Create_FieldsEnabled
+        public bool NewHub_FieldsEnabled
         {
             get
             {
-                return _Create_FieldsEnabled;
+                return _NewHub_FieldsEnabled;
             }
             set
             {
-                _Create_FieldsEnabled = value;
+                _NewHub_FieldsEnabled = value;
                 OnPropertyChanged("Create_FieldsEnabled");
-                Create_Validate();
+                NewHub_Validate();
 
                 OnPropertyChanged("Create_InProgress");
             }
         }
 
-        public Visibility Create_InProgress
+        public Visibility NewHub_InProgress
         {
             get
             {
-                return (_Create_FieldsEnabled && (this.Hubs != null)) ? Visibility.Hidden : Visibility.Visible;
+                return (_NewHub_FieldsEnabled && (this.Hubs != null)) ? Visibility.Hidden : Visibility.Visible;
             }
         }
 
-        public /* XXX - IAzureRMSubscription*/ dynamic Create_SubscriptionItem
+        public string NewHub_SubscriptionItem
         {
-            get { return _Create_SubscriptionItem; }
-            set { _Create_SubscriptionItem = value; Create_Validate(); OnPropertyChanged("Create_SubscriptionName"); /*XXX - QueryResourceGroups(_Create_SubscriptionItem.SubscriptionName);*/ }
+            get { return _NewHub_SubscriptionItem; }
+            set { _NewHub_SubscriptionItem = value; NewHub_Validate(); OnPropertyChanged("Create_SubscriptionName"); QueryResourceGroups(_NewHub_SubscriptionItem); }
         }
 
-        public string Create_IoTHubName
+        public string NewHub_Name
         {
-            get { return _Create_IoTHubName; }
-            set { _Create_IoTHubName = value; Create_Validate(); OnPropertyChanged("Create_IoTHubName"); }
+            get { return _NewHub_Name; }
+            set { _NewHub_Name = value; NewHub_Validate(); OnPropertyChanged("Create_IoTHubName"); }
         }
 
-        public string Create_ResourceGroupName
+        public string NewHub_ResourceGroupName
         {
-            get { return _Create_ResourceGroupName; }
-            set { _Create_ResourceGroupName = value; Create_Validate(); OnPropertyChanged("Create_ResourceGroupName"); }
+            get { return _NewHub_ResourceGroupName; }
+            set { _NewHub_ResourceGroupName = value; NewHub_Validate(); OnPropertyChanged("Create_ResourceGroupName"); }
         }
 
         internal void CreateNewHub()
         {
-            Create_FieldsEnabled = false;
+            NewHub_FieldsEnabled = false;
 
             OnPropertyChanged("Create_InProgress");
 
-            CreateNewHub(Create_SubscriptionItem.SubscriptionName, Create_ResourceGroupName, Create_IoTHubName);
+            CreateNewHub(NewHub_SubscriptionItem, NewHub_ResourceGroupName, NewHub_Name);
         }
 
-        private void Create_Validate()
+        private void NewHub_Validate()
         {
-            Create_IsEnabled = (_Create_IoTHubName != "" && _Create_SubscriptionItem != null && _Create_ResourceGroupName != "" && _Create_FieldsEnabled);
+            NewHub_CanCreate = (_NewHub_Name != "" && _NewHub_SubscriptionItem != "" && _NewHub_ResourceGroupName != "" && _NewHub_FieldsEnabled);
         }
 
-        private bool _Create_IsEnabled = false;
-        private bool _Create_FieldsEnabled = true;
-        private /* XXX - IAzureRMSubscription */ dynamic _Create_SubscriptionItem = null;
-        private string _Create_IoTHubName = "";
-        private string _Create_ResourceGroupName = "";
+        private bool _NewHub_CanCreate = false;
+        private bool _NewHub_FieldsEnabled = true;
+        private string _NewHub_SubscriptionItem = "";
+        private string _NewHub_Name = "";
+        private string _NewHub_ResourceGroupName = "";
 
 
         //--------------------------------------------------------------------------------------------------------------------
@@ -509,6 +510,10 @@ namespace AzureIoTHubConnectedService
             {
                 return NewDevice_CanCreate;
             }
+            else if (p == "CreateNewHub")
+            {
+                return NewHub_CanCreate;
+            }
             else
             {
                 CanExecuteExtras(parameter);
@@ -524,6 +529,10 @@ namespace AzureIoTHubConnectedService
             if (p == "CreateNewDevice")
             {
                 CreateNewDevice();
+            }
+            else if (p == "CreateNewHub")
+            {
+                CreateNewHub();
             }
             else
             {

@@ -27,6 +27,8 @@ namespace AzureIoTHubConnectedService
 
         public async void CreateNewHub(string subscriptionName, string resourceGroupName, string iotHubName) { }
 
+        public async void QueryResourceGroups(string subscriptionName) { }
+
         // this is a hack to handle some inconsistencies that still exist
         public WizardMain MainModel { get { return this; } }
     }

@@ -94,12 +94,12 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Label Content="{x:Static local:Resource.CreateHubSubscription}" Grid.Row="0" Grid.Column="0" Margin="5" />
-                        <ComboBox Name="SubscriptionCombo" Grid.Row="0" Grid.Column="1" Margin="5" SelectedItem="{Binding Path=Create_SubscriptionItem, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=Create_FieldsEnabled}" ItemsSource="{Binding Subscriptions}" SelectedValuePath="SubscriptionName" DisplayMemberPath="SubscriptionName"/>
+                        <ComboBox Name="SubscriptionCombo" Grid.Row="0" Grid.Column="1" Margin="5" SelectedItem="{Binding Path=NewHub_SubscriptionItem, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=NewHub_FieldsEnabled}" ItemsSource="{Binding Subscriptions}" />
                         <Label Content="{x:Static local:Resource.CreateHubResourceGroup}" Grid.Row="1" Grid.Column="0" Margin="5" />
-                        <ComboBox Name="ResourceGroupCombo" Grid.Row="1" Grid.Column="1" Margin="5" IsEditable="True" Text="{Binding Path=Create_ResourceGroupName, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=Create_FieldsEnabled}"/>
+                        <ComboBox Name="ResourceGroupCombo" Grid.Row="1" Grid.Column="1" Margin="5" IsEditable="True" Text="{Binding Path=NewHub_ResourceGroupName, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=NewHub_FieldsEnabled}"/>
                         <Label Content="{x:Static local:Resource.CreateHubName}" Grid.Row="2" Grid.Column="0" Margin="5"/>
-                        <TextBox Name="IoTHubNameText" Grid.Row="2" Grid.Column="1" Margin="5" Text="{Binding Path=Create_IoTHubName, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=Create_FieldsEnabled}"/>
-                        <Button Name="CreateButton" Content="{x:Static local:Resource.ButtonCreate}" Grid.Row="3" Grid.Column="1" Margin="5" Click="Button_Click" IsEnabled="{Binding Path=Create_IsEnabled}" />
+                        <TextBox Name="IoTHubNameText" Grid.Row="2" Grid.Column="1" Margin="5" Text="{Binding Path=NewHub_Name, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=NewHub_FieldsEnabled}"/>
+                        <Button Name="CreateButton" Content="{x:Static local:Resource.ButtonCreate}" Grid.Row="3" Grid.Column="1" Margin="5" Command="{Binding Path=ExecuteCmd}" CommandParameter="CreateNewHub" />
                     </Grid>
                 </TabItem>
             </TabControl>

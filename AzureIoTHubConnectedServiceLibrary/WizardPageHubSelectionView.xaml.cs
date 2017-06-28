@@ -32,10 +32,6 @@ namespace AzureIoTHubConnectedService
             Tabs.SelectedIndex = 0;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            (this.DataContext as dynamic).CreateNewHub();
-        }
         private void UserControl_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             MainGrid.Height = e.NewSize.Height;

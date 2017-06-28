@@ -222,7 +222,7 @@ namespace AzureIoTHubConnectedService
 
         private bool _CanUseTPM = false;
 
-        public ObservableCollection<IAzureRMSubscription> Subscriptions
+        public ObservableCollection<string> Subscriptions
         {
             get { return _Subscriptions; }
             set { _Subscriptions = value; OnPropertyChanged("Subscriptions"); }
@@ -262,7 +262,8 @@ namespace AzureIoTHubConnectedService
                 // [ZKK] todo: fix cancellation token issue
                 Task<IEnumerable<IAzureIoTHub>> task = Authenticator.GetAzureIoTHubs(_IoTHubAccountManager, new CancellationToken());
                 Hubs = new ObservableCollection<IAzureIoTHub>(await task);
-                Subscriptions = new ObservableCollection<IAzureRMSubscription>(Authenticator.Subscriptions);
+
+                Subscriptions = new ObservableCollection<string>(Authenticator.Subscriptions.ToList<IAzureRMSubscription>().ConvertAll<string>(obj => obj.SubscriptionName));
             }
             catch (Exception ex)
             {
@@ -344,7 +345,7 @@ namespace AzureIoTHubConnectedService
 
         // XXX - do we need it here?
 
-        private ObservableCollection<IAzureRMSubscription> _Subscriptions = null;
+        private ObservableCollection<string> _Subscriptions = null;
 
         private IServiceProvider _ServiceProvider = null;
         private IAzureIoTHubAccountManager _IoTHubAccountManager = null;
