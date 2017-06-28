@@ -19,7 +19,7 @@
     <Grid Name="MainGrid" Height="200">
         <Grid.Resources>
             <BooleanToVisibilityConverter x:Key="BoolToVis"/>
-            <CollectionViewSource Source="{Binding MainModel.Devices}" x:Key="SortedDevices">
+            <CollectionViewSource Source="{Binding Devices}" x:Key="SortedDevices">
                 <CollectionViewSource.SortDescriptions>
                     <scm:SortDescription PropertyName="Id"/>
                 </CollectionViewSource.SortDescriptions>
@@ -37,7 +37,7 @@
 
         <TabControl Name="Tabs" Grid.Row="1" Background="Transparent">
             <TabItem Header="{x:Static local:Resource.TabHeaderSelect}">
-                <ListBox ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible" Name="DevicesListBox" Margin="10" SelectedItem="{Binding MainModel.SelectedDevice}"  ItemsSource="{Binding Source={StaticResource SortedDevices}}" DisplayMemberPath="Id">
+                <ListBox ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible" Name="DevicesListBox" Margin="10" SelectedItem="{Binding SelectedDevice}"  ItemsSource="{Binding Source={StaticResource SortedDevices}}" DisplayMemberPath="Id">
                 </ListBox>
             </TabItem>
             <TabItem Header="{x:Static local:Resource.TabHeaderNewDevice}">
@@ -58,14 +58,14 @@
 
             </TabItem>
         </TabControl>
-        <ProgressBar Name="Progress" Grid.Row="2" Height="2" BorderThickness="0" VerticalAlignment="Bottom" IsIndeterminate="True" Visibility="{Binding Path=MainModel.IsBusy, Converter={StaticResource BoolToVis}}"/>
+        <ProgressBar Name="Progress" Grid.Row="2" Height="2" BorderThickness="0" VerticalAlignment="Bottom" IsIndeterminate="True" Visibility="{Binding Path=IsBusy, Converter={StaticResource BoolToVis}}"/>
 
         <GroupBox Grid.Row="3"  Header="{x:Static local:Resource.LabelAdvancedOptions}" Padding="5">
             <StackPanel>
                 <CheckBox Margin="2" IsChecked="true" Content="{x:Static local:Resource.DeviceOptionSendingMsgs}" IsEnabled="False" />
                 <CheckBox Margin="2" IsChecked="true" Content="{x:Static local:Resource.DeviceOptionReceivingMsgs}" IsEnabled="False"/>
-                <CheckBox Margin="2" IsChecked="{Binding MainModel.DeviceTwinEnabled}" Content="{x:Static local:Resource.DeviceOptionDeviceTwin}" />
-                <CheckBox Margin="2" IsChecked="{Binding MainModel.DeviceMethodEnabled}" Content="{x:Static local:Resource.DeviceOptionDirectMethod}" />
+                <CheckBox Margin="2" IsChecked="{Binding DeviceTwinEnabled}" Content="{x:Static local:Resource.DeviceOptionDeviceTwin}" />
+                <CheckBox Margin="2" IsChecked="{Binding DeviceMethodEnabled}" Content="{x:Static local:Resource.DeviceOptionDirectMethod}" />
             </StackPanel>
         </GroupBox>
     </Grid>

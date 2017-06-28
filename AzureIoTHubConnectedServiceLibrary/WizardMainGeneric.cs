@@ -399,7 +399,10 @@ namespace AzureIoTHubConnectedService
 
                 Devices = new ObservableCollection<Device>(await devicesTask);
             }
-            catch (Exception) { }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to query devices: " + ex.Message);
+            }
 
             DecrementBusyCounter();
         }
