@@ -26,8 +26,6 @@ namespace AzureIoTHubConnectedService
             InitializeComponent();
         }
 
-        private dynamic PageModel;
-
         public void SelectHub(IAzureIoTHub hub)
         {
             HubListView.SelectedItem = hub;

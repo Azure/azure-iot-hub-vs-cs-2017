@@ -266,22 +266,92 @@ namespace AzureIoTHubConnectedService
         // NEW IOT HUB CREATION RELATED CODE
         //--------------------------------------------------------------------------------------------------------------------
 
+        public void ClearCreate()
+        {
+            Create_FieldsEnabled = true;
+            Create_IoTHubName = "";
+            Create_ResourceGroupName = "";
+        }
+
+        public bool Create_IsEnabled
+        {
+            get
+            {
+                return _Create_IsEnabled;
+            }
+            set
+            {
+                _Create_IsEnabled = value;
+                OnPropertyChanged("Create_IsEnabled");
+            }
+        }
+
+        public bool Create_FieldsEnabled
+        {
+            get
+            {
+                return _Create_FieldsEnabled;
+            }
+            set
+            {
+                _Create_FieldsEnabled = value;
+                OnPropertyChanged("Create_FieldsEnabled");
+                Create_Validate();
+
+                OnPropertyChanged("Create_InProgress");
+            }
+        }
+
+        public Visibility Create_InProgress
+        {
+            get
+            {
+                return (_Create_FieldsEnabled && (this.Hubs != null)) ? Visibility.Hidden : Visibility.Visible;
+            }
+        }
+
+        public /* XXX - IAzureRMSubscription*/ dynamic Create_SubscriptionItem
+        {
+            get { return _Create_SubscriptionItem; }
+            set { _Create_SubscriptionItem = value; Create_Validate(); OnPropertyChanged("Create_SubscriptionName"); /*XXX - QueryResourceGroups(_Create_SubscriptionItem.SubscriptionName);*/ }
+        }
+
+        public string Create_IoTHubName
+        {
+            get { return _Create_IoTHubName; }
+            set { _Create_IoTHubName = value; Create_Validate(); OnPropertyChanged("Create_IoTHubName"); }
+        }
+
+        public string Create_ResourceGroupName
+        {
+            get { return _Create_ResourceGroupName; }
+            set { _Create_ResourceGroupName = value; Create_Validate(); OnPropertyChanged("Create_ResourceGroupName"); }
+        }
+
+        internal void CreateNewHub()
+        {
+            Create_FieldsEnabled = false;
+
+            OnPropertyChanged("Create_InProgress");
+
+            CreateNewHub(Create_SubscriptionItem.SubscriptionName, Create_ResourceGroupName, Create_IoTHubName);
+        }
+
+        private void Create_Validate()
+        {
+            Create_IsEnabled = (_Create_IoTHubName != "" && _Create_SubscriptionItem != null && _Create_ResourceGroupName != "" && _Create_FieldsEnabled);
+        }
+
+        private bool _Create_IsEnabled = false;
+        private bool _Create_FieldsEnabled = true;
+        private /* XXX - IAzureRMSubscription */ dynamic _Create_SubscriptionItem = null;
+        private string _Create_IoTHubName = "";
+        private string _Create_ResourceGroupName = "";
+
 
         //--------------------------------------------------------------------------------------------------------------------
         // NEW DEVICE CREATION RELATED CODE
         //--------------------------------------------------------------------------------------------------------------------
-
-        public void ClearCreate(bool switchTab)
-        {
-            NewDevice_FieldsEnabled = true;
-            NewDevice_Name = "";
-
-            // XXX - fix this
-            //if (switchTab)
-            //{
-            //    (this.View as WizardPageDeviceSelectionView).Tabs.SelectedIndex = 0;
-            //}
-        }
 
         public bool NewDevice_CanCreate
         {
@@ -348,15 +418,22 @@ namespace AzureIoTHubConnectedService
                 //Microsoft.VisualStudio.Telemetry.TelemetryService.DefaultSession.PostEvent("vs/iothubcs/DeviceCreated");
 
                 AddDevice(device);
+                NewDevice_Name = "";
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Failed to create new device: " + ex.Message);
-                Microsoft.VisualStudio.Telemetry.TelemetryService.DefaultSession.PostEvent("vs/iothubcs/FailureDeviceCreation");
+                //Microsoft.VisualStudio.Telemetry.TelemetryService.DefaultSession.PostEvent("vs/iothubcs/FailureDeviceCreation");
             }
 
             DecrementBusyCounter();
             NewDevice_FieldsEnabled = true;
+        }
+
+        private void AddDevice(Device device)
+        {
+            Devices.Add(device);
+            SelectedDevice = device;
         }
 
         private bool _NewDevice_CanCreate = false;
@@ -412,12 +489,6 @@ namespace AzureIoTHubConnectedService
             Hubs.Add(hub);
             // XXXX
             //_PageHubSelection.ClearCreate();
-        }
-
-        public void AddDevice(Device device)
-        {
-            Devices.Add(device);
-            SelectedDevice = device;
         }
 
         protected void IncrementBusyCounter()

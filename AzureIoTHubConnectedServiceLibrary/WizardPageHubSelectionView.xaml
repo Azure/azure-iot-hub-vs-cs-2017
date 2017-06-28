@@ -55,7 +55,7 @@
         <Grid.Resources>
             <BooleanToVisibilityConverter x:Key="BoolToVis"/>
 
-            <CollectionViewSource Source="{Binding MainModel.Hubs}" x:Key="SortedHubs">
+            <CollectionViewSource Source="{Binding Hubs}" x:Key="SortedHubs">
                 <CollectionViewSource.SortDescriptions>
                     <scm:SortDescription PropertyName="Properties[IoTHubName]"/>
                 </CollectionViewSource.SortDescriptions>
@@ -68,7 +68,7 @@
 
         <TabControl Name="Tabs" Grid.Row="0" Background="Transparent">
             <TabItem Header="{x:Static local:Resource.TabHeaderSelect}"  >
-                    <ListView ScrollViewer.CanContentScroll="True" Name="HubListView" Margin="10" ItemsSource="{Binding Source={StaticResource SortedHubs}}" SelectedItem="{Binding MainModel.SelectedHub}" ItemContainerStyle="{StaticResource {x:Static resources:ResourceKeys.ThemedDialogListViewItemGridStyleKey}}" >
+                    <ListView ScrollViewer.CanContentScroll="True" Name="HubListView" Margin="10" ItemsSource="{Binding Source={StaticResource SortedHubs}}" SelectedItem="{Binding SelectedHub}" ItemContainerStyle="{StaticResource {x:Static resources:ResourceKeys.ThemedDialogListViewItemGridStyleKey}}" >
                        
                         <ListView.View>
                            <GridView>
@@ -94,7 +94,7 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Label Content="{x:Static local:Resource.CreateHubSubscription}" Grid.Row="0" Grid.Column="0" Margin="5" />
-                        <ComboBox Name="SubscriptionCombo" Grid.Row="0" Grid.Column="1" Margin="5" SelectedItem="{Binding Path=Create_SubscriptionItem, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=Create_FieldsEnabled}" ItemsSource="{Binding MainModel.Subscriptions}" SelectedValuePath="SubscriptionName" DisplayMemberPath="SubscriptionName"/>
+                        <ComboBox Name="SubscriptionCombo" Grid.Row="0" Grid.Column="1" Margin="5" SelectedItem="{Binding Path=Create_SubscriptionItem, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=Create_FieldsEnabled}" ItemsSource="{Binding Subscriptions}" SelectedValuePath="SubscriptionName" DisplayMemberPath="SubscriptionName"/>
                         <Label Content="{x:Static local:Resource.CreateHubResourceGroup}" Grid.Row="1" Grid.Column="0" Margin="5" />
                         <ComboBox Name="ResourceGroupCombo" Grid.Row="1" Grid.Column="1" Margin="5" IsEditable="True" Text="{Binding Path=Create_ResourceGroupName, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=Create_FieldsEnabled}"/>
                         <Label Content="{x:Static local:Resource.CreateHubName}" Grid.Row="2" Grid.Column="0" Margin="5"/>
@@ -103,6 +103,6 @@
                     </Grid>
                 </TabItem>
             </TabControl>
-        <ProgressBar Name="Progress" Grid.ColumnSpan="2" Grid.Row="4" Height="2" BorderThickness="0" VerticalAlignment="Bottom" IsIndeterminate="True" Visibility="{Binding Path=MainModel.IsBusy, Converter={StaticResource BoolToVis}}"/>
+        <ProgressBar Name="Progress" Grid.ColumnSpan="2" Grid.Row="4" Height="2" BorderThickness="0" VerticalAlignment="Bottom" IsIndeterminate="True" Visibility="{Binding Path=IsBusy, Converter={StaticResource BoolToVis}}"/>
     </Grid>
 </UserControl>
