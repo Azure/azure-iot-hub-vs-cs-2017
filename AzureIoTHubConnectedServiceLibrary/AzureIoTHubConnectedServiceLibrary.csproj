@@ -345,7 +345,6 @@
     <Compile Include="CommandDeviceMethod.cs" />
     <Compile Include="CommandDeviceTestTool.cs" />
     <Compile Include="CommonResources.xaml.cs" />
-    <Compile Include="Device.cs" />
     <Compile Include="DeviceProvisionerBase.cs" />
     <Compile Include="DeviceMethodDescription.cs" />
     <Compile Include="DeviceTwinProperty.cs" />

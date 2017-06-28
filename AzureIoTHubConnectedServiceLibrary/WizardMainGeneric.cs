@@ -150,9 +150,6 @@ namespace AzureIoTHubConnectedService
 
                 if (_SelectedDevice != null)
                 {
-                    // XXX - clean up m_SelectedDevice
-                    _SelectedDeviceXXX = new SelectedDevice { Id = value.Id, Key = value.Authentication.SymmetricKey.PrimaryKey };
-
                     _SelectedDevicePrimaryConnectionString = string.Format(CultureInfo.InvariantCulture,
                         "HostName={0};DeviceId={1};SharedAccessKey={2}",
                         SelectedHubHost, value.Id, value.Authentication.SymmetricKey.PrimaryKey);
@@ -166,7 +163,6 @@ namespace AzureIoTHubConnectedService
                 }
                 else
                 {
-                    _SelectedDeviceXXX = null;
                     _SelectedDevicePrimaryConnectionString = "";
                     _SelectedDeviceSecondaryConnectionString = "";
                 }
@@ -192,7 +188,7 @@ namespace AzureIoTHubConnectedService
         /// </summary>
         public string DeviceId
         {
-            get { return (null != _SelectedDeviceXXX) ? _SelectedDeviceXXX.Id : ""; }
+            get { return (null != _SelectedDevice) ? _SelectedDevice.Id : ""; }
         }
 
         /// <summary>
@@ -215,28 +211,10 @@ namespace AzureIoTHubConnectedService
         // DEVICE TWIN RELATED PROPERTIES
         //--------------------------------------------------------------------------------------------------------------------
 
+        /// <summary>
+        /// Is device twin functionality enabled by the user?
+        /// </summary>
         public bool DeviceTwinEnabled
-        {
-            get
-            {
-                return _DeviceMethodEnabled;
-            }
-            set
-            {
-                _DeviceMethodEnabled = value;
-            }
-        }
-
-        public ObservableCollection<DeviceTwinProperty> DeviceTwinProperties { get { return _DeviceTwinProperties; } }
-
-        private bool _DeviceTwinEnabled = false;
-        private ObservableCollection<DeviceTwinProperty> _DeviceTwinProperties = new ObservableCollection<DeviceTwinProperty>();
-
-        //--------------------------------------------------------------------------------------------------------------------
-        // DEVICE METHOD RELATED PROPERTIES
-        //--------------------------------------------------------------------------------------------------------------------
-
-        public bool DeviceMethodEnabled
         {
             get
             {
@@ -248,6 +226,37 @@ namespace AzureIoTHubConnectedService
             }
         }
 
+        /// <summary>
+        /// List of device twin properties
+        /// </summary>
+        public ObservableCollection<DeviceTwinProperty> DeviceTwinProperties { get { return _DeviceTwinProperties; } }
+
+        private bool _DeviceTwinEnabled = false;
+        private ObservableCollection<DeviceTwinProperty> _DeviceTwinProperties = new ObservableCollection<DeviceTwinProperty>();
+
+        //--------------------------------------------------------------------------------------------------------------------
+        // DIRECT METHOD RELATED PROPERTIES
+        //--------------------------------------------------------------------------------------------------------------------
+
+
+        /// <summary>
+        /// Is direct method functionality enabled by the user?
+        /// </summary>
+        public bool DeviceMethodEnabled
+        {
+            get
+            {
+                return _DeviceMethodEnabled;
+            }
+            set
+            {
+                _DeviceMethodEnabled = value;
+            }
+        }
+
+        /// <summary>
+        /// List of device methods
+        /// </summary>
         public ObservableCollection<DeviceMethodDescription> DeviceMethods { get { return _DeviceMethods; } }
 
         private bool _DeviceMethodEnabled = false;
@@ -398,7 +407,6 @@ namespace AzureIoTHubConnectedService
         private string _SelectedHubConnectionString = "";
         private string _SelectedDevicePrimaryConnectionString = "";
         private string _SelectedDeviceSecondaryConnectionString = "";
-        private SelectedDevice _SelectedDeviceXXX = null;
         private int _IsBusy = 0;
         private string _ErrorMessage = "";
         private ObservableCollection<IAzureIoTHub> _Hubs = null;

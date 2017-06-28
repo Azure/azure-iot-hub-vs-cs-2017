@@ -74,7 +74,7 @@ namespace AzureIoTHubConnectedService
 
                 handlerHelper.TokenReplacementValues.Add("iotHubUri", ioTHubUri);
 
-                var device = context.ServiceInstance.Metadata["Device"] as SelectedDevice;
+                var device = context.ServiceInstance.Metadata["Device"] as Device;
                 if (device == null)
                 {
                     throw new OperationCanceledException();
@@ -83,7 +83,7 @@ namespace AzureIoTHubConnectedService
                 {
                     // just use %s so the connection string can be used as sprintf pattern in the sample code
                     handlerHelper.TokenReplacementValues.Add("deviceId", isDeviceProvisioned ? "%s" : device.Id);
-                    handlerHelper.TokenReplacementValues.Add("deviceKey", isDeviceProvisioned ? "%s" : device.Key);
+                    handlerHelper.TokenReplacementValues.Add("deviceKey", isDeviceProvisioned ? "%s" : device.Authentication.SymmetricKey.PrimaryKey);
                     handlerHelper.TokenReplacementValues.Add("iotHubOwnerPrimaryKey", primaryKeys.IoTHubOwner);
                     handlerHelper.TokenReplacementValues.Add("servicePrimaryKey", primaryKeys.Service);
 

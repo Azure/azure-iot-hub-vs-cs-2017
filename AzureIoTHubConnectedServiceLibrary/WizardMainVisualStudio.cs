@@ -132,7 +132,7 @@ namespace AzureIoTHubConnectedService
                   instance.Metadata.Add("IoTHubAccount", _SelectedHub);
                   instance.Metadata.Add("Cancel", false);
                   instance.Metadata.Add("TPM", false);
-                  instance.Metadata.Add("Device", _SelectedDeviceXXX);
+                  instance.Metadata.Add("Device", _SelectedDevice);
                   instance.Metadata.Add("ProvisionedDevice", _WizardMode == WizardMode.ProvisionConnectionString);
 
                   if (DeviceMethodEnabled)
