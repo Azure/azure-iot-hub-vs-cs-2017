@@ -94,7 +94,7 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Label Content="{x:Static local:Resource.CreateHubSubscription}" Grid.Row="0" Grid.Column="0" Margin="5" />
-                        <ComboBox Name="SubscriptionCombo" Grid.Row="0" Grid.Column="1" Margin="5" SelectedItem="{Binding Path=NewHub_SubscriptionItem, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=NewHub_FieldsEnabled}" ItemsSource="{Binding Subscriptions}" />
+                        <ComboBox Name="SubscriptionCombo" Grid.Row="0" Grid.Column="1" Margin="5" SelectedItem="{Binding Path=NewHub_SubscriptionName, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=NewHub_FieldsEnabled}" ItemsSource="{Binding Subscriptions}" />
                         <Label Content="{x:Static local:Resource.CreateHubResourceGroup}" Grid.Row="1" Grid.Column="0" Margin="5" />
                         <ComboBox Name="ResourceGroupCombo" Grid.Row="1" Grid.Column="1" Margin="5" IsEditable="True" Text="{Binding Path=NewHub_ResourceGroupName, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=NewHub_FieldsEnabled}"/>
                         <Label Content="{x:Static local:Resource.CreateHubName}" Grid.Row="2" Grid.Column="0" Margin="5"/>

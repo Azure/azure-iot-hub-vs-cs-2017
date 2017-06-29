@@ -266,13 +266,6 @@ namespace AzureIoTHubConnectedService
         // NEW IOT HUB CREATION RELATED CODE
         //--------------------------------------------------------------------------------------------------------------------
 
-        public void ClearCreate()
-        {
-            NewHub_FieldsEnabled = true;
-            NewHub_Name = "";
-            NewHub_ResourceGroupName = "";
-        }
-
         public bool NewHub_CanCreate
         {
             get
@@ -298,23 +291,13 @@ namespace AzureIoTHubConnectedService
                 _NewHub_FieldsEnabled = value;
                 OnPropertyChanged("Create_FieldsEnabled");
                 NewHub_Validate();
-
-                OnPropertyChanged("Create_InProgress");
             }
         }
 
-        public Visibility NewHub_InProgress
+        public string NewHub_SubscriptionName
         {
-            get
-            {
-                return (_NewHub_FieldsEnabled && (this.Hubs != null)) ? Visibility.Hidden : Visibility.Visible;
-            }
-        }
-
-        public string NewHub_SubscriptionItem
-        {
-            get { return _NewHub_SubscriptionItem; }
-            set { _NewHub_SubscriptionItem = value; NewHub_Validate(); OnPropertyChanged("Create_SubscriptionName"); QueryResourceGroups(_NewHub_SubscriptionItem); }
+            get { return _NewHub_SubscriptionName; }
+            set { _NewHub_SubscriptionName = value; NewHub_Validate(); OnPropertyChanged("NewHub_SubscriptionName"); QueryResourceGroups(_NewHub_SubscriptionName); }
         }
 
         public string NewHub_Name
@@ -333,22 +316,27 @@ namespace AzureIoTHubConnectedService
         {
             NewHub_FieldsEnabled = false;
 
-            OnPropertyChanged("Create_InProgress");
+            CreateNewHub(NewHub_SubscriptionName, NewHub_ResourceGroupName, NewHub_Name);
+        }
 
-            CreateNewHub(NewHub_SubscriptionItem, NewHub_ResourceGroupName, NewHub_Name);
+        private void AddHub(IAzureIoTHub hub)
+        {
+            Hubs.Add(hub);
+            NewHub_FieldsEnabled = true;
+            NewHub_Name = "";
+            NewHub_ResourceGroupName = "";
         }
 
         private void NewHub_Validate()
         {
-            NewHub_CanCreate = (_NewHub_Name != "" && _NewHub_SubscriptionItem != "" && _NewHub_ResourceGroupName != "" && _NewHub_FieldsEnabled);
+            NewHub_CanCreate = (_NewHub_Name != "" && _NewHub_SubscriptionName != "" && _NewHub_ResourceGroupName != "" && _NewHub_FieldsEnabled);
         }
 
         private bool _NewHub_CanCreate = false;
         private bool _NewHub_FieldsEnabled = true;
-        private string _NewHub_SubscriptionItem = "";
-        private string _NewHub_Name = "";
         private string _NewHub_ResourceGroupName = "";
-
+        private string _NewHub_SubscriptionName = "";
+        private string _NewHub_Name = "";
 
         //--------------------------------------------------------------------------------------------------------------------
         // NEW DEVICE CREATION RELATED CODE
@@ -483,13 +471,6 @@ namespace AzureIoTHubConnectedService
             }
 
             DecrementBusyCounter();
-        }
-
-        public void AddHub(IAzureIoTHub hub)
-        {
-            Hubs.Add(hub);
-            // XXXX
-            //_PageHubSelection.ClearCreate();
         }
 
         protected void IncrementBusyCounter()
