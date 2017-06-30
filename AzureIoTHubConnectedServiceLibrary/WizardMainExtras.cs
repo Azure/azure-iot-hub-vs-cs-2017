@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Azure.Devices;
 using Microsoft.Azure.Devices.Common;
 using Microsoft.ServiceBus.Messaging;
+using System.Windows.Input;
 
 
 namespace AzureIoTHubConnectedService
@@ -412,7 +413,7 @@ namespace AzureIoTHubConnectedService
 
             try
             {
-                dynamic registryManager = RegistryManager.CreateFromConnectionString(IoTHubConnectionString);
+                dynamic registryManager = CommonFactory.CreateRegistryManagerFromConnectionString(IoTHubConnectionString);
                 var deviceTwin = await registryManager.GetTwinAsync(SelectedDevice.Id);
                 DeviceTwin = deviceTwin.ToJson();
                 DeviceTwinTags = deviceTwin.Tags.ToJson();
@@ -438,7 +439,7 @@ namespace AzureIoTHubConnectedService
 
             try
             {
-                dynamic registryManager = RegistryManager.CreateFromConnectionString(IoTHubConnectionString);
+                dynamic registryManager = CommonFactory.CreateRegistryManagerFromConnectionString(IoTHubConnectionString);
                 Microsoft.Azure.Devices.Shared.Twin original = await registryManager.GetTwinAsync(SelectedDevice.Id);
                 await registryManager.UpdateTwinAsync(original.DeviceId, DeviceTwinUpdate, original.ETag);
                 await Task.Delay(1000);

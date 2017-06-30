@@ -3,7 +3,6 @@
 using System.Windows.Input;
 using System.Collections.ObjectModel;
 using System.Globalization;
-using System.Windows;
 using Microsoft.Azure.Devices;
 
 namespace AzureIoTHubConnectedService
@@ -21,6 +20,10 @@ namespace AzureIoTHubConnectedService
         {
             get { return (_IsBusy > 0); }
         }
+
+        //--------------------------------------------------------------------------------------------------------------------
+        // IOT HUBS
+        //--------------------------------------------------------------------------------------------------------------------
 
         /// <summary>
         /// Observable collection of IoT Hubs
@@ -159,7 +162,8 @@ namespace AzureIoTHubConnectedService
                         SelectedHubHost, value.Id, value.Authentication.SymmetricKey.SecondaryKey);
 
 
-                    GetDeviceTwinData();
+                    // [ZKK] no need to get it here in current version of the extension
+                    // GetDeviceTwinData();
                 }
                 else
                 {
@@ -411,7 +415,7 @@ namespace AzureIoTHubConnectedService
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Failed to create new device: " + ex.Message);
+                DisplayMessage("Failed to create new device: " + ex.Message);
                 //Microsoft.VisualStudio.Telemetry.TelemetryService.DefaultSession.PostEvent("vs/iothubcs/FailureDeviceCreation");
             }
 
@@ -460,14 +464,14 @@ namespace AzureIoTHubConnectedService
 
             try
             {
-                _RegistryManager = RegistryManager.CreateFromConnectionString(_SelectedHubConnectionString);
+                _RegistryManager = CommonFactory.CreateRegistryManagerFromConnectionString(_SelectedHubConnectionString);
                 var devicesTask = _RegistryManager.GetDevicesAsync(1000);
 
                 Devices = new ObservableCollection<Device>(await devicesTask);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Failed to query devices: " + ex.Message);
+                DisplayMessage("Failed to query devices: " + ex.Message);
             }
 
             DecrementBusyCounter();

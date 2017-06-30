@@ -9,7 +9,6 @@ using System.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Threading;
 using System.Globalization;
-using System.Windows;
 
 namespace AzureIoTHubConnectedService
 {
@@ -35,7 +34,7 @@ namespace AzureIoTHubConnectedService
 
         public void DisplayMessage(string message)
         {
-            MessageBox.Show(message);
+            //MessageBox(message);
         }
 
     }

@@ -99,6 +99,9 @@
     <Compile Include="..\AzureIoTHubConnectedServiceLibrary\AzureIoTHub.cs">
       <Link>AzureIoTHub.cs</Link>
     </Compile>
+    <Compile Include="..\AzureIoTHubConnectedServiceLibrary\CommonFactory.cs">
+      <Link>CommonFactory.cs</Link>
+    </Compile>
     <Compile Include="..\AzureIoTHubConnectedServiceLibrary\DeviceMethodDescription.cs">
       <Link>DeviceMethodDescription.cs</Link>
     </Compile>

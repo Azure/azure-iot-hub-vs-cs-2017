@@ -344,6 +344,7 @@
     <Compile Include="CommandDeviceToCloudMsgs.cs" />
     <Compile Include="CommandDeviceMethod.cs" />
     <Compile Include="CommandDeviceTestTool.cs" />
+    <Compile Include="CommonFactory.cs" />
     <Compile Include="CommonResources.xaml.cs" />
     <Compile Include="DeviceProvisionerBase.cs" />
     <Compile Include="DeviceMethodDescription.cs" />

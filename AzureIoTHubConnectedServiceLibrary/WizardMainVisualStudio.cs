@@ -330,6 +330,11 @@ namespace AzureIoTHubConnectedService
             _ProvisioningDevice = false;
         }
 
+        public void DisplayMessage(string message)
+        {
+            MessageBox.Show(message);
+        }
+
         /*--------------------------------------------------------------------------------------------------------------------
          * INTERNAL DATA
          *--------------------------------------------------------------------------------------------------------------------*/
@@ -342,8 +347,6 @@ namespace AzureIoTHubConnectedService
         private WizardPageSummary _PageSummary = null;
 
         private WizardMode _WizardMode = WizardMode.EmbedConnectionString;
-
-        // XXX - do we need it here?
 
         private ObservableCollection<string> _Subscriptions = null;
 
