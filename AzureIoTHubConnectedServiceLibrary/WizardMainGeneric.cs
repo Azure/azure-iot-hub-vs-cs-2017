@@ -307,13 +307,13 @@ namespace AzureIoTHubConnectedService
         public string NewHub_Name
         {
             get { return _NewHub_Name; }
-            set { _NewHub_Name = value; NewHub_Validate(); OnPropertyChanged("Create_IoTHubName"); }
+            set { _NewHub_Name = value; NewHub_Validate(); OnPropertyChanged("NewHub_Name"); }
         }
 
         public string NewHub_ResourceGroupName
         {
             get { return _NewHub_ResourceGroupName; }
-            set { _NewHub_ResourceGroupName = value; NewHub_Validate(); OnPropertyChanged("Create_ResourceGroupName"); }
+            set { _NewHub_ResourceGroupName = value; NewHub_Validate(); OnPropertyChanged("NewHub_ResourceGroupName"); }
         }
 
         internal void CreateNewHub()
@@ -333,7 +333,23 @@ namespace AzureIoTHubConnectedService
 
         private void NewHub_Validate()
         {
-            NewHub_CanCreate = (_NewHub_Name != "" && _NewHub_SubscriptionName != "" && _NewHub_ResourceGroupName != "" && _NewHub_FieldsEnabled);
+            bool match = true;
+
+            // in case of synscription name, just verify that it's not empty 
+            if (_NewHub_SubscriptionName == "")
+                match = false;
+
+            // verify iot hub name - it can contain only alphanymeric characters
+            if (!System.Text.RegularExpressions.Regex.IsMatch(_NewHub_Name, @"^[a-zA-Z0-9]+$"))
+                match = false;
+
+            // verify resource group name -- it can contain alphanumeric characters
+            // periods, underscores, hyphens, parenthesis.
+            // Period cannot be last character
+            if (!System.Text.RegularExpressions.Regex.IsMatch(_NewHub_ResourceGroupName, @"^[a-zA-Z0-9\._\-\(\)]*[a-zA-Z0-9_\-\(\)]$"))
+                match = false;
+
+            NewHub_CanCreate = match && _NewHub_FieldsEnabled;
         }
 
         private bool _NewHub_CanCreate = false;

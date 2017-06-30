@@ -75,5 +75,62 @@ namespace UnitTests
             model.NewDevice_Name = "/";
             Assert.IsFalse(model.NewDevice_CanCreate);
         }
+
+        [TestMethod]
+        public void TestNewHubInputValidation()
+        {
+            WizardMain model = new WizardMain();
+
+            Assert.IsFalse(model.NewHub_CanCreate);
+
+            model.NewHub_Name = "hub";
+            model.NewHub_SubscriptionName = "sub";
+            model.NewHub_ResourceGroupName = "rgr";
+
+            Assert.IsTrue(model.NewHub_CanCreate);
+
+            // verify empty hub name
+            model.NewHub_Name = "";
+            Assert.IsFalse(model.NewHub_CanCreate);
+
+            // verify empty subscription name
+            model.NewHub_Name = "hub";
+            model.NewHub_SubscriptionName = "";
+            Assert.IsFalse(model.NewHub_CanCreate);
+
+            // verify empty resource group name
+            model.NewHub_ResourceGroupName = "";
+            model.NewHub_SubscriptionName = "sub";
+            Assert.IsFalse(model.NewHub_CanCreate);
+            model.NewHub_ResourceGroupName = "rg";
+
+            Assert.IsTrue(model.NewHub_CanCreate);
+
+            // verify all characters that should match hub name
+            model.NewHub_Name = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            Assert.IsTrue(model.NewHub_CanCreate);
+
+            // verify all characters that should match resource group name
+            model.NewHub_ResourceGroupName = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._-()";
+            Assert.IsTrue(model.NewHub_CanCreate);
+
+            // period at the end of resource group name is not allowed
+            model.NewHub_ResourceGroupName = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._-().";
+            Assert.IsFalse(model.NewHub_CanCreate);
+
+            // verify that resource group name can be one character
+            model.NewHub_ResourceGroupName = "a";
+            Assert.IsTrue(model.NewHub_CanCreate);
+
+            // verify that hub name can be single character
+            model.NewHub_Name = "a";
+            Assert.IsTrue(model.NewHub_CanCreate);
+
+            model.NewHub_Name = "abc!";
+            Assert.IsFalse(model.NewHub_CanCreate);
+
+            model.NewHub_Name = "abc xyz";
+            Assert.IsFalse(model.NewHub_CanCreate);
+        }
     }
 }
