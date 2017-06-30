@@ -126,11 +126,33 @@ namespace UnitTests
             model.NewHub_Name = "a";
             Assert.IsTrue(model.NewHub_CanCreate);
 
-            model.NewHub_Name = "abc!";
-            Assert.IsFalse(model.NewHub_CanCreate);
+            // verify characters not allowed in hub name
+            foreach (char ch in " _-:.+%#*?!(),=@;$[]{}&^|~\"'\\/")
+            {
+                model.NewHub_Name = "aaa" + ch + "bbb";
+                Assert.IsFalse(model.NewHub_CanCreate);
+                model.NewHub_Name = ch + "bbb";
+                Assert.IsFalse(model.NewHub_CanCreate);
+                model.NewHub_Name = "aaa + " + ch;
+                Assert.IsFalse(model.NewHub_CanCreate);
+            }
 
-            model.NewHub_Name = "abc xyz";
-            Assert.IsFalse(model.NewHub_CanCreate);
+            model.NewHub_Name = "abc";
+            Assert.IsTrue(model.NewHub_CanCreate);
+
+            // verify characters not allowed in resource group name
+            foreach (char ch in " :+%#*?!,=@;$[]{}&^|~\"'\\/")
+            {
+                model.NewHub_ResourceGroupName = "aaa" + ch + "bbb";
+                Assert.IsFalse(model.NewHub_CanCreate);
+                model.NewHub_ResourceGroupName = ch + "bbb";
+                Assert.IsFalse(model.NewHub_CanCreate);
+                model.NewHub_ResourceGroupName = "aaa + " + ch;
+                Assert.IsFalse(model.NewHub_CanCreate);
+            }
+
+            model.NewHub_ResourceGroupName = "xyz";
+            Assert.IsTrue(model.NewHub_CanCreate);
         }
     }
 }
