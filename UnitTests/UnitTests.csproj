@@ -105,6 +105,7 @@
     <Compile Include="..\AzureIoTHubConnectedServiceLibrary\WizardMainGeneric.cs">
       <Link>WizardMainGeneric.cs</Link>
     </Compile>
+    <Compile Include="Mocks\AzureIoTHubFake.cs" />
     <Compile Include="Mocks\CommonFactory.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

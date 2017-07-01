@@ -154,5 +154,42 @@ namespace UnitTests
             model.NewHub_ResourceGroupName = "xyz";
             Assert.IsTrue(model.NewHub_CanCreate);
         }
+
+        [TestMethod]
+        public void TestHubSelected()
+        {
+            AzureIoTHubFake hub = new AzureIoTHubFake();
+            WizardMain model = new WizardMain();
+
+            //{ "IoTHubName", iotHubAccount.Name },
+            //    { "Region", iotHubAccount.Location },
+            //    { "SubscriptionName", subscription.SubscriptionName },
+            //    { "ResourceGroup", iotHubAccount.ResourceGroup },
+            //    { "Tier", iotHubAccount.Tier() },
+            //    { "iotHubUri", iotHubAccount.Properties.HostName },
+
+            hub.WritableProperties.Add("IoTHubName", "testhub");
+            hub.WritableProperties.Add("iotHubUri", "test.azuredevices.net");
+
+            model.SelectedHub = hub;
+
+            //Assert.AreEqual<string>("test.azuredevices.net", model.SelectedHubHost);
+            Assert.AreEqual<string>("testhub", model.IoTHubName);
+        }
+
+        [TestMethod]
+        public void TestHubUnselected()
+        {
+        }
+
+        [TestMethod]
+        public void TestDeviceSelected()
+        {
+        }
+
+        [TestMethod]
+        public void TestDeviceUnselected()
+        {
+        }
     }
 }
