@@ -243,11 +243,18 @@ namespace AzureIoTHubConnectedService
 
         private async void HandleHubSelected()
         {
-            PrimaryKeys keys = await _CurrentHub.GetPrimaryKeysAsync(new CancellationToken());
+            if (_CurrentHub != null)
+            {
+                PrimaryKeys keys = await _CurrentHub.GetPrimaryKeysAsync(new CancellationToken());
 
-            _CurrentHub_ConnectionString = string.Format(CultureInfo.InvariantCulture,
-                "HostName={0};SharedAccessKeyName=iothubowner;SharedAccessKey={1}",
-                _CurrentHub.Properties["iotHubUri"], keys.IoTHubOwner);
+                _CurrentHub_ConnectionString = string.Format(CultureInfo.InvariantCulture,
+                    "HostName={0};SharedAccessKeyName=iothubowner;SharedAccessKey={1}",
+                    _CurrentHub.Properties["iotHubUri"], keys.IoTHubOwner);
+            }
+            else
+            {
+                _CurrentHub_ConnectionString = "";
+            }
 
             ConfigurePages();
             PopulateDevices();

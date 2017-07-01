@@ -480,10 +480,13 @@ namespace AzureIoTHubConnectedService
 
             try
             {
-                _RegistryManager = CommonFactory.CreateRegistryManagerFromConnectionString(_CurrentHub_ConnectionString);
-                var devicesTask = _RegistryManager.GetDevicesAsync(1000);
+                if (_CurrentHub_ConnectionString != "")
+                {
+                    _RegistryManager = CommonFactory.CreateRegistryManagerFromConnectionString(_CurrentHub_ConnectionString);
+                    var devicesTask = _RegistryManager.GetDevicesAsync(1000);
 
-                Devices = new ObservableCollection<Device>(await devicesTask);
+                    Devices = new ObservableCollection<Device>(await devicesTask);
+                }
             }
             catch (Exception ex)
             {
