@@ -15,14 +15,15 @@ class AzureIoTHub
     DeviceClient deviceClient = null;
 
     //
-    // Note: this connection string is specific to the device "kraaa". To configure other devices,
+    // Note: this connection string is specific to the device "$deviceId$". To configure other devices,
     // see information on iothub-explorer at http://aka.ms/iothubgetstartedVSCS
     //
-    const string deviceConnectionString = "HostName=mukan.azure-devices.net;DeviceId=kraaa;SharedAccessKey=a8AhFsuEm/yVcIzBkox1qBz35tTUrX90FR7JH1E0Hck=";
+    const string deviceConnectionString = "HostName=$iotHubUri$;DeviceId=$deviceId$;SharedAccessKey=$deviceKey$";
+
 
     //
     // To monitor messages sent to device "kraaa" use iothub-explorer as follows:
-    //    iothub-explorer monitor-events --login HostName=mukan.azure-devices.net;SharedAccessKeyName=service;SharedAccessKey=ZAX49V76BSFs/Idg5N8cqPCnIx1FTW8/u03nUjv2HOU= "kraaa"
+    //    iothub-explorer monitor-events --login HostName=$iotHubUri$;SharedAccessKeyName=service;SharedAccessKey=$servicePrimaryKey$ "$deviceId$"
     //
 
     // Refer to http://aka.ms/azure-iot-hub-vs-cs-wiki for more information on Connected Service for Azure IoT Hub
@@ -30,9 +31,9 @@ class AzureIoTHub
     public async Task SendDeviceToCloudMessageAsync()
     {
 #if WINDOWS_UWP
-        var str = "{\"deviceId\":\"kraaa\",\"messageId\":1,\"text\":\"Hello, Cloud from a UWP C# app!\"}";
+        var str = "{\"deviceId\":\"$deviceId$\",\"messageId\":1,\"text\":\"Hello, Cloud from a UWP C# app!\"}";
 #else
-        var str = "{\"deviceId\":\"kraaa\",\"messageId\":1,\"text\":\"Hello, Cloud from a C# app!\"}";
+        var str = "{\"deviceId\":\"$deviceId$\",\"messageId\":1,\"text\":\"Hello, Cloud from a C# app!\"}";
 #endif
         var message = new Message(Encoding.ASCII.GetBytes(str));
 
