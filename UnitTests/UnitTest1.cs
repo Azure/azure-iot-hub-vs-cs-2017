@@ -196,6 +196,15 @@ namespace UnitTests
             Assert.AreEqual<string>("", model.IoTHubConnectionString);
         }
 
+        public void TestHubFromConnectionString()
+        {
+            WizardMain model = new WizardMain();
+
+            model.IoTHubConnectionString = "XXXXX-XXXX-XXXXX-CONNECTION-STRING";
+        }
+
+
+
         [TestMethod]
         public void TestDeviceSelected()
         {
@@ -204,6 +213,26 @@ namespace UnitTests
         [TestMethod]
         public void TestDeviceUnselected()
         {
+        }
+
+        public void TestDeviceCreateSuccessful()
+        {
+
+        }
+
+        public void TestDeviceCreateFailed()
+        {
+
+        }
+
+        public void TestHubCreateSuccessful()
+        {
+
+        }
+
+        public void TestHubCreateFailed()
+        {
+
         }
     }
 }
