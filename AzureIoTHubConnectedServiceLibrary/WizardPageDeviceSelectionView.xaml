@@ -37,7 +37,7 @@
 
         <TabControl Name="Tabs" Grid.Row="1" Background="Transparent">
             <TabItem Header="{x:Static local:Resource.TabHeaderSelect}">
-                <ListBox ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible" Name="DevicesListBox" Margin="10" SelectedItem="{Binding SelectedDevice}"  ItemsSource="{Binding Source={StaticResource SortedDevices}}" DisplayMemberPath="Id">
+                <ListBox ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible" Name="DevicesListBox" Margin="10" SelectedItem="{Binding CurrentDevice}"  ItemsSource="{Binding Source={StaticResource SortedDevices}}" DisplayMemberPath="Id">
                 </ListBox>
             </TabItem>
             <TabItem Header="{x:Static local:Resource.TabHeaderNewDevice}">

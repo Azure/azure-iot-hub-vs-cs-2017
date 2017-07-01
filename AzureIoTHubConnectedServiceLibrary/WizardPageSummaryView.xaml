@@ -30,12 +30,12 @@
         <Label Content="{x:Static local:Resource.SummaryDevicePrimaryConnectionString}" Grid.Column="0" Grid.Row="3" Height="38" Margin="0,0,0,37" Grid.RowSpan="3" VerticalAlignment="Bottom" />
         <Label Content="{x:Static local:Resource.SummaryDeviceSecondaryConnectionString}" Grid.Column="0" Grid.Row="5" />
 
-        <Label Content="{Binding Subscription}" Grid.Column="1" Grid.Row="0"/>
+        <Label Content="{Binding CurrentHub_Subscription}" Grid.Column="1" Grid.Row="0"/>
         <Label Content="{Binding CurrentHub_Name}" Grid.Column="1" Grid.Row="1"/>
         <TextBox Text="{Binding CurrentHub_ConnectionString, Mode=OneWay}" Grid.Column="1" Grid.Row="2" IsReadOnly="True" Margin="1" MinLines="2" TextWrapping="Wrap"/>
-        <Label Content="{Binding DeviceId}" Grid.Column="1" Grid.Row="3"/>
-        <TextBox Text="{Binding DevicePrimaryConnectionString, Mode=OneWay}" Grid.Column="1" Grid.Row="4" IsReadOnly="True" Margin="1" MinLines="2" TextWrapping="Wrap"/>
-        <TextBox Text="{Binding DeviceSecondaryConnectionString, Mode=OneWay}" Grid.Column="1" Grid.Row="5" IsReadOnly="True" Margin="1" MinLines="2" TextWrapping="Wrap"/>
+        <Label Content="{Binding CurrentDevice_Id}" Grid.Column="1" Grid.Row="3"/>
+        <TextBox Text="{Binding CurrentDevice_PrimaryConnectionString, Mode=OneWay}" Grid.Column="1" Grid.Row="4" IsReadOnly="True" Margin="1" MinLines="2" TextWrapping="Wrap"/>
+        <TextBox Text="{Binding CurrentDevice_SecondaryConnectionString, Mode=OneWay}" Grid.Column="1" Grid.Row="5" IsReadOnly="True" Margin="1" MinLines="2" TextWrapping="Wrap"/>
 
     </Grid>
 </UserControl>

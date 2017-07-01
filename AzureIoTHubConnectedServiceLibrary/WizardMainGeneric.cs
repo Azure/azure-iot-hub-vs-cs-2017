@@ -56,15 +56,15 @@ namespace AzureIoTHubConnectedService
         /// <summary>
         /// Currently selected IoT Hub
         /// </summary>
-        public IAzureIoTHub SelectedHub
+        public IAzureIoTHub CurrentHub
         {
             get
             {
-                return _SelectedHub;
+                return _CurrentHub;
             }
             set
             {
-                _SelectedHub = value;
+                _CurrentHub = value;
                 HandleHubSelected();
             }
         }
@@ -73,9 +73,9 @@ namespace AzureIoTHubConnectedService
         /// Subscription name of selected Iot hub.
         /// Empty string if no hub selected.
         /// </summary>
-        public string Subscription
+        public string CurrentHub_Subscription
         {
-            get { return (null != _SelectedHub) ? _SelectedHub.Properties["SubscriptionName"] : ""; }
+            get { return (null != _CurrentHub) ? _CurrentHub.Properties["SubscriptionName"] : ""; }
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace AzureIoTHubConnectedService
         /// </summary>
         public string CurrentHub_Name
         {
-            get { return (null != _SelectedHub) ? _SelectedHub.Properties["IoTHubName"] : ""; }
+            get { return (null != _CurrentHub) ? _CurrentHub.Properties["IoTHubName"] : ""; }
         }
 
         /// <summary>
@@ -93,12 +93,12 @@ namespace AzureIoTHubConnectedService
         /// </summary>
         public string CurrentHub_ConnectionString
         {
-            get { return _SelectedHubConnectionString; }
+            get { return _CurrentHub_ConnectionString; }
             set
             {
-                _SelectedHubConnectionString = value;
+                _CurrentHub_ConnectionString = value;
 
-                if (_SelectedHubConnectionString != "")
+                if (_CurrentHub_ConnectionString != "")
                 {
                     PopulateDevices();
                 }
@@ -114,7 +114,7 @@ namespace AzureIoTHubConnectedService
             get
             {
                 string[] separators = { "HostName=" };
-                string[] temp = _SelectedHubConnectionString.Split(separators, StringSplitOptions.None);
+                string[] temp = _CurrentHub_ConnectionString.Split(separators, StringSplitOptions.None);
                 if (temp.Length == 2)
                 {
                     return temp[1].Split(';')[0];
@@ -141,23 +141,23 @@ namespace AzureIoTHubConnectedService
         /// <summary>
         /// Currently selected device.
         /// </summary>
-        public Device SelectedDevice
+        public Device CurrentDevice
         {
             get
             {
-                return _SelectedDevice;
+                return _CurrentDevice;
             }
             set
             {
-                _SelectedDevice = value;
+                _CurrentDevice = value;
 
-                if (_SelectedDevice != null)
+                if (_CurrentDevice != null)
                 {
-                    _SelectedDevicePrimaryConnectionString = string.Format(CultureInfo.InvariantCulture,
+                    _CurrentDevice_PrimaryConnectionString = string.Format(CultureInfo.InvariantCulture,
                         "HostName={0};DeviceId={1};SharedAccessKey={2}",
                         CurrentHub_Host, value.Id, value.Authentication.SymmetricKey.PrimaryKey);
 
-                    _SelectedDeviceSecondaryConnectionString = string.Format(CultureInfo.InvariantCulture,
+                    _CurrentDevice_SecondaryConnectionString = string.Format(CultureInfo.InvariantCulture,
                         "HostName={0};DeviceId={1};SharedAccessKey={2}",
                         CurrentHub_Host, value.Id, value.Authentication.SymmetricKey.SecondaryKey);
 
@@ -167,18 +167,18 @@ namespace AzureIoTHubConnectedService
                 }
                 else
                 {
-                    _SelectedDevicePrimaryConnectionString = "";
-                    _SelectedDeviceSecondaryConnectionString = "";
+                    _CurrentDevice_PrimaryConnectionString = "";
+                    _CurrentDevice_SecondaryConnectionString = "";
                 }
 
-                OnPropertyChanged("Subscription");
+                OnPropertyChanged("CurrentHub_Subscription");
                 OnPropertyChanged("CurrentHub_Name");
                 OnPropertyChanged("CurrentHub_ConnectionString");
-                OnPropertyChanged("DeviceId");
-                OnPropertyChanged("DevicePrimaryConnectionString");
-                OnPropertyChanged("DeviceSecondaryConnectionString");
+                OnPropertyChanged("CurrentDevice_Id");
+                OnPropertyChanged("CurrentDevice_PrimaryConnectionString");
+                OnPropertyChanged("CurrentDevice_SecondaryConnectionString");
 
-                OnPropertyChanged("SelectedDevice");
+                OnPropertyChanged("CurrentDevice");
 
                 InvokeCanExecuteChanged();;
 
@@ -190,25 +190,25 @@ namespace AzureIoTHubConnectedService
         /// <summary>
         /// Currently selected device id
         /// </summary>
-        public string DeviceId
+        public string CurrentDevice_Id
         {
-            get { return (null != _SelectedDevice) ? _SelectedDevice.Id : ""; }
+            get { return (null != _CurrentDevice) ? _CurrentDevice.Id : ""; }
         }
 
         /// <summary>
         /// Currently selected device's connection string (primary).
         /// </summary>
-        public string DevicePrimaryConnectionString
+        public string CurrentDevice_PrimaryConnectionString
         {
-            get { return _SelectedDevicePrimaryConnectionString; }
+            get { return _CurrentDevice_PrimaryConnectionString; }
         }
 
         /// <summary>
         /// Currently selected device's connection string (secondary).
         /// </summary>
-        public string DeviceSecondaryConnectionString
+        public string CurrentDevice_SecondaryConnectionString
         {
-            get { return _SelectedDeviceSecondaryConnectionString; }
+            get { return _CurrentDevice_SecondaryConnectionString; }
         }
 
         //--------------------------------------------------------------------------------------------------------------------
@@ -442,7 +442,7 @@ namespace AzureIoTHubConnectedService
         private void AddDevice(Device device)
         {
             Devices.Add(device);
-            SelectedDevice = device;
+            CurrentDevice = device;
         }
 
         private bool _NewDevice_CanCreate = false;
@@ -480,7 +480,7 @@ namespace AzureIoTHubConnectedService
 
             try
             {
-                _RegistryManager = CommonFactory.CreateRegistryManagerFromConnectionString(_SelectedHubConnectionString);
+                _RegistryManager = CommonFactory.CreateRegistryManagerFromConnectionString(_CurrentHub_ConnectionString);
                 var devicesTask = _RegistryManager.GetDevicesAsync(1000);
 
                 Devices = new ObservableCollection<Device>(await devicesTask);
@@ -560,15 +560,15 @@ namespace AzureIoTHubConnectedService
          * INTERNAL DATA
          *--------------------------------------------------------------------------------------------------------------------*/
 
-        private string _SelectedHubConnectionString = "";
-        private string _SelectedDevicePrimaryConnectionString = "";
-        private string _SelectedDeviceSecondaryConnectionString = "";
+        private string _CurrentHub_ConnectionString = "";
+        private string _CurrentDevice_PrimaryConnectionString = "";
+        private string _CurrentDevice_SecondaryConnectionString = "";
         private int _IsBusy = 0;
         private string _ErrorMessage = "";
         private ObservableCollection<IAzureIoTHub> _Hubs = null;
         private ObservableCollection<Device> _Devices = null;
-        private Device _SelectedDevice = null;
-        private IAzureIoTHub _SelectedHub = null;
+        private Device _CurrentDevice = null;
+        private IAzureIoTHub _CurrentHub = null;
 
         private RegistryManager _RegistryManager = null;
     }

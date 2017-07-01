@@ -121,18 +121,18 @@ namespace AzureIoTHubConnectedService
               {
                   ConnectedServiceInstance instance = new ConnectedServiceInstance();
 
-                  instance.InstanceId = _SelectedHub.Id;
-                  instance.Name = _SelectedHub.Properties["IoTHubName"];
+                  instance.InstanceId = _CurrentHub.Id;
+                  instance.Name = _CurrentHub.Properties["IoTHubName"];
 
-                  foreach (var property in _SelectedHub.Properties)
+                  foreach (var property in _CurrentHub.Properties)
                   {
                       instance.Metadata.Add(property.Key, property.Value);
                   }
 
-                  instance.Metadata.Add("IoTHubAccount", _SelectedHub);
+                  instance.Metadata.Add("IoTHubAccount", _CurrentHub);
                   instance.Metadata.Add("Cancel", false);
                   instance.Metadata.Add("TPM", false);
-                  instance.Metadata.Add("Device", _SelectedDevice);
+                  instance.Metadata.Add("Device", _CurrentDevice);
                   instance.Metadata.Add("ProvisionedDevice", _WizardMode == WizardMode.ProvisionConnectionString);
 
                   if (DeviceMethodEnabled)
@@ -243,11 +243,11 @@ namespace AzureIoTHubConnectedService
 
         private async void HandleHubSelected()
         {
-            PrimaryKeys keys = await _SelectedHub.GetPrimaryKeysAsync(new CancellationToken());
+            PrimaryKeys keys = await _CurrentHub.GetPrimaryKeysAsync(new CancellationToken());
 
-            _SelectedHubConnectionString = string.Format(CultureInfo.InvariantCulture,
+            _CurrentHub_ConnectionString = string.Format(CultureInfo.InvariantCulture,
                 "HostName={0};SharedAccessKeyName=iothubowner;SharedAccessKey={1}",
-                _SelectedHub.Properties["iotHubUri"], keys.IoTHubOwner);
+                _CurrentHub.Properties["iotHubUri"], keys.IoTHubOwner);
 
             ConfigurePages();
             PopulateDevices();
@@ -303,11 +303,11 @@ namespace AzureIoTHubConnectedService
                 Authenticator.View.IsEnabled = true;
                 _PageHubSelection.IsEnabled = Authenticator.IsAuthenticated;
                 _PageDeviceSelection.IsEnabled = (CurrentHub_Name != "");
-                _PageDeviceTwin.IsEnabled = (DeviceId != "");
+                _PageDeviceTwin.IsEnabled = (CurrentDevice_Id != "");
 
-                _PageDeviceMethod.IsEnabled = (DeviceId != "");
-                _PageInjectConnectionString.IsEnabled = (DeviceId != "");
-                _PageSummary.IsEnabled = (DeviceId != "");
+                _PageDeviceMethod.IsEnabled = (CurrentDevice_Id != "");
+                _PageInjectConnectionString.IsEnabled = (CurrentDevice_Id != "");
+                _PageSummary.IsEnabled = (CurrentDevice_Id != "");
             }
         }
 
@@ -320,7 +320,7 @@ namespace AzureIoTHubConnectedService
             {
                 DeviceProvisionerBase provisioner = null;
 
-                provisioner.ProvisionDevice(SelectedDevice.Id, SelectedDevice.Authentication.SymmetricKey.PrimaryKey);
+                provisioner.ProvisionDevice(CurrentDevice.Id, CurrentDevice.Authentication.SymmetricKey.PrimaryKey);
             }
             catch (Exception ex)
             {

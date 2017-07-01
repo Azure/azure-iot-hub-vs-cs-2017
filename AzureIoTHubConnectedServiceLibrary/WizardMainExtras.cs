@@ -21,7 +21,7 @@ namespace AzureIoTHubConnectedService
         {
             string p = parameter as string;
 
-            if (this.SelectedDevice == null)
+            if (this.CurrentDevice == null)
                 _CanExecute = false;
 
             if (p == "ReceiveMsgStart")
@@ -164,7 +164,7 @@ namespace AzureIoTHubConnectedService
 
                 method = method.SetPayloadJson(DeviceMethodPayload);
 
-                dynamic result = await serviceClient.InvokeDeviceMethodAsync(SelectedDevice.Id, method, new CancellationToken());
+                dynamic result = await serviceClient.InvokeDeviceMethodAsync(CurrentDevice.Id, method, new CancellationToken());
 
                 DeviceMethodReturnStatus = result.Status;
                 DeviceMethodReturnPayload = result.GetPayloadAsJson();
@@ -218,7 +218,7 @@ namespace AzureIoTHubConnectedService
                 serviceMessage.Ack = DeliveryAcknowledgement.Full;
                 serviceMessage.MessageId = Guid.NewGuid().ToString();
 
-                await serviceClient.SendAsync(DeviceId, serviceMessage);
+                await serviceClient.SendAsync(CurrentDevice_Id, serviceMessage);
 
                 await serviceClient.CloseAsync();
 
@@ -263,8 +263,8 @@ namespace AzureIoTHubConnectedService
 
             try
             {
-                string selectedDevice = SelectedDevice.Id;
-                eventHubClient = EventHubClient.CreateFromConnectionString(_SelectedHubConnectionString, "messages/events");
+                string selectedDevice = CurrentDevice.Id;
+                eventHubClient = EventHubClient.CreateFromConnectionString(_CurrentHub_ConnectionString, "messages/events");
                 ReceiveMsgOutput = "Receiving events...\r\n";
                 int eventHubPartitionsCount = eventHubClient.GetRuntimeInformation().PartitionCount;
                 string partition = EventHubPartitionKeyResolver.ResolveToPartition(selectedDevice, eventHubPartitionsCount);
@@ -414,7 +414,7 @@ namespace AzureIoTHubConnectedService
             try
             {
                 dynamic registryManager = CommonFactory.CreateRegistryManagerFromConnectionString(CurrentHub_ConnectionString);
-                var deviceTwin = await registryManager.GetTwinAsync(SelectedDevice.Id);
+                var deviceTwin = await registryManager.GetTwinAsync(CurrentDevice.Id);
                 DeviceTwin = deviceTwin.ToJson();
                 DeviceTwinTags = deviceTwin.Tags.ToJson();
                 DeviceTwinReportedProperties = deviceTwin.Properties.Reported.ToJson();
@@ -440,7 +440,7 @@ namespace AzureIoTHubConnectedService
             try
             {
                 dynamic registryManager = CommonFactory.CreateRegistryManagerFromConnectionString(CurrentHub_ConnectionString);
-                Microsoft.Azure.Devices.Shared.Twin original = await registryManager.GetTwinAsync(SelectedDevice.Id);
+                Microsoft.Azure.Devices.Shared.Twin original = await registryManager.GetTwinAsync(CurrentDevice.Id);
                 await registryManager.UpdateTwinAsync(original.DeviceId, DeviceTwinUpdate, original.ETag);
                 await Task.Delay(1000);
             }

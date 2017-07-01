@@ -171,10 +171,10 @@ namespace UnitTests
             hub.WritableProperties.Add("IoTHubName", "testhub");
             hub.WritableProperties.Add("iotHubUri", "test.azuredevices.net");
 
-            model.SelectedHub = hub;
+            model.CurrentHub = hub;
             Assert.AreEqual<string>("testhub", model.CurrentHub_Name);
 
-            model.SelectedHub = null;
+            model.CurrentHub = null;
         }
 
         [TestMethod]
@@ -186,10 +186,10 @@ namespace UnitTests
             hub.WritableProperties.Add("IoTHubName", "testhub");
             hub.WritableProperties.Add("iotHubUri", "test.azuredevices.net");
 
-            model.SelectedHub = hub;
+            model.CurrentHub = hub;
             Assert.AreEqual<string>("testhub", model.CurrentHub_Name);
 
-            model.SelectedHub = null;
+            model.CurrentHub = null;
 
             Assert.AreEqual<string>("", model.CurrentHub_Host);
             Assert.AreEqual<string>("", model.CurrentHub_Name);
