@@ -172,7 +172,7 @@ namespace UnitTests
             hub.WritableProperties.Add("iotHubUri", "test.azuredevices.net");
 
             model.SelectedHub = hub;
-            Assert.AreEqual<string>("testhub", model.IoTHubName);
+            Assert.AreEqual<string>("testhub", model.CurrentHub_Name);
 
             model.SelectedHub = null;
         }
@@ -187,20 +187,20 @@ namespace UnitTests
             hub.WritableProperties.Add("iotHubUri", "test.azuredevices.net");
 
             model.SelectedHub = hub;
-            Assert.AreEqual<string>("testhub", model.IoTHubName);
+            Assert.AreEqual<string>("testhub", model.CurrentHub_Name);
 
             model.SelectedHub = null;
 
-            Assert.AreEqual<string>("", model.SelectedHubHost);
-            Assert.AreEqual<string>("", model.IoTHubName);
-            Assert.AreEqual<string>("", model.IoTHubConnectionString);
+            Assert.AreEqual<string>("", model.CurrentHub_Host);
+            Assert.AreEqual<string>("", model.CurrentHub_Name);
+            Assert.AreEqual<string>("", model.CurrentHub_ConnectionString);
         }
 
         public void TestHubFromConnectionString()
         {
             WizardMain model = new WizardMain();
 
-            model.IoTHubConnectionString = "XXXXX-XXXX-XXXXX-CONNECTION-STRING";
+            model.CurrentHub_ConnectionString = "XXXXX-XXXX-XXXXX-CONNECTION-STRING";
         }
 
 

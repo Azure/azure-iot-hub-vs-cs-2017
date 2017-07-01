@@ -302,7 +302,7 @@ namespace AzureIoTHubConnectedService
             {
                 Authenticator.View.IsEnabled = true;
                 _PageHubSelection.IsEnabled = Authenticator.IsAuthenticated;
-                _PageDeviceSelection.IsEnabled = (IoTHubName != "");
+                _PageDeviceSelection.IsEnabled = (CurrentHub_Name != "");
                 _PageDeviceTwin.IsEnabled = (DeviceId != "");
 
                 _PageDeviceMethod.IsEnabled = (DeviceId != "");

@@ -158,7 +158,7 @@ namespace AzureIoTHubConnectedService
 
             try
             {
-                dynamic serviceClient = ServiceClient.CreateFromConnectionString(IoTHubConnectionString);
+                dynamic serviceClient = ServiceClient.CreateFromConnectionString(CurrentHub_ConnectionString);
 
                 Microsoft.Azure.Devices.CloudToDeviceMethod method = new Microsoft.Azure.Devices.CloudToDeviceMethod(DeviceMethodName, TimeSpan.FromSeconds(timeout));
 
@@ -212,7 +212,7 @@ namespace AzureIoTHubConnectedService
 
             try
             {
-                ServiceClient serviceClient = ServiceClient.CreateFromConnectionString(IoTHubConnectionString);
+                ServiceClient serviceClient = ServiceClient.CreateFromConnectionString(CurrentHub_ConnectionString);
 
                 var serviceMessage = new Microsoft.Azure.Devices.Message(Encoding.ASCII.GetBytes(CloudToDeviceContent));
                 serviceMessage.Ack = DeliveryAcknowledgement.Full;
@@ -413,7 +413,7 @@ namespace AzureIoTHubConnectedService
 
             try
             {
-                dynamic registryManager = CommonFactory.CreateRegistryManagerFromConnectionString(IoTHubConnectionString);
+                dynamic registryManager = CommonFactory.CreateRegistryManagerFromConnectionString(CurrentHub_ConnectionString);
                 var deviceTwin = await registryManager.GetTwinAsync(SelectedDevice.Id);
                 DeviceTwin = deviceTwin.ToJson();
                 DeviceTwinTags = deviceTwin.Tags.ToJson();
@@ -439,7 +439,7 @@ namespace AzureIoTHubConnectedService
 
             try
             {
-                dynamic registryManager = CommonFactory.CreateRegistryManagerFromConnectionString(IoTHubConnectionString);
+                dynamic registryManager = CommonFactory.CreateRegistryManagerFromConnectionString(CurrentHub_ConnectionString);
                 Microsoft.Azure.Devices.Shared.Twin original = await registryManager.GetTwinAsync(SelectedDevice.Id);
                 await registryManager.UpdateTwinAsync(original.DeviceId, DeviceTwinUpdate, original.ETag);
                 await Task.Delay(1000);

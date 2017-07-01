@@ -31,8 +31,8 @@
         <Label Content="{x:Static local:Resource.SummaryDeviceSecondaryConnectionString}" Grid.Column="0" Grid.Row="5" />
 
         <Label Content="{Binding Subscription}" Grid.Column="1" Grid.Row="0"/>
-        <Label Content="{Binding IoTHubName}" Grid.Column="1" Grid.Row="1"/>
-        <TextBox Text="{Binding IoTHubConnectionString, Mode=OneWay}" Grid.Column="1" Grid.Row="2" IsReadOnly="True" Margin="1" MinLines="2" TextWrapping="Wrap"/>
+        <Label Content="{Binding CurrentHub_Name}" Grid.Column="1" Grid.Row="1"/>
+        <TextBox Text="{Binding CurrentHub_ConnectionString, Mode=OneWay}" Grid.Column="1" Grid.Row="2" IsReadOnly="True" Margin="1" MinLines="2" TextWrapping="Wrap"/>
         <Label Content="{Binding DeviceId}" Grid.Column="1" Grid.Row="3"/>
         <TextBox Text="{Binding DevicePrimaryConnectionString, Mode=OneWay}" Grid.Column="1" Grid.Row="4" IsReadOnly="True" Margin="1" MinLines="2" TextWrapping="Wrap"/>
         <TextBox Text="{Binding DeviceSecondaryConnectionString, Mode=OneWay}" Grid.Column="1" Grid.Row="5" IsReadOnly="True" Margin="1" MinLines="2" TextWrapping="Wrap"/>

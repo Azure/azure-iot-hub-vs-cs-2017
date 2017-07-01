@@ -14,7 +14,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Label Content="IoT Hub Connection String" Grid.Row="0" />
-        <TextBox Name="ConnectionString" Grid.Row="1" Margin="5" Text="{Binding Path=IoTHubConnectionString, Mode=TwoWay, UpdateSourceTrigger=Explicit}" IsEnabled="False"/>
+        <TextBox Name="ConnectionString" Grid.Row="1" Margin="5" Text="{Binding Path=CurrentHub_ConnectionString, Mode=TwoWay, UpdateSourceTrigger=Explicit}" IsEnabled="False"/>
         <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Right">
             <Button Name="UpdateButton" Content="Update" Width="Auto"  Padding="10,3,10,3" Margin="5" Click="UpdateButton_Click" Visibility="Collapsed" />
             <Button Name="CancelButton" Content="Cancel" Width="Auto" Padding="10,3,10,3" Margin="5" Click="CancelButton_Click" Visibility="Collapsed" />

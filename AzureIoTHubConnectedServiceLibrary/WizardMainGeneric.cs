@@ -82,7 +82,7 @@ namespace AzureIoTHubConnectedService
         /// Selected IoT hub name.
         /// Empty string if no hub selected.
         /// </summary>
-        public string IoTHubName
+        public string CurrentHub_Name
         {
             get { return (null != _SelectedHub) ? _SelectedHub.Properties["IoTHubName"] : ""; }
         }
@@ -91,7 +91,7 @@ namespace AzureIoTHubConnectedService
         /// Selected IoT hub connection string (primary).
         /// Empty string if no hub selected.
         /// </summary>
-        public string IoTHubConnectionString
+        public string CurrentHub_ConnectionString
         {
             get { return _SelectedHubConnectionString; }
             set
@@ -109,7 +109,7 @@ namespace AzureIoTHubConnectedService
         /// Selected IoT hub host name.
         /// Empty string if no hub selected.
         /// </summary>
-        public string SelectedHubHost
+        public string CurrentHub_Host
         {
             get
             {
@@ -155,11 +155,11 @@ namespace AzureIoTHubConnectedService
                 {
                     _SelectedDevicePrimaryConnectionString = string.Format(CultureInfo.InvariantCulture,
                         "HostName={0};DeviceId={1};SharedAccessKey={2}",
-                        SelectedHubHost, value.Id, value.Authentication.SymmetricKey.PrimaryKey);
+                        CurrentHub_Host, value.Id, value.Authentication.SymmetricKey.PrimaryKey);
 
                     _SelectedDeviceSecondaryConnectionString = string.Format(CultureInfo.InvariantCulture,
                         "HostName={0};DeviceId={1};SharedAccessKey={2}",
-                        SelectedHubHost, value.Id, value.Authentication.SymmetricKey.SecondaryKey);
+                        CurrentHub_Host, value.Id, value.Authentication.SymmetricKey.SecondaryKey);
 
 
                     // [ZKK] no need to get it here in current version of the extension
@@ -172,8 +172,8 @@ namespace AzureIoTHubConnectedService
                 }
 
                 OnPropertyChanged("Subscription");
-                OnPropertyChanged("IoTHubName");
-                OnPropertyChanged("IoTHubConnectionString");
+                OnPropertyChanged("CurrentHub_Name");
+                OnPropertyChanged("CurrentHub_ConnectionString");
                 OnPropertyChanged("DeviceId");
                 OnPropertyChanged("DevicePrimaryConnectionString");
                 OnPropertyChanged("DeviceSecondaryConnectionString");
