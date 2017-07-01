@@ -174,7 +174,6 @@ namespace AzureIoTHubConnectedService
         }
 
         protected bool m_isLinuxProject = false;
-        protected bool m_is4x4Project = false;
     }
 
     internal class NuGetReference

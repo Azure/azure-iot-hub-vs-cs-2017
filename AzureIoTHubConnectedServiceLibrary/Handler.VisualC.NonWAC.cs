@@ -35,19 +35,9 @@ namespace AzureIoTHubConnectedService
 
             }
 
-            if (!m_is4x4Project)
-            {
-                // Linux and Windows source code is almost identical
-                manifest.Files.Add(new FileToAdd("CPP/NonWAC/azure_iot_hub.cpp"));
-                manifest.Files.Add(new FileToAdd("CPP/NonWAC/azure_iot_hub.h"));
-            }
-            else
-            {
-                // 4x4 source code is a bit different right now
-                manifest.Files.Add(new FileToAdd("C/4x4/azure_iot_hub.c"));
-                manifest.Files.Add(new FileToAdd("C/4x4/azure_iot_hub.h"));
-            }
-
+            // Linux and Windows source code is almost identical
+            manifest.Files.Add(new FileToAdd("CPP/NonWAC/azure_iot_hub.cpp"));
+            manifest.Files.Add(new FileToAdd("CPP/NonWAC/azure_iot_hub.h"));
             return manifest;
         }
 
@@ -69,19 +59,6 @@ namespace AzureIoTHubConnectedService
             {
                 m_isLinuxProject = true;
             }
-            else if (type.Contains("4x4"))
-            {
-                EnvDTE.Project project = context.ProjectHierarchy.GetDteProject();
-                object vcproject = project.Object;
-   
-                string[] libs = new string[] { "-lm", "-liothub_client_mqtt_transport", "-lumqtt", "-liothub_client", "-laziotsharedutil", "-lserializer", "-l:libwolfssl.so.10" };
-                string[] libDirs = new string[] { ".\\azureiot\\lib" };
-                string[] incs = new string[] { "$(SysRoot)\\usr\\include\\azureiot" };
- 
-                UpdateCppProject(vcproject, libDirs, libs, incs);
-                m_isLinuxProject = true;
-                m_is4x4Project = true;
-            }
 
             return new AzureIoTHubConnectedServiceHandlerHelper(context);
         }
@@ -98,7 +75,7 @@ namespace AzureIoTHubConnectedService
 
             string t = "";
             var uriPrefix = "pack://application:,,/" + System.Reflection.Assembly.GetAssembly(this.GetType()).ToString() + ";component/Resources/";
-            using (var streamReader = new StreamReader(System.Windows.Application.GetResourceStream(new Uri(uriPrefix + "C/4x4/device_method_callback.inc")).Stream, System.Text.Encoding.ASCII))
+            using (var streamReader = new StreamReader(System.Windows.Application.GetResourceStream(new Uri(uriPrefix + "C/generic/device_method_callback.inc")).Stream, System.Text.Encoding.ASCII))
             {
                 t = streamReader.ReadToEnd();
             }
@@ -138,7 +115,7 @@ namespace AzureIoTHubConnectedService
 
             string t = "";
             var uriPrefix = "pack://application:,,/" + System.Reflection.Assembly.GetAssembly(this.GetType()).ToString() + ";component/Resources/";
-            using (var streamReader = new StreamReader(System.Windows.Application.GetResourceStream(new Uri(uriPrefix + "C/4x4/device_twin_callback.inc")).Stream, System.Text.Encoding.ASCII))
+            using (var streamReader = new StreamReader(System.Windows.Application.GetResourceStream(new Uri(uriPrefix + "C/generic/device_twin_callback.inc")).Stream, System.Text.Encoding.ASCII))
             {
                 t = streamReader.ReadToEnd();
             }
@@ -174,7 +151,7 @@ namespace AzureIoTHubConnectedService
 
             string t = "";
             var uriPrefix = "pack://application:,,/" + System.Reflection.Assembly.GetAssembly(this.GetType()).ToString() + ";component/Resources/";
-            using (var streamReader = new StreamReader(System.Windows.Application.GetResourceStream(new Uri(uriPrefix + "C/4x4/device_twin_report.inc")).Stream, System.Text.Encoding.ASCII))
+            using (var streamReader = new StreamReader(System.Windows.Application.GetResourceStream(new Uri(uriPrefix + "C/generic/device_twin_report.inc")).Stream, System.Text.Encoding.ASCII))
             {
                 t = streamReader.ReadToEnd();
             }
