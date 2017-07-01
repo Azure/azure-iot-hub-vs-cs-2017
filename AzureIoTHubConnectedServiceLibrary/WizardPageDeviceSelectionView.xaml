@@ -64,8 +64,20 @@
             <StackPanel>
                 <CheckBox Margin="2" IsChecked="true" Content="{x:Static local:Resource.DeviceOptionSendingMsgs}" IsEnabled="False" />
                 <CheckBox Margin="2" IsChecked="true" Content="{x:Static local:Resource.DeviceOptionReceivingMsgs}" IsEnabled="False"/>
-                <CheckBox Margin="2" IsChecked="{Binding DeviceTwinEnabled}" Content="{x:Static local:Resource.DeviceOptionDeviceTwin}" />
-                <CheckBox Margin="2" IsChecked="{Binding DeviceMethodEnabled}" Content="{x:Static local:Resource.DeviceOptionDirectMethod}" />
+                <CheckBox Margin="2" IsChecked="{Binding DeviceTwinEnabled}"  >
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{x:Static local:Resource.DeviceOptionDeviceTwin}" />
+                        <TextBlock Margin="5,0,0,0">(<Hyperlink NavigateUri="{Binding Source={x:Static local:Resource.DeviceOptionDeviceTwinLink}}" RequestNavigate="Hyperlink_RequestNavigate"><TextBlock Text="{x:Static local:Resource.MoreInfoLink}"/></Hyperlink>)
+                        </TextBlock>
+                    </StackPanel>
+                </CheckBox>
+                <CheckBox Margin="2" IsChecked="{Binding DeviceMethodEnabled}" >
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{x:Static local:Resource.DeviceOptionDirectMethod}" />
+                        <TextBlock Margin="5,0,0,0">(<Hyperlink NavigateUri="{Binding Source={x:Static local:Resource.DeviceOptionDirectMethodLink}}" RequestNavigate="Hyperlink_RequestNavigate"><TextBlock Text="{x:Static local:Resource.MoreInfoLink}"/></Hyperlink>)
+                        </TextBlock>
+                    </StackPanel>
+                </CheckBox>
             </StackPanel>
         </GroupBox>
     </Grid>

@@ -124,11 +124,29 @@ namespace AzureIoTHubConnectedService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-device-twins.
+        /// </summary>
+        public static string DeviceOptionDeviceTwinLink {
+            get {
+                return ResourceManager.GetString("DeviceOptionDeviceTwinLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Generate direct method sample code.
         /// </summary>
         public static string DeviceOptionDirectMethod {
             get {
                 return ResourceManager.GetString("DeviceOptionDirectMethod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-direct-methods.
+        /// </summary>
+        public static string DeviceOptionDirectMethodLink {
+            get {
+                return ResourceManager.GetString("DeviceOptionDirectMethodLink", resourceCulture);
             }
         }
         
@@ -282,6 +300,15 @@ namespace AzureIoTHubConnectedService {
         public static string LogMessage_UpgradingNuGetPackage {
             get {
                 return ResourceManager.GetString("LogMessage_UpgradingNuGetPackage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to more info....
+        /// </summary>
+        public static string MoreInfoLink {
+            get {
+                return ResourceManager.GetString("MoreInfoLink", resourceCulture);
             }
         }
         

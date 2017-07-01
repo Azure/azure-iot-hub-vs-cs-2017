@@ -303,4 +303,13 @@
   <data name="WizardOptionTpmDescription" xml:space="preserve">
     <value>Requires device provisioning using WebB or IoT Dashboard.</value>
   </data>
+  <data name="DeviceOptionDeviceTwinLink" xml:space="preserve">
+    <value>https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-device-twins</value>
+  </data>
+  <data name="DeviceOptionDirectMethodLink" xml:space="preserve">
+    <value>https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-direct-methods</value>
+  </data>
+  <data name="MoreInfoLink" xml:space="preserve">
+    <value>more info...</value>
+  </data>
 </root>
