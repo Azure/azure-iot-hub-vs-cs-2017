@@ -172,14 +172,28 @@ namespace UnitTests
             hub.WritableProperties.Add("iotHubUri", "test.azuredevices.net");
 
             model.SelectedHub = hub;
-
-            //Assert.AreEqual<string>("test.azuredevices.net", model.SelectedHubHost);
             Assert.AreEqual<string>("testhub", model.IoTHubName);
+
+            model.SelectedHub = null;
         }
 
         [TestMethod]
         public void TestHubUnselected()
         {
+            AzureIoTHubFake hub = new AzureIoTHubFake();
+            WizardMain model = new WizardMain();
+
+            hub.WritableProperties.Add("IoTHubName", "testhub");
+            hub.WritableProperties.Add("iotHubUri", "test.azuredevices.net");
+
+            model.SelectedHub = hub;
+            Assert.AreEqual<string>("testhub", model.IoTHubName);
+
+            model.SelectedHub = null;
+
+            Assert.AreEqual<string>("", model.SelectedHubHost);
+            Assert.AreEqual<string>("", model.IoTHubName);
+            Assert.AreEqual<string>("", model.IoTHubConnectionString);
         }
 
         [TestMethod]
