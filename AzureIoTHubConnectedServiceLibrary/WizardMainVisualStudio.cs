@@ -260,6 +260,11 @@ namespace AzureIoTHubConnectedService
             PopulateDevices();
         }
 
+        private void HandleDeviceSelected()
+        {
+            ConfigurePages();
+        }
+
         private async void PopulateHubs()
         {
             IncrementBusyCounter();

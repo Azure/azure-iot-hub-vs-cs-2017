@@ -28,6 +28,10 @@ namespace AzureIoTHubConnectedService
         {
         }
 
+        private void HandleDeviceSelected()
+        {
+        }
+
         public async void CreateNewHub(string subscriptionName, string resourceGroupName, string iotHubName) { }
 
         public async void QueryResourceGroups(string subscriptionName) { }

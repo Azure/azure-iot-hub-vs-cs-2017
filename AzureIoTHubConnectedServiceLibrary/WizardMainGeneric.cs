@@ -180,10 +180,9 @@ namespace AzureIoTHubConnectedService
 
                 OnPropertyChanged("CurrentDevice");
 
-                InvokeCanExecuteChanged();;
+                InvokeCanExecuteChanged();
 
-                // XXX - fix this
-                //ConfigurePages();
+                HandleDeviceSelected();
             }
         }
 
