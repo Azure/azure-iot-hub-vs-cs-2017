@@ -40,45 +40,6 @@ class AzureIoTHub
         await deviceClient.SendEventAsync(message);
     }
 
-    async Task<MethodResponse> DirectMethodCallback(MethodRequest methodRequest, object userContext)
-    {
-        Console.WriteLine("Method has been called");
-        return new MethodResponse(new byte[] { 1, 2, 3, 4, 5 }, 200);
-    }
-
-    public async Task RegisterDirectMethodsAsync()
-    {
-        await deviceClient.SetMethodHandlerAsync("myMethod", DirectMethodCallback, null);
-    }
-
-    public async Task GetDeviceTwinAsync()
-    {
-        Twin twin = await deviceClient.GetTwinAsync();
-
-        Console.WriteLine(twin.ToJson());
-    }
-
-    private async Task OnDesiredPropertiesUpdated(TwinCollection desiredProperties, object userContext)
-    {
-        Console.WriteLine("Desired properties updated");
-        Console.WriteLine(desiredProperties.ToJson());
-    }
-
-    public async Task RegisterTwinUpdateAsync()
-    {
-        await deviceClient.SetDesiredPropertyUpdateCallback(OnDesiredPropertiesUpdated, null);
-    }
-
-    public async Task UpdateDeviceTwin()
-    {
-        TwinCollection tc = new TwinCollection();
-
-        tc["property1"] = "value1";
-        tc["property2"] = "value2";
-
-        await deviceClient.UpdateReportedPropertiesAsync(tc);
-    }
-
     public async Task<string> ReceiveCloudToDeviceMessageAsync()
     {
         while (true)
@@ -95,4 +56,4 @@ class AzureIoTHub
             await Task.Delay(TimeSpan.FromSeconds(1));
         }
     }
-}
+$directMethod$$deviceTwin$}

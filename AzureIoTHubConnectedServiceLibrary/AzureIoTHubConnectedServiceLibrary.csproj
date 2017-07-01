@@ -530,6 +530,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\CSharp\DirectMethod.inc" />
+    <Resource Include="Resources\CSharp\DeviceTwin.inc" />
     <Resource Include="AzureIoTHubProviderIcon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>

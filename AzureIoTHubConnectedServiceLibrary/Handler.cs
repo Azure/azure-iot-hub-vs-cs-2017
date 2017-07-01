@@ -130,6 +130,18 @@ namespace AzureIoTHubConnectedService
             }
         }
 
+        protected string LoadResource(string location)
+        {
+            string t = "";
+            var uriPrefix = "pack://application:,,/" + System.Reflection.Assembly.GetAssembly(this.GetType()).ToString() + ";component/Resources/";
+            using (var streamReader = new StreamReader(System.Windows.Application.GetResourceStream(new Uri(uriPrefix + location)).Stream, System.Text.Encoding.ASCII))
+            {
+                t = streamReader.ReadToEnd();
+            }
+
+            return t;
+        }
+
         protected abstract HandlerManifest BuildHandlerManifest(bool useTPM);
 
         private async Task AddSdkReferenceAsync(ConnectedServiceHandlerContext context, HandlerManifest manifest, CancellationToken ct)
