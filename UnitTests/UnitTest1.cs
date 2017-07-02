@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using AzureIoTHubConnectedService;
+using System.Threading;
 
 namespace UnitTests
 {
@@ -219,9 +220,16 @@ namespace UnitTests
         public void TestDeviceCreateSuccessful()
         {
             WizardMain model = new WizardMain();
+
+            model.CurrentHub_ConnectionString = "XXX-JUST_FAKE_CONNECTION_STRING";
+
             model.NewDevice_Name = "newdevice";
 
-            model.CreateNewDevice();
+            Thread.Sleep(100);
+
+            model.CreateNewDevice().Wait();
+
+            Thread.Sleep(100);
 
             // verify that hub is currently selected
             Assert.IsNotNull(model.CurrentDevice);
