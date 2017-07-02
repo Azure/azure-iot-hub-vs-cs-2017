@@ -403,8 +403,14 @@
     <Compile Include="ResourceLocation.cs" />
     <Compile Include="ResourceTypeInfo.cs" />
     <Compile Include="WizardPageDeviceMethod.cs" />
+    <Compile Include="PageDirectMethodPreview.xaml.cs">
+      <DependentUpon>PageDirectMethodPreview.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WizardPageDeviceMethodView.xaml.cs">
       <DependentUpon>WizardPageDeviceMethodView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageDeviceTwinPreview.xaml.cs">
+      <DependentUpon>PageDeviceTwinPreview.xaml</DependentUpon>
     </Compile>
     <Compile Include="WizardPageLogin.cs" />
     <Compile Include="WizardPageDeviceTwinView.xaml.cs">
@@ -458,11 +464,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="PageDirectMethodPreview.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="WizardPageDeviceSelectionView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="WizardPageDeviceMethodView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PageDeviceTwinPreview.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

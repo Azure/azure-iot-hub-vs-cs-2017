@@ -227,7 +227,7 @@ namespace UnitTests
 
             Thread.Sleep(100);
 
-            model.CreateNewDevice().Wait();
+            model.CreateNewDevice();
 
             Thread.Sleep(100);
 

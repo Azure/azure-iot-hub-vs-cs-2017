@@ -226,6 +226,7 @@ namespace AzureIoTHubConnectedService
             set
             {
                 _DeviceTwinEnabled = value;
+                OnPropertyChanged("DeviceTwinEnabled");
             }
         }
 
@@ -254,6 +255,7 @@ namespace AzureIoTHubConnectedService
             set
             {
                 _DeviceMethodEnabled = value;
+                OnPropertyChanged("DeviceMethodEnabled");
             }
         }
 

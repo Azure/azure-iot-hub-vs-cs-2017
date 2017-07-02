@@ -1,0 +1,58 @@
+﻿<UserControl x:Class="AzureIoTHubConnectedService.PageDeviceTwinPreview"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AzureIoTHubConnectedService"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300"
+             Name="DeviceTwinView">
+    <Grid Name="MainGrid" VerticalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.ColumnSpan="3" TextWrapping="Wrap" Padding="5" >
+            Device Twin Properties
+        </TextBlock>
+
+        <ListView Grid.ColumnSpan="3" Grid.Row="1" HorizontalAlignment="Stretch" Margin="10" VerticalAlignment="Stretch" ItemsSource="{Binding DeviceTwinProperties}" SelectedItem="{Binding DeviceTwinSelectedProperty}" >
+            <ListView.Resources>
+                <x:Array x:Key="PropertyTypes" Type="local:ComboBoxItemString">
+                    <local:ComboBoxItemString ValueString = "Desired" />
+                    <local:ComboBoxItemString ValueString = "Reported"/>
+                </x:Array>
+                <x:Array x:Key="PropertyDataTypes" Type="local:ComboBoxItemString">
+                    <local:ComboBoxItemString ValueString = "String" />
+                    <local:ComboBoxItemString ValueString = "Number"/>
+                    <local:ComboBoxItemString ValueString = "Boolean"/>
+                </x:Array>
+            </ListView.Resources>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock  Text="{Binding PropertyName}" Grid.Column="0" TextWrapping="Wrap" Margin="3"/>
+                        <TextBlock Grid.Column="1" Margin="3" Text="{Binding PropertyType}" />
+                        <TextBlock Grid.Column="2" Margin="3"  Text="{Binding PropertyDataType}" />
+
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</UserControl>
