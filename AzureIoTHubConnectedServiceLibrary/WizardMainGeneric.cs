@@ -328,6 +328,8 @@ namespace AzureIoTHubConnectedService
             NewHub_FieldsEnabled = true;
             NewHub_Name = "";
             NewHub_ResourceGroupName = "";
+
+            CurrentHub = hub;
         }
 
         private void NewHub_Validate()

@@ -215,21 +215,40 @@ namespace UnitTests
         {
         }
 
+        [TestMethod]
         public void TestDeviceCreateSuccessful()
         {
 
         }
 
+        [TestMethod]
         public void TestDeviceCreateFailed()
         {
 
         }
 
+        [TestMethod]
         public void TestHubCreateSuccessful()
         {
+            WizardMain model = new WizardMain();
+            model.NewHub_Name = "newhubname";
+            model.NewHub_SubscriptionName = "test subscription";
+            model.NewHub_ResourceGroupName = "testrg";
 
+            model.CreateNewHub();
+
+            // verify if hub was correctly added to the list
+
+            // verify that hub is currently selected
+
+
+            Assert.IsNotNull(model.CurrentHub);
+            Assert.AreEqual<string>("newhubname.azuredevices.net", model.CurrentHub_Host);
+            Assert.AreEqual<string>("newhubname", model.CurrentHub_Name);
+            Assert.AreEqual<string>("HostName=newhubname.azuredevices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=fakekey-fakekey-fakekey", model.CurrentHub_ConnectionString);
         }
 
+        [TestMethod]
         public void TestHubCreateFailed()
         {
 

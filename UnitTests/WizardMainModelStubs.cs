@@ -14,6 +14,11 @@ namespace AzureIoTHubConnectedService
 {
     public partial class WizardMain: INotifyPropertyChanged
     {
+        public WizardMain()
+        {
+            _Hubs = new ObservableCollection<IAzureIoTHub>();
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged(string propertyName = null)
@@ -26,13 +31,48 @@ namespace AzureIoTHubConnectedService
 
         private void HandleHubSelected()
         {
+            if (_CurrentHub != null)
+            {
+                _CurrentHub_ConnectionString = string.Format(CultureInfo.InvariantCulture,
+                    "HostName={0};SharedAccessKeyName=iothubowner;SharedAccessKey={1}",
+                    _CurrentHub.Properties["iotHubUri"], "fakekey-fakekey-fakekey");
+            }
+            else
+            {
+                _CurrentHub_ConnectionString = "";
+            }
+
+            PopulateDevices();
         }
 
         private void HandleDeviceSelected()
         {
         }
 
-        public async void CreateNewHub(string subscriptionName, string resourceGroupName, string iotHubName) { }
+        public async void CreateNewHub(string subscriptionName, string resourceGroupName, string iotHubName)
+        {
+            IncrementBusyCounter();
+
+            AzureIoTHubFake hub = new AzureIoTHubFake();
+
+            if (!simulateOperationFailure)
+            {
+                hub.WritableProperties.Add("IoTHubName", iotHubName);
+                hub.WritableProperties.Add("Region", "westus");
+                hub.WritableProperties.Add("SubscriptionName", subscriptionName);
+                hub.WritableProperties.Add("ResourceGroup", resourceGroupName);
+                hub.WritableProperties.Add("iotHubUri", iotHubName + ".azuredevices.net");
+
+                AddHub(hub);
+            }
+
+            DecrementBusyCounter();
+
+            if (simulateOperationFailure)
+            {
+                throw new Exception("Creating IoT Hub Failed");
+            }
+        }
 
         public async void QueryResourceGroups(string subscriptionName) { }
 
@@ -44,5 +84,6 @@ namespace AzureIoTHubConnectedService
             //MessageBox(message);
         }
 
+        public bool simulateOperationFailure = false;
     }
 }
