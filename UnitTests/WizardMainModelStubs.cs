@@ -51,6 +51,7 @@ namespace AzureIoTHubConnectedService
 
         public async void CreateNewHub(string subscriptionName, string resourceGroupName, string iotHubName)
         {
+            NewHub_FieldsEnabled = false;
             IncrementBusyCounter();
 
             AzureIoTHubFake hub = new AzureIoTHubFake();
@@ -65,13 +66,13 @@ namespace AzureIoTHubConnectedService
 
                 AddHub(hub);
             }
+            else
+            {
+                DisplayMessage("Failed to create new IoT Hub");
+            }
 
             DecrementBusyCounter();
-
-            if (simulateOperationFailure)
-            {
-                throw new Exception("Creating IoT Hub Failed");
-            }
+            NewHub_FieldsEnabled = true;
         }
 
         public async void QueryResourceGroups(string subscriptionName) { }

@@ -317,8 +317,6 @@ namespace AzureIoTHubConnectedService
 
         internal void CreateNewHub()
         {
-            NewHub_FieldsEnabled = false;
-
             CreateNewHub(NewHub_SubscriptionName, NewHub_ResourceGroupName, NewHub_Name);
         }
 
@@ -328,6 +326,7 @@ namespace AzureIoTHubConnectedService
             NewHub_FieldsEnabled = true;
             NewHub_Name = "";
             NewHub_ResourceGroupName = "";
+            NewHub_SubscriptionName = "";
 
             CurrentHub = hub;
         }

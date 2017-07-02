@@ -218,6 +218,18 @@ namespace UnitTests
         [TestMethod]
         public void TestDeviceCreateSuccessful()
         {
+            WizardMain model = new WizardMain();
+            model.NewDevice_Name = "newdevice";
+
+            model.CreateNewDevice();
+
+            // verify that hub is currently selected
+            Assert.IsNotNull(model.CurrentDevice);
+            Assert.AreEqual<string>("newdevice", model.CurrentDevice_Id);
+
+            // verify that fields are cleared
+            Assert.AreEqual<string>("", model.NewDevice_Name);
+            Assert.IsTrue(model.NewDevice_FieldsEnabled);
 
         }
 
@@ -240,18 +252,50 @@ namespace UnitTests
             // verify if hub was correctly added to the list
 
             // verify that hub is currently selected
-
-
             Assert.IsNotNull(model.CurrentHub);
             Assert.AreEqual<string>("newhubname.azuredevices.net", model.CurrentHub_Host);
             Assert.AreEqual<string>("newhubname", model.CurrentHub_Name);
             Assert.AreEqual<string>("HostName=newhubname.azuredevices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=fakekey-fakekey-fakekey", model.CurrentHub_ConnectionString);
+
+            // verify that fields are cleared
+            Assert.AreEqual<string>("", model.NewHub_Name);
+            Assert.AreEqual<string>("", model.NewHub_ResourceGroupName);
+            Assert.AreEqual<string>("", model.NewHub_SubscriptionName);
+            Assert.IsTrue(model.NewHub_FieldsEnabled);
+
+            // verify that message was displayed
+
+
+            // verify that appropriate property updates were called
         }
 
         [TestMethod]
         public void TestHubCreateFailed()
         {
+            WizardMain model = new WizardMain();
+            model.NewHub_Name = "newhubname";
+            model.NewHub_SubscriptionName = "test subscription";
+            model.NewHub_ResourceGroupName = "testrg";
 
+            // make sure next operation fails
+            model.simulateOperationFailure = true;
+
+            model.CreateNewHub();
+
+            // verify no new hub was created
+            Assert.IsNull(model.CurrentHub);
+            Assert.AreEqual<string>("", model.CurrentHub_Host);
+            Assert.AreEqual<string>("", model.CurrentHub_Name);
+            Assert.AreEqual<string>("", model.CurrentHub_ConnectionString);
+
+            // verify that fields are remain unchanged
+            Assert.AreEqual<string>("newhubname", model.NewHub_Name);
+            Assert.AreEqual<string>("testrg", model.NewHub_ResourceGroupName);
+            Assert.AreEqual<string>("test subscription", model.NewHub_SubscriptionName);
+            Assert.IsTrue(model.NewHub_FieldsEnabled);
+            Assert.IsTrue(model.NewHub_CanCreate);
+          
+            // verify that error message was displayed
         }
     }
 }

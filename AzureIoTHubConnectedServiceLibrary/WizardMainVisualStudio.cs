@@ -155,6 +155,7 @@ namespace AzureIoTHubConnectedService
 
         public async void CreateNewHub(string subscriptionName, string resourceGroupName, string iotHubName)
         {
+            NewHub_FieldsEnabled = false;
             IncrementBusyCounter();
 
             try
@@ -179,6 +180,7 @@ namespace AzureIoTHubConnectedService
             }
 
             DecrementBusyCounter();
+            NewHub_FieldsEnabled = true;
         }
 
         public async void QueryResourceGroups(string subscriptionName)
