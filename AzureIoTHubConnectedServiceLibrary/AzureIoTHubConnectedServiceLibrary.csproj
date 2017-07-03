@@ -544,7 +544,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\CPP\generic\azure_iot_hub.cpp" />
+    <Resource Include="Resources\CPP\generic\azure_iot_hub.cpp" />
     <Resource Include="Resources\CPP\generic\azure_iot_hub.h" />
     <Resource Include="Resources\CPP\generic\device_method_callback.inc" />
     <Resource Include="Resources\CPP\generic\device_twin_callback.inc" />
@@ -668,6 +668,10 @@
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="Packages\Microsoft.Extensions.Logging.1.1.1.nupkg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="Packages\Microsoft.Azure.IoTHub.Serializer.1.1.14.nupkg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>

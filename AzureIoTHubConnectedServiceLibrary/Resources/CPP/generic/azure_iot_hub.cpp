@@ -7,7 +7,7 @@ $stdafx$
 #include "azure_c_shared_utility/threadapi.h"
 #include "iothub_client.h"
 #include "iothubtransportmqtt.h"
-//#include "jsondecoder.h"
+#include "jsondecoder.h"
 #include "azure_iot_hub.h"
 
 
@@ -201,9 +201,9 @@ void sendMessage(void)
 	}
 	else
 	{
-		const unsigned char* message = "{{\"deviceId\":\"mydevice\",\"messageId\":1,\"text\":\"Hello Cloud from a C app!\"}}";
+		const unsigned char* message = (const unsigned char*)"{{\"deviceId\":\"mydevice\",\"messageId\":1,\"text\":\"Hello Cloud from a C app!\"}}";
 
-		IOTHUB_MESSAGE_HANDLE message_handle = IoTHubMessage_CreateFromByteArray(message, strlen(message));
+		IOTHUB_MESSAGE_HANDLE message_handle = IoTHubMessage_CreateFromByteArray(message, strlen((const char*)message));
 
 		if (message_handle == 0)
 		{
@@ -247,7 +247,7 @@ static IOTHUBMESSAGE_DISPOSITION_RESULT receiveMessageCallback(IOTHUB_MESSAGE_HA
 	else
 	{
 		/*buffer is not zero terminated*/
-		unsigned char* str_msg = malloc(size + 1);
+		unsigned char* str_msg = (unsigned char*)malloc(size + 1);
 
 		if (str_msg != NULL)
 		{

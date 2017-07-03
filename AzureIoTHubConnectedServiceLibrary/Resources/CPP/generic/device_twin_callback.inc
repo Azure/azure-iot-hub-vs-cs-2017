@@ -19,21 +19,21 @@ static void twinCallback(DEVICE_TWIN_UPDATE_STATE updateState,
 		temp[i] = (char)(payLoad[i]);
 	}
 	temp[size] = '\0';
-//	MULTITREE_HANDLE tree = NULL;
-//
-//	if (JSON_DECODER_OK == JSONDecoder_JSON_To_MultiTree(temp, &tree))
-//	{
-//		MULTITREE_HANDLE child = NULL;
+	MULTITREE_HANDLE tree = NULL;
 
-//		if (MULTITREE_OK != MultiTree_GetChildByName(tree, "desired", &child))
-//		{
-//			LogInfo("This device twin message contains desired message only");
-//			child = tree;
-//		}
-//		const void *value = NULL;
-//
-//$innerxx$
-//	}
-//	MultiTree_Destroy(tree);
+	if (JSON_DECODER_OK == JSONDecoder_JSON_To_MultiTree(temp, &tree))
+	{
+		MULTITREE_HANDLE child = NULL;
+
+		if (MULTITREE_OK != MultiTree_GetChildByName(tree, "desired", &child))
+		{
+			LogInfo("This device twin message contains desired message only");
+			child = tree;
+		}
+		const void *value = NULL;
+
+$inner$
+	}
+	MultiTree_Destroy(tree);
 	free(temp);
 }

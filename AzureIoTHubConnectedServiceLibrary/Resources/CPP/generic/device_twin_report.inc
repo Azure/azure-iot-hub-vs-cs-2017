@@ -19,7 +19,7 @@ void twinReportState(void)
 	{
 		const char* state = "$inner$";
 
-		if (IoTHubClient_LL_SendReportedState(iothub_client_handle, state, strlen(state), reportStatusCallback, 0) != IOTHUB_CLIENT_OK)
+		if (IoTHubClient_LL_SendReportedState(iothub_client_handle, (unsigned char*)state, strlen(state), reportStatusCallback, 0) != IOTHUB_CLIENT_OK)
 		{
 			Log_Debug("ERROR: failed to set reported state\n");
 		}
