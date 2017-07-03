@@ -4,6 +4,8 @@
 using System;
 using System.IO;
 using Microsoft.VisualStudio.ConnectedServices;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace AzureIoTHubConnectedService
 {
@@ -36,8 +38,8 @@ namespace AzureIoTHubConnectedService
             }
 
             // Linux and Windows source code is almost identical
-            manifest.Files.Add(new FileToAdd("CPP/NonWAC/azure_iot_hub.cpp"));
-            manifest.Files.Add(new FileToAdd("CPP/NonWAC/azure_iot_hub.h"));
+            manifest.Files.Add(new FileToAdd("C/generic/azure_iot_hub.c"));
+            manifest.Files.Add(new FileToAdd("C/generic/azure_iot_hub.h"));
             return manifest;
         }
 
@@ -175,6 +177,21 @@ namespace AzureIoTHubConnectedService
             helper.TokenReplacementValues.Add("twinReportStateCall", "\r\n    twinReportState();");
         }
 
+        static private void ToolsPropertyAddValues(object item, string subProperty, string[] additionalValues)
+        {
+            List<String> values = new List<string>((item.GetType().GetProperty(subProperty).GetValue(item) as string).Split());
+
+            foreach (string v in additionalValues)
+            {
+                if (!values.Any(s => s.Equals(v, StringComparison.CurrentCultureIgnoreCase)))
+                {
+                    values.Add(v);
+                }
+            }
+
+            item.GetType().GetProperty(subProperty).SetValue(item, String.Join(" ", values));
+        }
+
         private void UpdateCppProject(object vcProject, string[] additionalLibraryDirs, string[] additionalLibraries, string[] additionalIncludePaths)
         {
             System.Collections.IEnumerable configurations = vcProject.GetType().GetProperty("Configurations").GetValue(vcProject) as System.Collections.IEnumerable;
@@ -187,35 +204,12 @@ namespace AzureIoTHubConnectedService
                 {
                     if (item.ToString() == "Microsoft.VisualStudio.Project.VisualC.VCProjectEngine.VCLinkerToolShim")
                     {
-                        string value = item.GetType().GetProperty("AdditionalLibraryDirectories").GetValue(item) as string;
-
-                        foreach (string dir in additionalLibraryDirs)
-                        {
-                            if (!value.Contains(dir)) value += " " + dir;
-                        }
-
-                        item.GetType().GetProperty("AdditionalLibraryDirectories").SetValue(item, value);
-
-                        value = item.GetType().GetProperty("AdditionalDependencies").GetValue(item) as string;
-
-                        foreach (string library in additionalLibraries)
-                        {
-                            if (!value.Contains(library)) value += " " + library;
-                        }
-                       
-                        item.GetType().GetProperty("AdditionalDependencies").SetValue(item, value);
+                        ToolsPropertyAddValues(item, "AdditionalLibraryDirectories", additionalLibraryDirs);
+                        ToolsPropertyAddValues(item, "AdditionalDependencies", additionalLibraries);
                     }
                     else if (item.ToString() == "Microsoft.VisualStudio.Project.VisualC.VCProjectEngine.VCCLCompilerToolShim")
                     {
-                        string value = item.GetType().GetProperty("AdditionalIncludeDirectories").GetValue(item) as string;
-
-                        foreach (string inc in additionalIncludePaths)
-                        {
-                            if (!value.Contains(inc)) value += " " + inc;
-                        }
-
-                        item.GetType().GetProperty("AdditionalIncludeDirectories").SetValue(item, value);
-
+                        ToolsPropertyAddValues(item, "AdditionalIncludeDirectories", additionalIncludePaths);
                     }
                 }
             }

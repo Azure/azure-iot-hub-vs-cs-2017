@@ -120,6 +120,12 @@
       <Link>PageDeviceTwin.xaml.cs</Link>
       <DependentUpon>PageDeviceTwin.xaml</DependentUpon>
     </Compile>
+    <Compile Include="..\AzureIoTHubConnectedServiceLibrary\PageDeviceTwinPreview.xaml.cs">
+      <Link>PageDeviceTwinPreview.xaml.cs</Link>
+    </Compile>
+    <Compile Include="..\AzureIoTHubConnectedServiceLibrary\PageDirectMethodPreview.xaml.cs">
+      <Link>PageDirectMethodPreview.xaml.cs</Link>
+    </Compile>
     <Compile Include="..\AzureIoTHubConnectedServiceLibrary\PageHubConnectionString.xaml.cs">
       <Link>PageHubConnectionString.xaml.cs</Link>
       <DependentUpon>PageHubConnectionString.xaml</DependentUpon>
@@ -171,6 +177,16 @@
     </Page>
     <Page Include="..\AzureIoTHubConnectedServiceLibrary\PageDeviceTwin.xaml">
       <Link>PageDeviceTwin.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="..\AzureIoTHubConnectedServiceLibrary\PageDeviceTwinPreview.xaml">
+      <Link>PageDeviceTwinPreview.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="..\AzureIoTHubConnectedServiceLibrary\PageDirectMethodPreview.xaml">
+      <Link>PageDirectMethodPreview.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
