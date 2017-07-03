@@ -38,8 +38,8 @@ namespace AzureIoTHubConnectedService
             }
 
             // Linux and Windows source code is almost identical
-            manifest.Files.Add(new FileToAdd("C/generic/azure_iot_hub.c"));
-            manifest.Files.Add(new FileToAdd("C/generic/azure_iot_hub.h"));
+            manifest.Files.Add(new FileToAdd("CPP/generic/azure_iot_hub.cpp"));
+            manifest.Files.Add(new FileToAdd("CPP/generic/azure_iot_hub.h"));
             return manifest;
         }
 
@@ -77,7 +77,7 @@ namespace AzureIoTHubConnectedService
 
             string t = "";
             var uriPrefix = "pack://application:,,/" + System.Reflection.Assembly.GetAssembly(this.GetType()).ToString() + ";component/Resources/";
-            using (var streamReader = new StreamReader(System.Windows.Application.GetResourceStream(new Uri(uriPrefix + "C/generic/device_method_callback.inc")).Stream, System.Text.Encoding.ASCII))
+            using (var streamReader = new StreamReader(System.Windows.Application.GetResourceStream(new Uri(uriPrefix + "CPP/generic/device_method_callback.inc")).Stream, System.Text.Encoding.ASCII))
             {
                 t = streamReader.ReadToEnd();
             }
@@ -117,7 +117,7 @@ namespace AzureIoTHubConnectedService
 
             string t = "";
             var uriPrefix = "pack://application:,,/" + System.Reflection.Assembly.GetAssembly(this.GetType()).ToString() + ";component/Resources/";
-            using (var streamReader = new StreamReader(System.Windows.Application.GetResourceStream(new Uri(uriPrefix + "C/generic/device_twin_callback.inc")).Stream, System.Text.Encoding.ASCII))
+            using (var streamReader = new StreamReader(System.Windows.Application.GetResourceStream(new Uri(uriPrefix + "CPP/generic/device_twin_callback.inc")).Stream, System.Text.Encoding.ASCII))
             {
                 t = streamReader.ReadToEnd();
             }
@@ -153,7 +153,7 @@ namespace AzureIoTHubConnectedService
 
             string t = "";
             var uriPrefix = "pack://application:,,/" + System.Reflection.Assembly.GetAssembly(this.GetType()).ToString() + ";component/Resources/";
-            using (var streamReader = new StreamReader(System.Windows.Application.GetResourceStream(new Uri(uriPrefix + "C/generic/device_twin_report.inc")).Stream, System.Text.Encoding.ASCII))
+            using (var streamReader = new StreamReader(System.Windows.Application.GetResourceStream(new Uri(uriPrefix + "CPP/generic/device_twin_report.inc")).Stream, System.Text.Encoding.ASCII))
             {
                 t = streamReader.ReadToEnd();
             }

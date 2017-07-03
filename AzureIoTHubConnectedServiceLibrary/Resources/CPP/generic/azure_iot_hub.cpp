@@ -1,4 +1,5 @@
 ﻿
+$stdafx$
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -6,7 +7,7 @@
 #include "azure_c_shared_utility/threadapi.h"
 #include "iothub_client.h"
 #include "iothubtransportmqtt.h"
-#include "jsondecoder.h"
+//#include "jsondecoder.h"
 #include "azure_iot_hub.h"
 
 
@@ -126,7 +127,6 @@ const char AzureIoTCertificatesX[] =
 "VTJbZAxEaZ3cVCKva5sQUxFMjwG32g==\r\n"
 "-----END CERTIFICATE-----\r\n";
 
-static char* retrieveKeys();
 static void sendMessageCallback(IOTHUB_CLIENT_CONFIRMATION_RESULT result, void* context);
 static IOTHUBMESSAGE_DISPOSITION_RESULT receiveMessageCallback(IOTHUB_MESSAGE_HANDLE message, void* context);$deviceTwinCallbackDecl$$deviceMethodCallbackDecl$
 
@@ -141,21 +141,11 @@ bool clientConnect(void)
 {
     if (platform_init() != 0)
     {
-        Log_Debug("ERROR: failed initializing platform.\n");
+        printf("ERROR: failed initializing platform.\n");
         return false;
     }
 
-    char* updatedConnectionString = retrieveKeys();
-
-    if (updatedConnectionString == NULL)
-    {
-        Log_Debug("ERROR: failed to allocate buffer for connection string\n");
-        return false;
-    }
-
-    iothub_client_handle = IoTHubClient_LL_CreateFromConnectionString(updatedConnectionString, MQTT_Protocol);
-
-    free(updatedConnectionString);
+    iothub_client_handle = IoTHubClient_LL_CreateFromConnectionString(connection_string, MQTT_Protocol);
 
     if (iothub_client_handle == NULL)
     {
@@ -166,7 +156,7 @@ bool clientConnect(void)
 
 	if (azureRes != IOTHUB_CLIENT_OK)
 	{
-		Log_Debug("ERROR: failure to set option \"TrustedCerts\"\n");
+		printf("ERROR: failure to set option \"TrustedCerts\"\n");
 		return false;
 	}
 
@@ -175,48 +165,6 @@ bool clientConnect(void)
 $deviceMethodCallbackRegistration$$deviceTwinCallbackRegistration$
 
 	return true;
-}
-
-static char* retrieveKeys()
-{
-    char* updated = (char*)malloc(MAX_CONNECTION_STRING_SIZE * 3);
-
-    if (updated != NULL)
-    {
-        if (strstr(connection_string, "=%s") != NULL)
-        {
-            char* deviceId = updated + MAX_CONNECTION_STRING_SIZE;
-            char* sharedAccessKey = deviceId + MAX_CONNECTION_STRING_SIZE;
-
-            if (Config_ReadString("DeviceId", deviceId, MAX_CONNECTION_STRING_SIZE) == Result_Success)
-            {
-                if (Config_ReadString("SharedAccessKey", sharedAccessKey, MAX_CONNECTION_STRING_SIZE) == Result_Success)
-                {
-                    snprintf(updated, MAX_CONNECTION_STRING_SIZE, connection_string, deviceId, sharedAccessKey);
-                    return updated;
-                }
-                else
-                {
-                    Log_Debug("ERROR: failed to get SharedAccessKey\n");
-                }
-            }
-            else
-            {
-                Log_Debug("ERROR: failed to get DeviceId\n");
-            }
-
-        }
-        else
-        {
-            Log_Debug("Using embedded key\n");
-            strncpy(updated, connection_string, MAX_CONNECTION_STRING_SIZE);
-            return updated;
-        }
-
-        free(updated);
-    }
-
-    return NULL;
 }
 
 /// <summary>
@@ -238,7 +186,7 @@ void clientDisconnect(void)
 /// </summary>
 void doWork(void)
 {
-	Log_Debug("doWork called...\n");
+	printf("doWork called...\n");
 	IoTHubClient_LL_DoWork(iothub_client_handle);
 }
 
@@ -249,7 +197,7 @@ void sendMessage(void)
 {
 	if (iothub_client_handle == NULL)
 	{
-		Log_Debug("ERROR: IoT Hub client not initialized\n");
+		printf("ERROR: IoT Hub client not initialized\n");
 	}
 	else
 	{
@@ -259,17 +207,17 @@ void sendMessage(void)
 
 		if (message_handle == 0)
 		{
-			Log_Debug("ERROR: unable to create a new IoTHubMessage\n");
+			printf("ERROR: unable to create a new IoTHubMessage\n");
 		}
 		else
 		{
 			if (IoTHubClient_LL_SendEventAsync(iothub_client_handle, message_handle, sendMessageCallback, /*&callback_param*/0) != IOTHUB_CLIENT_OK)
 			{
-				Log_Debug("ERROR: failed to hand over the message to IoTHubClient");
+				printf("ERROR: failed to hand over the message to IoTHubClient");
 			}
 			else
 			{
-				Log_Debug("IoTHubClient accepted the message for delivery\n");
+				printf("IoTHubClient accepted the message for delivery\n");
 			}
 		}
 	}
@@ -282,7 +230,7 @@ $deviceTwinCodeReported$
 /// </summary>
 static void sendMessageCallback(IOTHUB_CLIENT_CONFIRMATION_RESULT result, void* context)
 {
-	Log_Debug("Message received by IoT Hub. Result is: %d\n", result);
+	printf("Message received by IoT Hub. Result is: %d\n", result);
 }
 
 /// <summary>
@@ -294,7 +242,7 @@ static IOTHUBMESSAGE_DISPOSITION_RESULT receiveMessageCallback(IOTHUB_MESSAGE_HA
 	size_t size;
 	if (IoTHubMessage_GetByteArray(message, &buffer, &size) != IOTHUB_MESSAGE_OK)
 	{
-		Log_Debug("ERROR: unable to IoTHubMessage_GetByteArray\n");
+		printf("ERROR: unable to IoTHubMessage_GetByteArray\n");
 	}
 	else
 	{
@@ -306,12 +254,12 @@ static IOTHUBMESSAGE_DISPOSITION_RESULT receiveMessageCallback(IOTHUB_MESSAGE_HA
 			memcpy(str_msg, buffer, size);
 			str_msg[size] = '\0';
 
-			Log_Debug("Received message '%s' from IoT Hub\n", str_msg);
+			printf("Received message '%s' from IoT Hub\n", str_msg);
 			free(str_msg);
 		}
 		else
 		{
-			Log_Debug("ERROR: couldn't allocate buffer for received message\n");
+			printf("ERROR: couldn't allocate buffer for received message\n");
 		}
 	}
 
