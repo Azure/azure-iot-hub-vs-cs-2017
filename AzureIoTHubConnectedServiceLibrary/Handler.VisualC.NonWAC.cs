@@ -96,7 +96,7 @@ namespace AzureIoTHubConnectedService
                 result += "if (strcmp(methodName, \"" + method.Name + "\") == 0)\r\n";
                 result += "    {\r\n";
 
-                result += "        Log_Debug(\"Method " + method.Name + " called...\\n\");\r\n";
+                result += "        printf(\"Method " + method.Name + " called...\\n\");\r\n";
                 result += "    }\r\n";
                 first = false;
             }
@@ -132,7 +132,7 @@ namespace AzureIoTHubConnectedService
                 {
                     result += "        if (MULTITREE_OK == MultiTree_GetLeafValue(child, \"" + property.PropertyName + "\", &value))\r\n";
                     result += "        {\r\n";
-                    result += "            Log_Debug(\"Property " + property.PropertyName + " changed, new value is %s\\n\", (char*) value);\r\n";
+                    result += "            printf(\"Property " + property.PropertyName + " changed, new value is %s\\n\", (char*) value);\r\n";
                     result += "        }\r\n";
                 }
 
@@ -166,10 +166,8 @@ namespace AzureIoTHubConnectedService
             {
                 if (property.PropertyType == "Reported")
                 {
-                    //result += "        if (MULTITREE_OK == MultiTree_GetLeafValue(child, \"" + property.PropertyName + "\", &value))\r\n";
-                    //result += "        {\r\n";
-                    //result += "            Log_Debug(\"Property " + property.PropertyName + " changed, new value is %s\\n\", (char*) value);\r\n";
-                    //result += "        }\r\n";
+
+                    result += "            if (mtreeResult == MULTITREE_OK) mtreeResult = MultiTree_AddLeaf(tree, \"/" + property.PropertyName + "\", \"\\\"test value\\\"\");";
                 }
             }
 

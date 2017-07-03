@@ -10,7 +10,7 @@ static void twinCallback(DEVICE_TWIN_UPDATE_STATE updateState,
 
 	if (temp == NULL)
 	{
-		Log_Debug("ERROR: couldn't allocate buffer for twin update payload\n");
+		printf("ERROR: couldn't allocate buffer for twin update payload\n");
 		return;
 	}
 
@@ -27,7 +27,7 @@ static void twinCallback(DEVICE_TWIN_UPDATE_STATE updateState,
 
 		if (MULTITREE_OK != MultiTree_GetChildByName(tree, "desired", &child))
 		{
-			LogInfo("This device twin message contains desired message only");
+			printf("This device twin message contains desired message only");
 			child = tree;
 		}
 		const void *value = NULL;

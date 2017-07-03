@@ -22,11 +22,13 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.ColumnSpan="3" TextWrapping="Wrap" Padding="5" >
-            Device Twin Properties
-        </TextBlock>
+        <Border HorizontalAlignment="Stretch" Grid.ColumnSpan="3" Grid.Row="0" BorderThickness="0,0,0,0.5" BorderBrush="Gray" >
+            <TextBlock TextWrapping="Wrap" Padding="5"  >            
+                Device Twin Properties
+            </TextBlock>
+        </Border>
 
-        <ListView Grid.ColumnSpan="3" Grid.Row="1" HorizontalAlignment="Stretch" Margin="10" VerticalAlignment="Stretch" ItemsSource="{Binding DeviceTwinProperties}" SelectedItem="{Binding DeviceTwinSelectedProperty}" >
+        <ListView Grid.ColumnSpan="3" Grid.Row="1" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Stretch" ItemsSource="{Binding DeviceTwinProperties}" SelectedItem="{Binding DeviceTwinSelectedProperty}" >
             <ListView.Resources>
                 <x:Array x:Key="PropertyTypes" Type="local:ComboBoxItemString">
                     <local:ComboBoxItemString ValueString = "Desired" />
@@ -40,7 +42,7 @@
             </ListView.Resources>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Grid>
+                    <Grid HorizontalAlignment="Stretch">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />

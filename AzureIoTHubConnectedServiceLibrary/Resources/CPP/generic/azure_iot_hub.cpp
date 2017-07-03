@@ -8,6 +8,7 @@ $stdafx$
 #include "iothub_client.h"
 #include "iothubtransportmqtt.h"
 #include "jsondecoder.h"
+#include "jsonencoder.h"
 #include "azure_iot_hub.h"
 
 

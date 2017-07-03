@@ -21,11 +21,13 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.ColumnSpan="3" TextWrapping="Wrap" Padding="5" >
-            Direct Methods
-        </TextBlock>
+        <Border HorizontalAlignment="Stretch" Grid.ColumnSpan="3" Grid.Row="0" BorderThickness="0,0,0,0.5" BorderBrush="Gray" >
+            <TextBlock TextWrapping="Wrap" Padding="5"  >            
+                Direct Methods
+            </TextBlock>
+        </Border>
 
-        <ListView Grid.ColumnSpan="3" Grid.Row="1" HorizontalAlignment="Stretch" Margin="10" VerticalAlignment="Stretch" ItemsSource="{Binding DeviceMethods}" >
+        <ListView Grid.ColumnSpan="3" Grid.Row="1" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Stretch" ItemsSource="{Binding DeviceMethods}" >
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid>

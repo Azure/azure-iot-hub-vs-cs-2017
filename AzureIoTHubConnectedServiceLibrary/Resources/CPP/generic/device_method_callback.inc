@@ -8,14 +8,14 @@ static int deviceMethodCallback(const char *methodName,
 	size_t *response_size,
 	void *userContextCallback)
 {
-	Log_Debug("Try to invoke method %s\n", methodName);
+	printf("Try to invoke method %s\n", methodName);
 	const char *responseMessage = onSuccess;
 	int result = 200;
 
 $inner$
 	else
 	{
-		LogError("No method %s found\r\n", methodName);
+		printf("No method %s found\r\n", methodName);
 		responseMessage = notFound;
 		result = 404;
 	}
