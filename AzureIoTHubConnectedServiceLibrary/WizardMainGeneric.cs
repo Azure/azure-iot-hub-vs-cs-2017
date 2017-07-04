@@ -273,6 +273,9 @@ namespace AzureIoTHubConnectedService
         // NEW IOT HUB CREATION RELATED CODE
         //--------------------------------------------------------------------------------------------------------------------
 
+        /// <summary>
+        /// Can new IoT Hub be created?
+        /// </summary>
         public bool NewHub_CanCreate
         {
             get
@@ -287,6 +290,9 @@ namespace AzureIoTHubConnectedService
             }
         }
 
+        /// <summary>
+        /// Are new IoT hub fields enabled?
+        /// </summary>
         public bool NewHub_FieldsEnabled
         {
             get
@@ -301,29 +307,47 @@ namespace AzureIoTHubConnectedService
             }
         }
 
+        /// <summary>
+        /// New IoT Hub subscription name.
+        /// </summary>
         public string NewHub_SubscriptionName
         {
             get { return _NewHub_SubscriptionName; }
             set { _NewHub_SubscriptionName = value; NewHub_Validate(); OnPropertyChanged("NewHub_SubscriptionName"); QueryResourceGroups(_NewHub_SubscriptionName); }
         }
 
+        /// <summary>
+        /// New IoT Hub name.
+        /// </summary>
         public string NewHub_Name
         {
             get { return _NewHub_Name; }
             set { _NewHub_Name = value; NewHub_Validate(); OnPropertyChanged("NewHub_Name"); }
         }
 
+        /// <summary>
+        /// New IoT Hub resource group name.
+        /// </summary>
         public string NewHub_ResourceGroupName
         {
             get { return _NewHub_ResourceGroupName; }
             set { _NewHub_ResourceGroupName = value; NewHub_Validate(); OnPropertyChanged("NewHub_ResourceGroupName"); }
         }
 
+        /// <summary>
+        /// Creates new IoT Hub.
+        /// </summary>
         internal void CreateNewHub()
         {
             CreateNewHub(NewHub_SubscriptionName, NewHub_ResourceGroupName, NewHub_Name);
         }
 
+        /// <summary>
+        /// Adds new hub to the list.
+        /// Selects it by default.
+        /// Clears fields.
+        /// </summary>
+        /// <param name="hub"></param>
         private void AddHub(IAzureIoTHub hub)
         {
             Hubs.Add(hub);
@@ -335,6 +359,9 @@ namespace AzureIoTHubConnectedService
             CurrentHub = hub;
         }
 
+        /// <summary>
+        /// Validate new hub fields
+        /// </summary>
         private void NewHub_Validate()
         {
             bool match = true;
@@ -366,6 +393,9 @@ namespace AzureIoTHubConnectedService
         // NEW DEVICE CREATION RELATED CODE
         //--------------------------------------------------------------------------------------------------------------------
 
+        /// <summary>
+        /// Can new device be created?
+        /// </summary>
         public bool NewDevice_CanCreate
         {
             get
@@ -380,6 +410,9 @@ namespace AzureIoTHubConnectedService
             }
         }
 
+        /// <summary>
+        /// New device fields enabled indication, fields should be disabled while device is created.
+        /// </summary>
         public bool NewDevice_FieldsEnabled
         {
             get
@@ -394,6 +427,9 @@ namespace AzureIoTHubConnectedService
             }
         }
 
+        /// <summary>
+        /// New device name.
+        /// </summary>
         public string NewDevice_Name
         {
             get
@@ -408,6 +444,9 @@ namespace AzureIoTHubConnectedService
             }
         }
 
+        /// <summary>
+        /// Validated device name.
+        /// </summary>
         private void NewDevice_Validate()
         {
             // matching all alphanumeric characters + additional characters as defined in Azure IoT Hub documentation:
@@ -420,6 +459,9 @@ namespace AzureIoTHubConnectedService
                                 _NewDevice_FieldsEnabled);
         }
 
+        /// <summary>
+        /// Create new device in currently selected IoT Hub.
+        /// </summary>
         public async void CreateNewDevice()
         {
             NewDevice_FieldsEnabled = false;
@@ -443,6 +485,12 @@ namespace AzureIoTHubConnectedService
             NewDevice_FieldsEnabled = true;
         }
 
+        /// <summary>
+        /// Adds device to the list.
+        /// This function should be called after successful device creation in IoT Hub.
+        /// Newly added device will be automatically selected.
+        /// </summary>
+        /// <param name="device"></param>
         private void AddDevice(Device device)
         {
             Devices.Add(device);
@@ -476,6 +524,9 @@ namespace AzureIoTHubConnectedService
          * INTERNAL IMPLEMENTATION
          *--------------------------------------------------------------------------------------------------------------------*/
 
+        /// <summary>
+        /// Populate devices task for currently selected IoT Hub
+        /// </summary>
         private async void PopulateDevices()
         {
             Task<IEnumerable<Device>> devicesTask = null;
@@ -515,16 +566,27 @@ namespace AzureIoTHubConnectedService
 
         Task<IEnumerable<Device>> lastDevicesTask = null;
 
+        /// <summary>
+        /// Increment busy counter - used to display progress bar.
+        /// </summary>
         protected void IncrementBusyCounter()
         {
             if (1 == ++_IsBusy) OnPropertyChanged("IsBusy");
         }
 
+        /// <summary>
+        /// Decrement busy counter.
+        /// </summary>
         protected void DecrementBusyCounter()
         {
             if (0 == --_IsBusy) OnPropertyChanged("IsBusy");
         }
 
+        /// <summary>
+        /// Check if given command can be executed.
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
         public bool CanExecute(object parameter)
         {
             string p = parameter as string;
@@ -544,6 +606,10 @@ namespace AzureIoTHubConnectedService
             }
         }
 
+        /// <summary>
+        /// Execute given command
+        /// </summary>
+        /// <param name="parameter"></param>
         public void Execute(object parameter)
         {
             InvokeCanExecuteChanged();;
@@ -565,11 +631,23 @@ namespace AzureIoTHubConnectedService
 
         bool _CanExecute = false;
 
+        /// <summary>
+        /// Check if any extra command can be executed.
+        /// </summary>
+        /// <param name="parameter"></param>
         partial void CanExecuteExtras(object parameter);
+
+        /// <summary>
+        /// Execute extra command.
+        /// </summary>
+        /// <param name="parameter"></param>
         partial void ExecuteExtras(object parameter);
 
         public event EventHandler CanExecuteChanged;
 
+        /// <summary>
+        /// Notify clients that commands execution availability has changed.
+        /// </summary>
         private void InvokeCanExecuteChanged()
         {
             if (null != CanExecuteChanged)
