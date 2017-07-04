@@ -14,6 +14,9 @@ using Microsoft.VisualStudio.WindowsAzure.Authentication;
 
 namespace AzureIoTHubConnectedService
 {
+    /// <summary>
+    /// Currently supported wizard modes.
+    /// </summary>
     public enum WizardMode
     {
         UseTpm,
@@ -26,6 +29,12 @@ namespace AzureIoTHubConnectedService
     /// </summary>
     public partial class WizardMain : ConnectedServiceWizard
     {
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="accountManager"></param>
+        /// <param name="serviceProvider"></param>
+        /// <param name="canUseTpm"></param>
         public WizardMain(IAzureIoTHubAccountManager accountManager, IServiceProvider serviceProvider, bool canUseTpm)
         {
             this._IoTHubAccountManager = accountManager;
@@ -47,15 +56,18 @@ namespace AzureIoTHubConnectedService
             this.Pages.Add(_PageInjectConnectionString);
             this.Pages.Add(_PageSummary);
 
-            // XXX - this shoudl be moved to generic
+            // should be moved to generic
             _DeviceTwinProperties.Add(new DeviceTwinProperty("SampleProperty1", "Desired", "String"));
             _DeviceTwinProperties.Add(new DeviceTwinProperty("SampleProperty2", "Reported", "String"));
 
             _DeviceMethods.Add(new DeviceMethodDescription("SampleMethod1"));
             _DeviceMethods.Add(new DeviceMethodDescription("SampleMethod2"));
-            // XXX - <<<
         }
 
+        /// <summary>
+        /// Authenticator object.
+        /// Comes from Visual Studio.
+        /// </summary>
         private Authenticator Authenticator
         {
             get
@@ -64,12 +76,15 @@ namespace AzureIoTHubConnectedService
                 {
                     this._Authenticator = new Authenticator(this._ServiceProvider);
                     this._Authenticator.PropertyChanged += this.OnAuthenticatorPropertyChanged;
-                    this._Authenticator.AuthenticationChanged += this.OnAuthenticatorAuthenticationChanged;
                 }
                 return this._Authenticator;
             }
         }
 
+        /// <summary>
+        /// Dispose.
+        /// </summary>
+        /// <param name="disposing"></param>
         protected override void Dispose(bool disposing)
         {
             try
@@ -79,7 +94,6 @@ namespace AzureIoTHubConnectedService
                     if (this._Authenticator != null)
                     {
                         this._Authenticator.PropertyChanged -= this.OnAuthenticatorPropertyChanged;
-                        this._Authenticator.AuthenticationChanged -= this.OnAuthenticatorAuthenticationChanged;
                     }
                 }
             }
@@ -89,11 +103,12 @@ namespace AzureIoTHubConnectedService
             }
         }
 
-        // XXX - check why we need it
-        private void OnAuthenticatorAuthenticationChanged(object sender, AuthenticationChangedEventArgs e)
-        {
-        }
-
+        /// <summary>
+        /// Callback when authentication state changes.
+        /// Used to trigger IoT Hub population.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnAuthenticatorPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(Authenticator.IsAuthenticated))
@@ -104,7 +119,7 @@ namespace AzureIoTHubConnectedService
                 }
                 else
                 {
-                    // XXX - clear hubs
+                    ClearHubs();
                 }
 
                 ConfigurePages();
@@ -153,6 +168,13 @@ namespace AzureIoTHubConnectedService
          * PUBLIC API
          *--------------------------------------------------------------------------------------------------------------------*/
 
+        /// <summary>
+        /// Creates new IoT Hub.
+        /// 
+        /// </summary>
+        /// <param name="subscriptionName"></param>
+        /// <param name="resourceGroupName"></param>
+        /// <param name="iotHubName"></param>
         public async void CreateNewHub(string subscriptionName, string resourceGroupName, string iotHubName)
         {
             NewHub_FieldsEnabled = false;
@@ -183,6 +205,10 @@ namespace AzureIoTHubConnectedService
             NewHub_FieldsEnabled = true;
         }
 
+        /// <summary>
+        /// Query resource groups for given subscription.
+        /// </summary>
+        /// <param name="subscriptionName"></param>
         public async void QueryResourceGroups(string subscriptionName)
         {
             List<ResourceGroup> response = await Authenticator.GetResourceGroups(_IoTHubAccountManager, subscriptionName, new CancellationToken());
@@ -224,12 +250,18 @@ namespace AzureIoTHubConnectedService
 
         private bool _CanUseTPM = false;
 
+        /// <summary>
+        /// Subscriptions.
+        /// </summary>
         public ObservableCollection<string> Subscriptions
         {
             get { return _Subscriptions; }
             set { _Subscriptions = value; OnPropertyChanged("Subscriptions"); }
         }
 
+        /// <summary>
+        /// This is used by Summary page, when it's visible, Finish button should be enabled.
+        /// </summary>
         public bool SummaryVisible
         {
             set
@@ -243,6 +275,9 @@ namespace AzureIoTHubConnectedService
          * INTERNAL IMPLEMENTATION
          *--------------------------------------------------------------------------------------------------------------------*/
 
+        /// <summary>
+        /// Handles hubs selection.
+        /// </summary>
         private async void HandleHubSelected()
         {
             if (_CurrentHub != null)
@@ -262,11 +297,17 @@ namespace AzureIoTHubConnectedService
             PopulateDevices();
         }
 
+        /// <summary>
+        /// Handles device selection.
+        /// </summary>
         private void HandleDeviceSelected()
         {
             ConfigurePages();
         }
 
+        /// <summary>
+        /// Populates lists of IoT Hubs and subcriptions.
+        /// </summary>
         private async void PopulateHubs()
         {
             IncrementBusyCounter();
@@ -287,6 +328,18 @@ namespace AzureIoTHubConnectedService
             DecrementBusyCounter();
         }
 
+        /// <summary>
+        /// Clears list of IoT Hubs and Subscriptions.
+        /// </summary>
+        private void ClearHubs()
+        {
+            Hubs = null;
+            Subscriptions = null;
+        }   
+
+        /// <summary>
+        /// Configure wizard pages accordingly to mode.
+        /// </summary>
         private void ConfigurePages()
         {
             if (Mode == WizardMode.ProvisionConnectionString)
@@ -325,7 +378,10 @@ namespace AzureIoTHubConnectedService
             }
         }
 
-        // XXX - should go to generic??
+        /// <summary>
+        /// Provisions device.
+        /// This should probably go to generic part of the class as it's VS independent.
+        /// </summary>
         public void ProvisionDevice()
         {
             _ProvisioningDevice = true;
@@ -344,6 +400,10 @@ namespace AzureIoTHubConnectedService
             _ProvisioningDevice = false;
         }
 
+        /// <summary>
+        /// Display message
+        /// </summary>
+        /// <param name="message"></param>
         public void DisplayMessage(string message)
         {
             MessageBox.Show(message);
