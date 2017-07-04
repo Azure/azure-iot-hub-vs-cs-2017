@@ -4,6 +4,8 @@ using System.Windows.Input;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using Microsoft.Azure.Devices;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace AzureIoTHubConnectedService
 {
@@ -476,6 +478,8 @@ namespace AzureIoTHubConnectedService
 
         private async void PopulateDevices()
         {
+            Task<IEnumerable<Device>> devicesTask = null;
+            lastDevicesTask = null;
             Devices = null;
 
             IncrementBusyCounter();
@@ -485,18 +489,31 @@ namespace AzureIoTHubConnectedService
                 if (_CurrentHub_ConnectionString != "")
                 {
                     _RegistryManager = CommonFactory.CreateRegistryManagerFromConnectionString(_CurrentHub_ConnectionString);
-                    var devicesTask = _RegistryManager.GetDevicesAsync(1000);
+                    devicesTask = _RegistryManager.GetDevicesAsync(1000);
 
-                    Devices = new ObservableCollection<Device>(await devicesTask);
+                    lastDevicesTask = devicesTask;
+
+                    var devices = await devicesTask;
+
+                    if (lastDevicesTask == devicesTask)
+                    {
+                        Devices = new ObservableCollection<Device>(devices);
+                        lastDevicesTask = null;
+                    }
                 }
             }
             catch (Exception ex)
             {
-                DisplayMessage("Failed to query devices: " + ex.Message);
+                if (devicesTask == lastDevicesTask)
+                {
+                    DisplayMessage("Failed to query devices: " + ex.Message);
+                }
             }
 
             DecrementBusyCounter();
         }
+
+        Task<IEnumerable<Device>> lastDevicesTask = null;
 
         protected void IncrementBusyCounter()
         {
