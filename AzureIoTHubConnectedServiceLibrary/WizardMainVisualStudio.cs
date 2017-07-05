@@ -213,7 +213,7 @@ namespace AzureIoTHubConnectedService
         {
             List<ResourceGroup> response = await Authenticator.GetResourceGroups(_IoTHubAccountManager, subscriptionName, new CancellationToken());
 
-            ResourceGroups = new ObservableCollection<ResourceGroup>(response);
+            ResourceGroups = (response != null) ? new ObservableCollection<ResourceGroup>(response) : null;
         }
 
         /*--------------------------------------------------------------------------------------------------------------------
@@ -398,6 +398,11 @@ namespace AzureIoTHubConnectedService
             }
 
             _ProvisioningDevice = false;
+        }
+
+        public bool ProvisioningDevice
+        {
+            get { return _ProvisioningDevice; }
         }
 
         /// <summary>

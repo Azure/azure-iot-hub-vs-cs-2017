@@ -11,44 +11,10 @@
              SizeChanged="UserControl_SizeChanged">
     <UserControl.Resources>
         <ResourceDictionary x:Uid="ResourceDictionary_1">
-            <Style TargetType="{x:Type TabItem}">
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type TabItem}">
-                            <Grid>
-                                <Border 
-                                Name="Border"
-                                Margin="0,0,-4,0" 
-                                Background="{StaticResource {x:Static resources:ResourceKeys.InnerTabInactiveBackgroundBrushKey}}"
-                                BorderThickness="1,1,1,1" >
-                                    
-                                    <ContentPresenter x:Name="ContentSite"
-                                    VerticalAlignment="Center"
-                                    HorizontalAlignment="Center"
-                                    ContentSource="Header"
-                                    Margin="12,2,12,2"
-                                    RecognizesAccessKey="True"/>
-                                </Border>
-                            </Grid>
-                            <ControlTemplate.Triggers>
-                                <Trigger Property="IsSelected" Value="True">
-                                    <Setter Property="Panel.ZIndex" Value="100" />
-                                    <!--<Setter TargetName="Border" Property="BorderThickness" Value="1,1,1,0" />-->
-                                    <Setter TargetName="Border" Property="Background" Value="{StaticResource {x:Static resources:ResourceKeys.InnerTabActiveBackgroundBrushKey}}" />
-                                    <Setter Property="Foreground" Value="{StaticResource {x:Static resources:ResourceKeys.InnerTabActiveTextBrushKey}}" />
-                                </Trigger>
-                                <Trigger Property="IsSelected" Value="False">
-                                    <Setter Property="Foreground" Value="{StaticResource {x:Static resources:ResourceKeys.InnerTabActiveTextBrushKey}}" />
-                                </Trigger>
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
-
-
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary x:Uid="ResourceDictionary_2" Source="CommonResources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-
     </UserControl.Resources>
 
     <Grid Name="MainGrid" Height="200">
@@ -96,7 +62,7 @@
                         <Label Content="{x:Static local:Resource.CreateHubSubscription}" Grid.Row="0" Grid.Column="0" Margin="5" />
                         <ComboBox Name="SubscriptionCombo" Grid.Row="0" Grid.Column="1" Margin="5" SelectedItem="{Binding Path=NewHub_SubscriptionName, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=NewHub_FieldsEnabled}" ItemsSource="{Binding Subscriptions}" />
                         <Label Content="{x:Static local:Resource.CreateHubResourceGroup}" Grid.Row="1" Grid.Column="0" Margin="5" />
-                        <ComboBox Name="ResourceGroupCombo" Grid.Row="1" Grid.Column="1" Margin="5" IsEditable="True" Text="{Binding Path=NewHub_ResourceGroupName, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=NewHub_FieldsEnabled}"/>
+                        <ComboBox Name="ResourceGroupCombo" Grid.Row="1" Grid.Column="1" Margin="5" IsEditable="True" Text="{Binding Path=NewHub_ResourceGroupName, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=NewHub_FieldsEnabled}" ItemsSource="{Binding ResourceGroups}" DisplayMemberPath="Name"/>
                         <Label Content="{x:Static local:Resource.CreateHubName}" Grid.Row="2" Grid.Column="0" Margin="5"/>
                         <TextBox Name="IoTHubNameText" Grid.Row="2" Grid.Column="1" Margin="5" Text="{Binding Path=NewHub_Name, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=NewHub_FieldsEnabled}"/>
                         <Button Name="CreateButton" Content="{x:Static local:Resource.ButtonCreate}" Grid.Row="3" Grid.Column="1" Margin="5" Command="{Binding Path=ExecuteCmd}" CommandParameter="CreateNewHub" />
