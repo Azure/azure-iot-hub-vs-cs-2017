@@ -9,7 +9,7 @@
 To build the project, you need 
 
 - Visual Studio 2017 
-- Visual Studio SDK. For more information, see [Visual Studio SDK](https://msdn.microsoft.com/en-us/library/bb166441.aspx).
+- Visual Studio SDK. For more information, see [Visual Studio SDK](https://docs.microsoft.com/en-us/visualstudio/extensibility/visual-studio-sdk).
 
 ### Build the solution
 
