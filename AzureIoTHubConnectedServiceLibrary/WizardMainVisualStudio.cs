@@ -162,6 +162,7 @@ namespace AzureIoTHubConnectedService
             // only if account differs, query hubs again
             if (_CurrentAccount != account.UniqueId)
             {
+                Microsoft.VisualStudio.Telemetry.TelemetryService.DefaultSession.PostEvent("vs/iothubcs/Authenticated");
                 _CurrentAccount = account.UniqueId;
                 ClearHubs();
                 PopulateHubs();
@@ -241,10 +242,13 @@ namespace AzureIoTHubConnectedService
 
                 // select hub automatically
                 _PageHubSelection.SelectHub(hub);
+
+                Microsoft.VisualStudio.Telemetry.TelemetryService.DefaultSession.PostEvent("vs/iothubcs/IoTHubCreated");
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Failed to create new IoT Hub: " + ex.Message);
+                Microsoft.VisualStudio.Telemetry.TelemetryService.DefaultSession.PostEvent("vs/iothubcs/FailureIotHubCreation");
             }
 
             DecrementBusyCounter();
@@ -369,10 +373,13 @@ namespace AzureIoTHubConnectedService
                 Hubs = new ObservableCollection<IAzureIoTHub>(await task);
 
                 Subscriptions = new ObservableCollection<string>(Authenticator.Subscriptions.ToList<IAzureRMSubscription>().ConvertAll<string>(obj => obj.SubscriptionName));
+
+                Microsoft.VisualStudio.Telemetry.TelemetryService.DefaultSession.PostEvent((Hubs.Count > 0) ? "vs/iothubcs/HubsPopulated" : "vs/iothubcs/HubsPopulatedEmpty");
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Failed to query IoT hubs: " + ex.Message);
+                Microsoft.VisualStudio.Telemetry.TelemetryService.DefaultSession.PostEvent("vs/iothubcs/HubsPopulatationFailed");
             }
 
             DecrementBusyCounter();

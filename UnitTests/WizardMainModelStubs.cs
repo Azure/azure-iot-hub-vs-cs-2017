@@ -93,3 +93,11 @@ namespace AzureIoTHubConnectedService
         public bool simulateOperationFailure = false;
     }
 }
+
+namespace Microsoft.VisualStudio.Telemetry.TelemetryService
+{
+    internal class DefaultSession
+    {
+        internal static void PostEvent(string e) { }
+    }
+}

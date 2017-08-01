@@ -507,7 +507,7 @@ namespace AzureIoTHubConnectedService
             try
             {
                 var device = await _RegistryManager.AddDeviceAsync(new Device(NewDevice_Name));
-                //Microsoft.VisualStudio.Telemetry.TelemetryService.DefaultSession.PostEvent("vs/iothubcs/DeviceCreated");
+                Microsoft.VisualStudio.Telemetry.TelemetryService.DefaultSession.PostEvent("vs/iothubcs/DeviceCreated");
 
                 AddDevice(device);
                 NewDevice_Name = "";
@@ -515,7 +515,7 @@ namespace AzureIoTHubConnectedService
             catch (Exception ex)
             {
                 DisplayMessage("Failed to create new device: " + ex.Message);
-                //Microsoft.VisualStudio.Telemetry.TelemetryService.DefaultSession.PostEvent("vs/iothubcs/FailureDeviceCreation");
+                Microsoft.VisualStudio.Telemetry.TelemetryService.DefaultSession.PostEvent("vs/iothubcs/FailureDeviceCreation");
             }
 
             DecrementBusyCounter();
