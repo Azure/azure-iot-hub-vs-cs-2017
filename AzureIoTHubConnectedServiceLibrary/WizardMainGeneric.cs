@@ -264,7 +264,7 @@ namespace AzureIoTHubConnectedService
         /// </summary>
         public ObservableCollection<DeviceTwinProperty> DeviceTwinProperties { get { return _DeviceTwinProperties; } }
 
-        private bool _DeviceTwinEnabled = false;
+        private bool _DeviceTwinEnabled = true;
         private ObservableCollection<DeviceTwinProperty> _DeviceTwinProperties = new ObservableCollection<DeviceTwinProperty>();
 
         //--------------------------------------------------------------------------------------------------------------------
@@ -293,7 +293,7 @@ namespace AzureIoTHubConnectedService
         /// </summary>
         public ObservableCollection<DeviceMethodDescription> DeviceMethods { get { return _DeviceMethods; } }
 
-        private bool _DeviceMethodEnabled = false;
+        private bool _DeviceMethodEnabled = true;
         private ObservableCollection<DeviceMethodDescription> _DeviceMethods = new ObservableCollection<DeviceMethodDescription>();
 
         //--------------------------------------------------------------------------------------------------------------------
