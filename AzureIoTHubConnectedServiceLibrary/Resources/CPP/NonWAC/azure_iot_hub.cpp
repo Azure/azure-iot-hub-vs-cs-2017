@@ -22,7 +22,7 @@ static const char* connection_string = "HostName=$iotHubUri$;DeviceId=$deviceId$
 //    iothub-explorer HostName=$iotHubUri$;SharedAccessKeyName=service;SharedAccessKey=$servicePrimaryKey$ monitor-events "$deviceId$"
 //
 
-// Refer to http://aka.ms/azure-iot-hub-vs-cs-wiki for more information on Connected Service for Azure IoT Hub
+// Refer to http://aka.ms/azure-iot-hub-vs-cs-2017-wiki for more information on Connected Service for Azure IoT Hub
 
 struct callback_parameter
 {
