@@ -7,34 +7,40 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              Name="DeviceTwinView">
-    <Grid Name="MainGrid" VerticalAlignment="Stretch">
+    <UserControl.Resources>
+        <Style x:Key="myHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
+            <Setter Property="Visibility" Value="Collapsed" />
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-
-        <Border HorizontalAlignment="Stretch" Grid.ColumnSpan="3" Grid.Row="0" BorderThickness="0,0,0,0.5" BorderBrush="Gray" >
-            <TextBlock TextWrapping="Wrap" Padding="5"  >            
-                Direct Methods
-            </TextBlock>
+        <Border HorizontalAlignment="Stretch" Grid.Row="0" BorderThickness="0,0,0,0.5" BorderBrush="Gray">
+            <Label Content="Direct Methods" Grid.Row="0" />
         </Border>
+        <ListView ItemsSource="{Binding DeviceMethods}" IsEnabled="True" Grid.Row="1">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Style.Setters>
+                        <Setter Property="Focusable" Value="False" />
+                    </Style.Setters>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="BorderBrush" Value="Transparent"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
 
-        <ListView Grid.ColumnSpan="3" Grid.Row="1" HorizontalAlignment="Stretch" Margin="5" VerticalAlignment="Stretch" ItemsSource="{Binding DeviceMethods}" >
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <TextBlock Text="{Binding Name}" Grid.Column="0" TextWrapping="Wrap" Margin="3"/>
-                    </Grid>
-                </DataTemplate>
-            </ListView.ItemTemplate>
+            </ListView.ItemContainerStyle>
+            <ListView.View>
+                <GridView  ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}">
+                    <GridViewColumn DisplayMemberBinding="{Binding Name}"  />
+                </GridView>
+            </ListView.View>
         </ListView>
     </Grid>
 </UserControl>

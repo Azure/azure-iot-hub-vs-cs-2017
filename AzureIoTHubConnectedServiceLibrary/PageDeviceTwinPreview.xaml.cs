@@ -29,12 +29,12 @@ namespace AzureIoTHubConnectedService
         {
             InitializeComponent();
 
-            MainGrid.DataContext = model;
+            DataContext = model;
         }
 
         public void SetModel(object model)
         {
-            MainGrid.DataContext = model;
+            DataContext = model;
         }
     }
 }

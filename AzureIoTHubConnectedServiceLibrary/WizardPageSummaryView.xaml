@@ -42,7 +42,7 @@
         <TextBox Text="{Binding CurrentDevice_PrimaryConnectionString, Mode=OneWay}" Grid.Column="1" Grid.Row="4" IsReadOnly="True" Margin="1" MinLines="2" TextWrapping="Wrap"/>
         <TextBox Text="{Binding CurrentDevice_SecondaryConnectionString, Mode=OneWay}" Grid.Column="1" Grid.Row="5" IsReadOnly="True" Margin="1" MinLines="2" TextWrapping="Wrap"/>
 
-        <local:PageDirectMethodPreview Grid.Row="6" Grid.ColumnSpan="2" Visibility="{Binding DeviceMethodEnabled, Converter={StaticResource BoolToVis}}" />
-        <local:PageDeviceTwinPreview Grid.Row="7" Grid.ColumnSpan="2" Visibility="{Binding DeviceTwinEnabled, Converter={StaticResource BoolToVis}}"/>
+        <local:PageDirectMethodPreview Grid.Row="6" Grid.ColumnSpan="2" Visibility="{Binding DeviceMethodEnabled, Converter={StaticResource BoolToVis}}" Margin="0,10,0,0" />
+        <local:PageDeviceTwinPreview Grid.Row="7" Grid.ColumnSpan="2" Visibility="{Binding DeviceTwinEnabled, Converter={StaticResource BoolToVis}}" Margin="0,10,0,0" />
     </Grid>
 </UserControl>
