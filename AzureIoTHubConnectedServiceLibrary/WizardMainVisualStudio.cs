@@ -25,6 +25,17 @@ namespace AzureIoTHubConnectedService
     }
 
     /// <summary>
+    /// Device provisioning state
+    /// </summary>
+    public enum ProvisioningState
+    {
+        Disabled,
+        NotProvisioned,
+        Provisioning,
+        Provisioned
+    };
+
+    /// <summary>
     /// This part of the class implements all stuff related to Visual Studio & Connected Services framework
     /// </summary>
     public partial class WizardMain : ConnectedServiceWizard
@@ -117,11 +128,7 @@ namespace AzureIoTHubConnectedService
             {
                 if (Authenticator.IsAuthenticated)
                 {
-                    PopulateHubs();
-                }
-                else
-                {
-                    ClearHubs();
+                    HandleAccountUpdated();
                 }
 
                 ConfigurePages();
@@ -136,15 +143,33 @@ namespace AzureIoTHubConnectedService
         /// <param name="e"></param>
         private void OnAuthenticationChanged(object sender, AuthenticationChangedEventArgs e)
         {
-            ClearHubs();
-
             if (Authenticator.IsAuthenticated)
             {
-                PopulateHubs();
+                HandleAccountUpdated();
             }
 
             ConfigurePages();
         }
+
+        /// <summary>
+        /// Handles situation when account has been changed / authentication state updated.
+        /// Doesn't requery hubs if account is the same as before.
+        /// </summary>
+        async void HandleAccountUpdated()
+        {
+            Microsoft.VisualStudio.Services.Client.AccountManagement.Account account = await Authenticator.GetAccountAsync();
+
+            // only if account differs, query hubs again
+            if (_CurrentAccount != account.UniqueId)
+            {
+                _CurrentAccount = account.UniqueId;
+                ClearHubs();
+                PopulateHubs();
+                ConfigurePages();
+            }
+        }
+
+        private string _CurrentAccount = "";
 
         /// <summary>
         /// Creates and returnes instace of the service to Connected Services framework.
@@ -374,6 +399,11 @@ namespace AzureIoTHubConnectedService
                     int index = this.Pages.IndexOf(_PageSummary);
                     this.Pages.Insert(index, _PageInjectConnectionString);
                 }
+
+                if (_ProvisioningState == ProvisioningState.Disabled)
+                {
+                    _ProvisioningState = ProvisioningState.NotProvisioned;
+                }
             }
             else
             {
@@ -381,6 +411,8 @@ namespace AzureIoTHubConnectedService
                 {
                     this.Pages.Remove(_PageInjectConnectionString);
                 }
+
+                _ProvisioningState = ProvisioningState.Disabled;
             }
 
             if (Mode == WizardMode.UseTpm)
@@ -399,7 +431,7 @@ namespace AzureIoTHubConnectedService
 
                 _PageDeviceMethod.IsEnabled = (CurrentDevice_Id != "");
                 _PageInjectConnectionString.IsEnabled = (CurrentDevice_Id != "");
-                _PageSummary.IsEnabled = (CurrentDevice_Id != "");
+                _PageSummary.IsEnabled = (CurrentDevice_Id != "") && (_ProvisioningState == ProvisioningState.Provisioned || _ProvisioningState == ProvisioningState.Disabled);
             }
         }
 
@@ -409,25 +441,27 @@ namespace AzureIoTHubConnectedService
         /// </summary>
         public void ProvisionDevice()
         {
-            _ProvisioningDevice = true;
+            _ProvisioningState = ProvisioningState.Provisioning;
 
             try
             {
                 DeviceProvisionerBase provisioner = null;
 
                 provisioner.ProvisionDevice(CurrentDevice.Id, CurrentDevice.Authentication.SymmetricKey.PrimaryKey);
+                _ProvisioningState = ProvisioningState.Provisioned;
             }
             catch (Exception ex)
             {    
                 MessageBox.Show("Failed to provision device: " + ex.Message);
+                _ProvisioningState = ProvisioningState.NotProvisioned;
             }
 
-            _ProvisioningDevice = false;
+            ConfigurePages();
         }
 
         public bool ProvisioningDevice
         {
-            get { return _ProvisioningDevice; }
+            get { return _ProvisioningState == ProvisioningState.Provisioning; }
         }
 
         /// <summary>
@@ -458,6 +492,6 @@ namespace AzureIoTHubConnectedService
         private IAzureIoTHubAccountManager _IoTHubAccountManager = null;
         private Authenticator _Authenticator = null;
 
-        private bool _ProvisioningDevice = false;
+        private ProvisioningState _ProvisioningState = ProvisioningState.NotProvisioned;
     }
 }
