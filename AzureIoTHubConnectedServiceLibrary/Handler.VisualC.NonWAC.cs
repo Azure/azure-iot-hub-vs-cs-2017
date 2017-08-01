@@ -210,6 +210,7 @@ namespace AzureIoTHubConnectedService
                     else if (item.ToString() == "Microsoft.VisualStudio.Project.VisualC.VCProjectEngine.VCCLCompilerToolShim")
                     {
                         ToolsPropertyAddValues(item, "AdditionalIncludeDirectories", additionalIncludePaths);
+                        ToolsPropertyAddValues(item, "AdditionalOptions", new string[] { "-D AZURE_IOT_HUB_CONFIGURED"});
                     }
                 }
             }
