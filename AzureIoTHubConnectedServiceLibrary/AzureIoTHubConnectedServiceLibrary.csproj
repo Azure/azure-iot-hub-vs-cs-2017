@@ -349,6 +349,7 @@
     <Compile Include="DeviceProvisionerBase.cs" />
     <Compile Include="DeviceMethodDescription.cs" />
     <Compile Include="DeviceTwinProperty.cs" />
+    <Compile Include="LocationListResponse.cs" />
     <Compile Include="ResourceGroupListResponse.cs" />
     <Compile Include="PageHubConnectionString.xaml.cs">
       <DependentUpon>PageHubConnectionString.xaml</DependentUpon>

@@ -70,6 +70,15 @@ namespace AzureIoTHubConnectedService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Location.
+        /// </summary>
+        public static string CreateHubLocation {
+            get {
+                return ResourceManager.GetString("CreateHubLocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to IoT Hub Name.
         /// </summary>
         public static string CreateHubName {

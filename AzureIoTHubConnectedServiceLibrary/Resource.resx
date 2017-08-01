@@ -312,4 +312,7 @@
   <data name="MoreInfoLink" xml:space="preserve">
     <value>more info...</value>
   </data>
+  <data name="CreateHubLocation" xml:space="preserve">
+    <value>Location</value>
+  </data>
 </root>

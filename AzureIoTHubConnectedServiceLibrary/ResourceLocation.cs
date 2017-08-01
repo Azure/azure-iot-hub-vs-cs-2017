@@ -9,7 +9,7 @@ namespace AzureIoTHubConnectedService
     /// Represents a location supported by the Resource Manager
     /// </summary>
     [DataContract]
-    internal class ResourceLocation
+    public class ResourceLocation
     {
         [DataMember(Name = "name")]
         public string Name { get; set; }

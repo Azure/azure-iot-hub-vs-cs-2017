@@ -76,6 +76,7 @@ namespace AzureIoTHubConnectedService
                 {
                     this._Authenticator = new Authenticator(this._ServiceProvider);
                     this._Authenticator.PropertyChanged += this.OnAuthenticatorPropertyChanged;
+                    this._Authenticator.AuthenticationChanged += this.OnAuthenticationChanged;
                 }
                 return this._Authenticator;
             }
@@ -94,6 +95,7 @@ namespace AzureIoTHubConnectedService
                     if (this._Authenticator != null)
                     {
                         this._Authenticator.PropertyChanged -= this.OnAuthenticatorPropertyChanged;
+                        this._Authenticator.AuthenticationChanged -= this.OnAuthenticationChanged;
                     }
                 }
             }
@@ -124,6 +126,24 @@ namespace AzureIoTHubConnectedService
 
                 ConfigurePages();
             }
+        }
+
+        /// <summary>
+        /// Callback when authentication changes.
+        /// Used to trigger IoT Hub population.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnAuthenticationChanged(object sender, AuthenticationChangedEventArgs e)
+        {
+            ClearHubs();
+
+            if (Authenticator.IsAuthenticated)
+            {
+                PopulateHubs();
+            }
+
+            ConfigurePages();
         }
 
         /// <summary>
@@ -174,8 +194,9 @@ namespace AzureIoTHubConnectedService
         /// </summary>
         /// <param name="subscriptionName"></param>
         /// <param name="resourceGroupName"></param>
+        /// <param name="location"></param>
         /// <param name="iotHubName"></param>
-        public async void CreateNewHub(string subscriptionName, string resourceGroupName, string iotHubName)
+        public async void CreateNewHub(string subscriptionName, string resourceGroupName, string location, string iotHubName)
         {
             NewHub_FieldsEnabled = false;
             IncrementBusyCounter();
@@ -188,7 +209,7 @@ namespace AzureIoTHubConnectedService
                     ResourceGroup group = await Authenticator.CreateResourceGroup(_IoTHubAccountManager, subscriptionName, resourceGroupName, new CancellationToken());
                 }
 
-                IAzureIoTHub hub = await Authenticator.CreateIoTHub(_IoTHubAccountManager, subscriptionName, resourceGroupName, iotHubName, new CancellationToken());
+                IAzureIoTHub hub = await Authenticator.CreateIoTHub(_IoTHubAccountManager, subscriptionName, resourceGroupName, location, iotHubName, new CancellationToken());
 
                 // insert hub into the list
                 AddHub(hub);
@@ -214,6 +235,10 @@ namespace AzureIoTHubConnectedService
             List<ResourceGroup> response = await Authenticator.GetResourceGroups(_IoTHubAccountManager, subscriptionName, new CancellationToken());
 
             ResourceGroups = (response != null) ? new ObservableCollection<ResourceGroup>(response) : null;
+
+            List<ResourceLocation> locations = await Authenticator.GetLocations(_IoTHubAccountManager, subscriptionName, new CancellationToken());
+
+            Locations = (locations != null) ? new ObservableCollection<ResourceLocation>(locations) : null;
         }
 
         /*--------------------------------------------------------------------------------------------------------------------
@@ -393,7 +418,7 @@ namespace AzureIoTHubConnectedService
                 provisioner.ProvisionDevice(CurrentDevice.Id, CurrentDevice.Authentication.SymmetricKey.PrimaryKey);
             }
             catch (Exception ex)
-            {
+            {    
                 MessageBox.Show("Failed to provision device: " + ex.Message);
             }
 

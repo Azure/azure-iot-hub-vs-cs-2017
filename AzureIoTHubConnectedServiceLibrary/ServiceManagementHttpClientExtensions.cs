@@ -76,6 +76,15 @@ namespace AzureIoTHubConnectedService
             return client.GetAsync<ResourceGroupListResponse>(relativeUrl, cancellationToken);
         }
 
+        public static Task<LocationListResponse> GetLocationsAsync(this ServiceManagementHttpClient client, CancellationToken cancellationToken)
+        {
+            string relativeUrl = string.Format(CultureInfo.InvariantCulture,
+                                               "/subscriptions/{0}/locations?api-version=2017-05-10",
+                                               client.SubscriptionId);
+
+            return client.GetAsync<LocationListResponse>(relativeUrl, cancellationToken);
+        }
+
         public static async Task<IoTHub> GetIoTHubDetailsAsync(this ServiceManagementHttpClient client, IoTHub iotHubAccount, CancellationToken cancellationToken)
         {
             /// POST:
@@ -95,7 +104,7 @@ namespace AzureIoTHubConnectedService
             return iotHubAccount;
         }
 
-        public static async Task<IoTHub> CreateIotHubAsync(this ServiceManagementHttpClient client, string rgName, string hubName, CancellationToken cancellationToken)
+        public static async Task<IoTHub> CreateIotHubAsync(this ServiceManagementHttpClient client, string rgName, string hubLocation, string hubName, CancellationToken cancellationToken)
         {
 
             string subscriptionId = client.SubscriptionId;
@@ -103,7 +112,7 @@ namespace AzureIoTHubConnectedService
             var description = new
             {
                 name = hubName,
-                location = "East US",
+                location = hubLocation,
                 sku = new
                 {
                     name = "S1",
@@ -158,7 +167,7 @@ namespace AzureIoTHubConnectedService
 
             var content = new StringContent(JsonConvert.SerializeObject(description), Encoding.UTF8, "application/json");
             var requestUri = string.Format("https://management.azure.com/subscriptions/{0}/resourcegroups/{1}?api-version=2017-05-10", subscriptionId, rgName);
-            var result = client.PutAsync(requestUri, content).Result;
+            var result = await client.PutAsync(requestUri, content).ConfigureAwait(false);
 
             if (!result.IsSuccessStatusCode)
             {

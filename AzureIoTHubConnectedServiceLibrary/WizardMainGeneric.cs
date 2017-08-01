@@ -51,6 +51,17 @@ namespace AzureIoTHubConnectedService
 
         private ObservableCollection<ResourceGroup> _ResourceGroups = null;
 
+        /// <summary>
+        /// List of available locations for currently selected subscription
+        /// </summary>
+        public ObservableCollection<ResourceLocation> Locations
+        {
+            get { return _Locations; }
+            set { _Locations = value; OnPropertyChanged("Locations"); }
+        }
+
+        private ObservableCollection<ResourceLocation> _Locations = null;
+
         //--------------------------------------------------------------------------------------------------------------------
         // PROPERTIES BELOW ARE RELATED TO CURRENTLY SELECTED HUB
         //--------------------------------------------------------------------------------------------------------------------
@@ -87,6 +98,16 @@ namespace AzureIoTHubConnectedService
         public string CurrentHub_Name
         {
             get { return (null != _CurrentHub) ? _CurrentHub.Properties["IoTHubName"] : ""; }
+        }
+
+        /// <summary>
+        /// Selected IoT hub host.
+        /// Empty string if no hub selected.
+        /// </summary>
+        public string CurrentHub_HostName
+        {
+
+            get { return (null != _CurrentHub) ? _CurrentHub.Properties["iotHubUri"] : ""; }
         }
 
         /// <summary>
@@ -175,11 +196,12 @@ namespace AzureIoTHubConnectedService
 
                 OnPropertyChanged("CurrentHub_Subscription");
                 OnPropertyChanged("CurrentHub_Name");
+                OnPropertyChanged("CurrentHub_HostName");
                 OnPropertyChanged("CurrentHub_ConnectionString");
                 OnPropertyChanged("CurrentDevice_Id");
                 OnPropertyChanged("CurrentDevice_PrimaryConnectionString");
                 OnPropertyChanged("CurrentDevice_SecondaryConnectionString");
-
+                OnPropertyChanged("CurrentDevice_PrimarySharedKey");
                 OnPropertyChanged("CurrentDevice");
 
                 InvokeCanExecuteChanged();
@@ -210,6 +232,11 @@ namespace AzureIoTHubConnectedService
         public string CurrentDevice_SecondaryConnectionString
         {
             get { return _CurrentDevice_SecondaryConnectionString; }
+        }
+
+        public string CurrentDevice_PrimarySharedKey
+        {
+            get { return (null != _CurrentDevice) ? _CurrentDevice.Authentication.SymmetricKey.PrimaryKey : ""; }
         }
 
         //--------------------------------------------------------------------------------------------------------------------
@@ -317,6 +344,15 @@ namespace AzureIoTHubConnectedService
         }
 
         /// <summary>
+        /// New IoT Hub location.
+        /// </summary>
+        public string NewHub_Location
+        {
+            get { return _NewHub_Location; }
+            set { _NewHub_Location = value; OnPropertyChanged("NewHub_Location"); }
+        }
+
+        /// <summary>
         /// New IoT Hub name.
         /// </summary>
         public string NewHub_Name
@@ -339,7 +375,7 @@ namespace AzureIoTHubConnectedService
         /// </summary>
         internal void CreateNewHub()
         {
-            CreateNewHub(NewHub_SubscriptionName, NewHub_ResourceGroupName, NewHub_Name);
+            CreateNewHub(NewHub_SubscriptionName, NewHub_ResourceGroupName, NewHub_Location, NewHub_Name);
         }
 
         /// <summary>
@@ -387,6 +423,7 @@ namespace AzureIoTHubConnectedService
         private bool _NewHub_FieldsEnabled = true;
         private string _NewHub_ResourceGroupName = "";
         private string _NewHub_SubscriptionName = "";
+        private string _NewHub_Location = "";
         private string _NewHub_Name = "";
 
         //--------------------------------------------------------------------------------------------------------------------
@@ -599,6 +636,10 @@ namespace AzureIoTHubConnectedService
             {
                 return NewHub_CanCreate;
             }
+            else if (p == "ProvisionDevice")
+            {
+                return true;
+            }
             else
             {
                 CanExecuteExtras(parameter);
@@ -622,6 +663,10 @@ namespace AzureIoTHubConnectedService
             else if (p == "CreateNewHub")
             {
                 CreateNewHub();
+            }
+            else if (p == "ProvisionDevice")
+            {
+                ProvisionDevice();
             }
             else
             {

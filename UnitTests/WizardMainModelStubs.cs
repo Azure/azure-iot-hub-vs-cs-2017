@@ -12,7 +12,7 @@ using System.Globalization;
 
 namespace AzureIoTHubConnectedService
 {
-    public partial class WizardMain: INotifyPropertyChanged
+    public partial class WizardMain : INotifyPropertyChanged
     {
         public WizardMain()
         {
@@ -49,7 +49,7 @@ namespace AzureIoTHubConnectedService
         {
         }
 
-        public async void CreateNewHub(string subscriptionName, string resourceGroupName, string iotHubName)
+        public async void CreateNewHub(string subscriptionName, string resourceGroupName, string location, string iotHubName)
         {
             NewHub_FieldsEnabled = false;
             IncrementBusyCounter();
@@ -79,6 +79,11 @@ namespace AzureIoTHubConnectedService
 
         // this is a hack to handle some inconsistencies that still exist
         public WizardMain MainModel { get { return this; } }
+
+        public void ProvisionDevice()
+        {
+
+        }
 
         public void DisplayMessage(string message)
         {

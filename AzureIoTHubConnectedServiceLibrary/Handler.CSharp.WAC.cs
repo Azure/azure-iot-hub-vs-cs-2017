@@ -67,10 +67,16 @@ namespace AzureIoTHubConnectedService
         }
         protected override void GenerateDeviceMethodCode(ConnectedServiceHandlerHelper helper, DeviceMethodDescription[] methods)
         {
+            // for now we will ignore real methods as they are fixed
+            string methodCode = (methods != null) ? LoadResource("CSharp/DirectMethod.inc") : "";
+            helper.TokenReplacementValues.Add("directMethod", methodCode);
         }
 
         protected override void GenerateDeviceTwinReportedCode(ConnectedServiceHandlerHelper helper, DeviceTwinProperty[] properties)
         {
+            // for now we will ignore real methods as they are fixed
+            string twinCode = (properties != null) ? LoadResource("CSharp/DeviceTwin.inc") : "";
+            helper.TokenReplacementValues.Add("deviceTwin", twinCode);
         }
 
         protected override void GenerateDeviceTwinDesiredCode(ConnectedServiceHandlerHelper helper, DeviceTwinProperty[] properties)

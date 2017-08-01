@@ -142,7 +142,7 @@ namespace AzureIoTHubConnectedService
 
         public IEnumerable<IAzureRMSubscription> Subscriptions { get; set; }
 
-        public async Task<IEnumerable<IAzureIoTHub>> GetAzureIoTHubs(IAzureIoTHubAccountManager accountManager, CancellationToken cancellationToken)
+        internal async Task<IEnumerable<IAzureIoTHub>> GetAzureIoTHubs(IAzureIoTHubAccountManager accountManager, CancellationToken cancellationToken)
         {
             IEnumerable<IAzureRMSubscription> subscriptions = await this.GetAzureRMSubscriptions().ConfigureAwait(false);
             List<IAzureIoTHub> iotHubAccounts = new List<IAzureIoTHub>();
@@ -155,7 +155,7 @@ namespace AzureIoTHubConnectedService
             return iotHubAccounts;
         }
 
-        public async Task<List<ResourceGroup>> GetResourceGroups(IAzureIoTHubAccountManager accountManager, string subscriptionName, CancellationToken cancellationToken)
+        internal async Task<List<ResourceGroup>> GetResourceGroups(IAzureIoTHubAccountManager accountManager, string subscriptionName, CancellationToken cancellationToken)
         {
             IEnumerable<IAzureRMSubscription> subscriptions = await this.GetAzureRMSubscriptions().ConfigureAwait(false);
             List<ResourceGroup> groups = null;
@@ -170,16 +170,31 @@ namespace AzureIoTHubConnectedService
             return groups;
         }
 
-        public async Task<IAzureIoTHub> CreateIoTHub(IAzureIoTHubAccountManager accountManager, string subscriptionName, string rgName, string hubName, CancellationToken cancellationToken)
+        internal async Task<List<ResourceLocation>> GetLocations(IAzureIoTHubAccountManager accountManager, string subscriptionName, CancellationToken cancellationToken)
+        {
+            IEnumerable<IAzureRMSubscription> subscriptions = await this.GetAzureRMSubscriptions().ConfigureAwait(false);
+            List<ResourceLocation> locations = null;
+            foreach (IAzureRMSubscription subscription in subscriptions)
+            {
+                if (subscription.SubscriptionName == subscriptionName)
+                {
+                    locations = (await accountManager.EnumerateLocationsAsync(subscription, cancellationToken).ConfigureAwait(false)).ToList<ResourceLocation>();
+                }
+            }
+
+            return locations;
+        }
+
+        internal async Task<IAzureIoTHub> CreateIoTHub(IAzureIoTHubAccountManager accountManager, string subscriptionName, string rgName, string location, string hubName, CancellationToken cancellationToken)
         {
             IAzureRMSubscription subscription = (from a in Subscriptions where a.SubscriptionName == subscriptionName select a).First<IAzureRMSubscription>();
             Account account = await this.GetAccountAsync();
             Debug.Assert(account != null && !account.NeedsReauthentication);
 
-            return await accountManager.CreateIoTHubAsync(subscription, this.serviceProvider, account, rgName, hubName, cancellationToken);
+            return await accountManager.CreateIoTHubAsync(subscription, this.serviceProvider, account, rgName, location, hubName, cancellationToken);
         }
 
-        public async Task<ResourceGroup> CreateResourceGroup(IAzureIoTHubAccountManager accountManager, string subscriptionName, string rgName, CancellationToken cancellationToken)
+        internal async Task<ResourceGroup> CreateResourceGroup(IAzureIoTHubAccountManager accountManager, string subscriptionName, string rgName, CancellationToken cancellationToken)
         {
             IAzureRMSubscription subscription = (from a in Subscriptions where a.SubscriptionName == subscriptionName select a).First<IAzureRMSubscription>();
             Account account = await this.GetAccountAsync();

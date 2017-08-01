@@ -34,6 +34,17 @@ namespace AzureIoTHubConnectedService
             return response.Accounts.Select(p => new IoTHubResource(subscription, p)).ToList();
         }
 
+        public async Task<IEnumerable<ResourceLocation>> EnumerateLocationsAsync(IAzureRMSubscription subscription, CancellationToken cancellationToken)
+        {
+            var builder = new ServiceManagementHttpClientBuilder(subscription);
+
+            var client = await builder.CreateAsync().ConfigureAwait(false);
+
+            LocationListResponse response = await ServiceManagementHttpClientExtensions.GetLocationsAsync(client, cancellationToken).ConfigureAwait(false);
+
+            return response.Locations;
+        }
+
         public async Task<IEnumerable<ResourceGroup>> EnumerateResourceGroupsAsync(IAzureRMSubscription subscription, CancellationToken cancellationToken)
         {
             var builder = new ServiceManagementHttpClientBuilder(subscription);
@@ -45,12 +56,12 @@ namespace AzureIoTHubConnectedService
             return response.Accounts.Select(p => new ResourceGroup(p.Name, p.Location) ).ToList();
         }
 
-        public async Task<IAzureIoTHub> CreateIoTHubAsync(IAzureRMSubscription subscription, IServiceProvider serviceProvider, Account userAccount, string rgName, string hubName, CancellationToken cancellationToken)
+        public async Task<IAzureIoTHub> CreateIoTHubAsync(IAzureRMSubscription subscription, IServiceProvider serviceProvider, Account userAccount, string rgName, string location, string hubName, CancellationToken cancellationToken)
         {
             var builder = new ServiceManagementHttpClientBuilder(subscription);
             var client = await builder.CreateAsync().ConfigureAwait(false);
 
-            IoTHub response = await ServiceManagementHttpClientExtensions.CreateIotHubAsync(client, rgName, hubName, cancellationToken).ConfigureAwait(false);
+            IoTHub response = await ServiceManagementHttpClientExtensions.CreateIotHubAsync(client, rgName, location, hubName, cancellationToken).ConfigureAwait(false);
 
             return new IoTHubResource(subscription, response);
         }

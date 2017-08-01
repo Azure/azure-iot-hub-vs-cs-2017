@@ -15,7 +15,9 @@ namespace AzureIoTHubConnectedService
         Task<IEnumerable<IAzureIoTHub>> EnumerateIoTHubAccountsAsync(IAzureRMSubscription subscription, CancellationToken cancellationToken);
         Task<IEnumerable<ResourceGroup>> EnumerateResourceGroupsAsync(IAzureRMSubscription subscription, CancellationToken cancellationToken);
 
-        Task<IAzureIoTHub> CreateIoTHubAsync(IAzureRMSubscription subscription, IServiceProvider serviceProvider, Account userAccount, string rgName, string hubName, CancellationToken cancellationToken);
+        Task<IEnumerable<ResourceLocation>> EnumerateLocationsAsync(IAzureRMSubscription subscription, CancellationToken cancellationToken);
+
+        Task<IAzureIoTHub> CreateIoTHubAsync(IAzureRMSubscription subscription, IServiceProvider serviceProvider, Account userAccount, string rgName, string location, string hubName, CancellationToken cancellationToken);
         Task<ResourceGroup> CreateResourceGroupAsync(IAzureRMSubscription subscription, IServiceProvider serviceProvider, Account userAccount, string rgName, CancellationToken cancellationToken);
     }
 }

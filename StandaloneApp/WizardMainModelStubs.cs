@@ -30,7 +30,7 @@ namespace AzureIoTHubConnectedService
         {
         }
 
-        public async void CreateNewHub(string subscriptionName, string resourceGroupName, string iotHubName) { }
+        public async void CreateNewHub(string subscriptionName, string resourceGroupName, string location, string iotHubName) { }
 
         public async void QueryResourceGroups(string subscriptionName) { }
 
@@ -42,5 +42,6 @@ namespace AzureIoTHubConnectedService
             MessageBox.Show(message);
         }
 
+        public void ProvisionDevice() { }
     }
 }

@@ -93,6 +93,9 @@
     <Compile Include="..\AzureIoTHubConnectedServiceLibrary\ResourceGroup.cs">
       <Link>ResourceGroup.cs</Link>
     </Compile>
+    <Compile Include="..\AzureIoTHubConnectedServiceLibrary\ResourceLocation.cs">
+      <Link>ResourceLocation.cs</Link>
+    </Compile>
     <Compile Include="..\AzureIoTHubConnectedServiceLibrary\WizardMainGeneric.cs">
       <Link>WizardMainGeneric.cs</Link>
     </Compile>
