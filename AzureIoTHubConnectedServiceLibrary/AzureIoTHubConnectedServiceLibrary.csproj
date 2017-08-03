@@ -502,7 +502,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Resource Include="Resources\CSharp\AzureIoTHub.cs" />
-    <Resource Include="Resources\CSharp\Tpm\AzureIoTHub.cs" />
     <Resource Include="Resources\CPP\NonWAC\azure_iot_hub.cpp" />
     <Resource Include="Resources\CPP\NonWAC\azure_iot_hub.h" />
     <Resource Include="Resources\CPP\WAC\azure_iot_hub.cpp" />
@@ -545,6 +544,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\CSharp\CreateClientFromConnectionString.inc" />
+    <Resource Include="Resources\CSharp\CreateClientTpm.inc" />
     <Resource Include="Resources\CPP\generic\azure_iot_hub.cpp" />
     <Resource Include="Resources\CPP\generic\azure_iot_hub.h" />
     <Resource Include="Resources\CPP\generic\device_method_callback.inc" />

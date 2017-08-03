@@ -93,7 +93,7 @@ namespace AzureIoTHubConnectedService
                 }
             }
 
-            HandlerManifest configuration = this.BuildHandlerManifest(bUseTPM);
+            HandlerManifest configuration = this.BuildHandlerManifest(bUseTPM, handlerHelper);
             await this.AddSdkReferenceAsync(context, configuration, ct);
 
             foreach (var fileToAdd in configuration.Files)
@@ -142,7 +142,7 @@ namespace AzureIoTHubConnectedService
             return t;
         }
 
-        protected abstract HandlerManifest BuildHandlerManifest(bool useTPM);
+        protected abstract HandlerManifest BuildHandlerManifest(bool useTPM, ConnectedServiceHandlerHelper helper);
 
         private async Task AddSdkReferenceAsync(ConnectedServiceHandlerContext context, HandlerManifest manifest, CancellationToken ct)
         {

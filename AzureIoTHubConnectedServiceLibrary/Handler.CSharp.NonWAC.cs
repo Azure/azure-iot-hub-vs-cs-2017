@@ -10,7 +10,7 @@ namespace AzureIoTHubConnectedService
     AppliesTo = "CSharp+!WindowsAppContainer")]
     internal class CSharpHandlerNonWAC : GenericAzureIoTHubServiceHandler
     {
-        protected override HandlerManifest BuildHandlerManifest(bool useTPM)
+        protected override HandlerManifest BuildHandlerManifest(bool useTPM, ConnectedServiceHandlerHelper helper)
         {
             HandlerManifest manifest = new HandlerManifest();
             manifest.PackageReferences.Add(new NuGetReference("DotNetty.Buffers", "0.4.4"));
@@ -41,14 +41,10 @@ namespace AzureIoTHubConnectedService
                 manifest.PackageReferences.Add(new NuGetReference("Microsoft.TSS", "1.0.6"));
             }
 
-            if (useTPM)
-            {
-                manifest.Files.Add(new FileToAdd("CSharp/Tpm/AzureIoTHub.cs"));
-            }
-            else
-            {
-                manifest.Files.Add(new FileToAdd("CSharp/AzureIoTHub.cs"));
-            }
+            manifest.Files.Add(new FileToAdd("CSharp/AzureIoTHub.cs"));
+
+            string createClientCode = LoadResource(useTPM ? "CSharp/CreateClientTpm.inc" : "CSharp/CreateClientFromConnectionString.inc");
+            helper.TokenReplacementValues.Add("createClient", createClientCode);
 
             return manifest;
         }

@@ -8,8 +8,7 @@ class AzureIoTHub
 {
     public AzureIoTHub()
     {
-        // create Azure IoT Hub client from embedded connection string
-        deviceClient = DeviceClient.CreateFromConnectionString(deviceConnectionString, TransportType.Mqtt);
+$createClient$
     }
 
     DeviceClient deviceClient = null;

@@ -13,7 +13,7 @@ namespace AzureIoTHubConnectedService
     AppliesTo = "VisualC+!WindowsAppContainer")]
     internal class CppHandler : GenericAzureIoTHubServiceHandler
     {
-        protected override HandlerManifest BuildHandlerManifest(bool useTPM)
+        protected override HandlerManifest BuildHandlerManifest(bool useTPM, ConnectedServiceHandlerHelper helper)
         {
             if (useTPM)
             {

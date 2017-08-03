@@ -12,7 +12,7 @@ namespace AzureIoTHubConnectedService
 #endif
     internal class CppHandlerWAC : GenericAzureIoTHubServiceHandler
     {
-        protected override HandlerManifest BuildHandlerManifest(bool useTPM)
+        protected override HandlerManifest BuildHandlerManifest(bool useTPM, ConnectedServiceHandlerHelper helper)
         {
             if (useTPM)
             {
