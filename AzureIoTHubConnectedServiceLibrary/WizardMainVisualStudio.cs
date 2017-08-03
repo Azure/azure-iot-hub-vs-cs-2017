@@ -182,18 +182,23 @@ namespace AzureIoTHubConnectedService
               {
                   ConnectedServiceInstance instance = new ConnectedServiceInstance();
 
-                  instance.InstanceId = _CurrentHub.Id;
-                  instance.Name = _CurrentHub.Properties["IoTHubName"];
-
-                  foreach (var property in _CurrentHub.Properties)
+                  if (_CurrentHub != null)
                   {
-                      instance.Metadata.Add(property.Key, property.Value);
+                      instance.InstanceId = _CurrentHub.Id;
+                      instance.Name = _CurrentHub.Properties["IoTHubName"];
+
+                      foreach (var property in _CurrentHub.Properties)
+                      {
+                          instance.Metadata.Add(property.Key, property.Value);
+                      }
+
+                      instance.Metadata.Add("IoTHubAccount", _CurrentHub);
+
+                      instance.Metadata.Add("Device", _CurrentDevice);
                   }
 
-                  instance.Metadata.Add("IoTHubAccount", _CurrentHub);
                   instance.Metadata.Add("Cancel", false);
-                  instance.Metadata.Add("TPM", false);
-                  instance.Metadata.Add("Device", _CurrentDevice);
+                  instance.Metadata.Add("TPM", Mode == WizardMode.UseTpm);
                   instance.Metadata.Add("ProvisionedDevice", _WizardMode == WizardMode.ProvisionConnectionString);
 
                   if (DeviceMethodEnabled)
@@ -428,6 +433,8 @@ namespace AzureIoTHubConnectedService
                 _PageHubSelection.IsEnabled = false;
                 _PageDeviceSelection.IsEnabled = false;
                 _PageSummary.IsEnabled = false;
+
+                IsFinishEnabled = true;
             }
             else
             {
