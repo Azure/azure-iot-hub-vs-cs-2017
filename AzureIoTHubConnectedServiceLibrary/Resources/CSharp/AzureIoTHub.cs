@@ -6,12 +6,15 @@ using Microsoft.Azure.Devices.Shared;
 
 class AzureIoTHub
 {
-    public AzureIoTHub()
+    private static void CreateClient()
     {
+        if (deviceClient == null)
+        {
 $createClient$
+        }
     }
 
-    DeviceClient deviceClient = null;
+    static DeviceClient deviceClient = null;
 
     //
     // Note: this connection string is specific to the device "$deviceId$". To configure other devices,
@@ -27,8 +30,9 @@ $createClient$
 
     // Refer to http://aka.ms/azure-iot-hub-vs-cs-2017-wiki for more information on Connected Service for Azure IoT Hub
 
-    public async Task SendDeviceToCloudMessageAsync()
+    public static async Task SendDeviceToCloudMessageAsync()
     {
+        CreateClient();
 #if WINDOWS_UWP
         var str = "{\"deviceId\":\"$deviceId$\",\"messageId\":1,\"text\":\"Hello, Cloud from a UWP C# app!\"}";
 #else
@@ -39,8 +43,10 @@ $createClient$
         await deviceClient.SendEventAsync(message);
     }
 
-    public async Task<string> ReceiveCloudToDeviceMessageAsync()
+    public static async Task<string> ReceiveCloudToDeviceMessageAsync()
     {
+        CreateClient();
+
         while (true)
         {
             var receivedMessage = await deviceClient.ReceiveAsync();
