@@ -61,6 +61,14 @@ namespace AzureIoTHubConnectedService
 
             if (type.Contains("Linux"))
             {
+
+                EnvDTE.Project project = context.ProjectHierarchy.GetDteProject();
+                object vcproject = project.Object;
+
+                string[] libs = new string[] { "-lm", "-liothub_client_mqtt_transport", "-lumqtt", "-liothub_client", "-lpthread", "-laziotsharedutil", "-lserializer", "-lssl", "-lcrypto", "-lcurl" };
+                string[] libDirs = new string[] {  };
+                string[] incs = new string[] { "/usr/include/azureiot;", "/usr/include/azureiot/inc;" };
+                UpdateCppProject(vcproject, libDirs, libs, incs);
                 m_isLinuxProject = true;
             }
 
