@@ -350,6 +350,9 @@
     <Compile Include="DeviceMethodDescription.cs" />
     <Compile Include="DeviceTwinProperty.cs" />
     <Compile Include="LocationListResponse.cs" />
+    <Compile Include="PageConfiguration.xaml.cs">
+      <DependentUpon>PageConfiguration.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ResourceGroupListResponse.cs" />
     <Compile Include="PageHubConnectionString.xaml.cs">
       <DependentUpon>PageHubConnectionString.xaml</DependentUpon>
@@ -358,6 +361,7 @@
     <Compile Include="PageTestDevice.xaml.cs">
       <DependentUpon>PageTestDevice.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UtilityWindowConfiguration.cs" />
     <Compile Include="UtilityWindowDeviceTestTool.cs" />
     <Compile Include="WizardMainExtras.cs" />
     <Compile Include="WizardMainGeneric.cs" />
@@ -438,6 +442,10 @@
       <DependentUpon>WizardPageHubSelectionView.xaml</DependentUpon>
     </Compile>
     <Page Include="CommonResources.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PageConfiguration.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

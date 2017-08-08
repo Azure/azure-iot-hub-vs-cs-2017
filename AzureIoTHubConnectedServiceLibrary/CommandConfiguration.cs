@@ -93,7 +93,7 @@ namespace AzureIoTHubConnectedService
         /// <param name="e">Event args.</param>
         private void MenuItemCallback(object sender, EventArgs ea)
         {
-            DisplayWindow(typeof(UtilityWindowSummary));
+            DisplayWindow(typeof(UtilityWindowConfiguration));
         }
 
         private void DisplayWindow(Type type)

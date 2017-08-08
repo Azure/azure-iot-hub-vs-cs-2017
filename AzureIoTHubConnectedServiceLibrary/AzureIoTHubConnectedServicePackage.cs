@@ -48,6 +48,8 @@ namespace AzureIoTHubConnectedService
     [ProvideToolWindow(typeof(UtilityWindowReceiveMsgs))]
     [ProvideToolWindow(typeof(UtilityWindowCloudToDeviceMsg))]
     [ProvideToolWindow(typeof(UtilityWindowDeviceTestTool))]
+    [ProvideToolWindow(typeof(UtilityWindowConfiguration))]
+
     public sealed class AzureIoTHubConnectedServicePackage : Package
     {
         /// <summary>
