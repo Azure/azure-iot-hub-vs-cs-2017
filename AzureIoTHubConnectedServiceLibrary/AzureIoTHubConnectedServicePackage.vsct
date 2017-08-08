@@ -66,7 +66,7 @@
               <CommandFlag>DefaultInvisible</CommandFlag>
               <CommandFlag>DynamicVisibility</CommandFlag>
           If you do not want an image next to your command, remove the Icon node /> -->
-      <Button guid="guidAzureIoTHubConnectedServicePackageCmdSet" id="CommandIdDeviceTwin" priority="0x0000" type="Button">
+      <Button guid="guidAzureIoTHubConnectedServicePackageCmdSet" id="CommandIdDeviceTwin" priority="0x0004" type="Button">
         <Parent guid="guidAzureIoTHubConnectedServicePackageCmdSet" id="SubMenuGroup" />
         <Icon guid="guidImages" id="bmpPic2" />
         <Strings>
@@ -74,7 +74,7 @@
           <ButtonText>Device Twin</ButtonText>
         </Strings>
       </Button>
-      <Button guid="guidAzureIoTHubConnectedServicePackageCmdSet" id="CommandIdCloudToDeviceMsg" priority="0x0000" type="Button">
+      <Button guid="guidAzureIoTHubConnectedServicePackageCmdSet" id="CommandIdCloudToDeviceMsg" priority="0x0002" type="Button">
         <Parent guid="guidAzureIoTHubConnectedServicePackageCmdSet" id="SubMenuGroup" />
         <Icon guid="guidImages" id="bmpPic2" />
         <Strings>
@@ -82,7 +82,7 @@
           <ButtonText>Cloud to Device Message</ButtonText>
         </Strings>
       </Button>
-      <Button guid="guidAzureIoTHubConnectedServicePackageCmdSet" id="CommandIdDeviceToCloudMsgs" priority="0x0000" type="Button">
+      <Button guid="guidAzureIoTHubConnectedServicePackageCmdSet" id="CommandIdDeviceToCloudMsgs" priority="0x0001" type="Button">
         <Parent guid="guidAzureIoTHubConnectedServicePackageCmdSet" id="SubMenuGroup" />
         <Icon guid="guidImages" id="bmpPic2" />
         <Strings>
@@ -90,7 +90,7 @@
           <ButtonText>Device to Cloud Messages</ButtonText>
         </Strings>
       </Button>
-      <Button guid="guidAzureIoTHubConnectedServicePackageCmdSet" id="CommandIdDeviceMethod" priority="0x0000" type="Button">
+      <Button guid="guidAzureIoTHubConnectedServicePackageCmdSet" id="CommandIdDeviceMethod" priority="0x0003" type="Button">
         <Parent guid="guidAzureIoTHubConnectedServicePackageCmdSet" id="SubMenuGroup" />
         <Icon guid="guidImages" id="bmpPic2" />
         <Strings>
@@ -106,14 +106,14 @@
           <ButtonText>Configuration</ButtonText>
         </Strings>
       </Button>
-      <Button guid="guidAzureIoTHubConnectedServicePackageCmdSet" id="CommandIdDeviceTestTool" priority="0x0000" type="Button">
+      <!--<Button guid="guidAzureIoTHubConnectedServicePackageCmdSet" id="CommandIdDeviceTestTool" priority="0x0000" type="Button">
         <Parent guid="guidAzureIoTHubConnectedServicePackageCmdSet" id="SubMenuGroup" />
         <Icon guid="guidImages" id="bmpPic2" />
         <Strings>
           <CommandName>Device Test Tool</CommandName>
           <ButtonText>Device Test Tool</ButtonText>
         </Strings>
-      </Button>
+      </Button>-->
     </Buttons>
 
     <!--The bitmaps section is used to define the bitmaps that are used for the commands.-->
