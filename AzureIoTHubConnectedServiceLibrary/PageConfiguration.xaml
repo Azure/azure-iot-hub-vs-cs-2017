@@ -6,20 +6,13 @@
              xmlns:local="clr-namespace:AzureIoTHubConnectedService"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
+    <Grid Name="MainGrid" >
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Label Content="Configuration" Grid.Row="0" />
-        <TextBox Name="ConnectionString" Grid.Row="1" Margin="5" Text="{Binding Path=CurrentHub_ConnectionString, Mode=TwoWay, UpdateSourceTrigger=Explicit}" IsEnabled="False"/>
-        <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Right">
-            <Button Name="UpdateButton" Content="Update" Width="Auto"  Padding="10,3,10,3" Margin="5" Click="UpdateButton_Click" Visibility="Collapsed" />
-            <Button Name="CancelButton" Content="Cancel" Width="Auto" Padding="10,3,10,3" Margin="5" Click="CancelButton_Click" Visibility="Collapsed" />
-            <Button Name="ChangeButton" Content="Change" Width="Auto" Padding="10,3,10,3" Margin="5" Click="ChangeButton_Click" />
-        </StackPanel>
-        <Label Grid.Row="3" Margin="0" Padding="0" Content="{Binding Path=ErrorMessage, Mode=OneWay}" VerticalAlignment="Top" HorizontalAlignment="Left" Background="Red"/>
+
+        <StackPanel Name="TopPanel" Orientation="Horizontal" Grid.Row="0"  />
+        <StackPanel Name="BottomPanel" Orientation="Horizontal" Grid.Row="0"  />
     </Grid>
 </UserControl>

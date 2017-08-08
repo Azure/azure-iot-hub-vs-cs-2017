@@ -23,33 +23,18 @@ namespace AzureIoTHubConnectedService
         public PageConfiguration()
         {
             InitializeComponent();
+
+            this.DataContextChanged += PageConfiguration_DataContextChanged;
         }
 
-        private void UpdateButton_Click(object sender, RoutedEventArgs e)
+        private void PageConfiguration_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            ConnectionString.GetBindingExpression(TextBox.TextProperty).UpdateSource();
-            ChangeButton.Visibility = Visibility.Visible;
-            UpdateButton.Visibility = Visibility.Collapsed;
-            CancelButton.Visibility = Visibility.Collapsed;
-            ConnectionString.IsEnabled = false;
-        }
-        private void ChangeButton_Click(object sender, RoutedEventArgs e)
-        {
-            ChangeButton.Visibility = Visibility.Collapsed;
-            UpdateButton.Visibility = Visibility.Visible;
-            CancelButton.Visibility = Visibility.Visible;
-            ConnectionString.IsEnabled = true;
-            ConnectionString.Text = "";
-            ConnectionString.Focus();
-        }
+            Authenticator authenticator = (DataContext as WizardMain).Authenticator;
 
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
-        {
-            ConnectionString.GetBindingExpression(TextBox.TextProperty).UpdateTarget();
-            ChangeButton.Visibility = Visibility.Visible;
-            UpdateButton.Visibility = Visibility.Collapsed;
-            CancelButton.Visibility = Visibility.Collapsed;
-            ConnectionString.IsEnabled = false;
+            if (authenticator.View.Parent == null)
+            {
+                this.TopPanel.Children.Add(authenticator.View);
+            }
         }
     }
 }

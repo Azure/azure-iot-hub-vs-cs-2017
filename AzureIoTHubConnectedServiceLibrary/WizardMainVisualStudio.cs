@@ -79,7 +79,7 @@ namespace AzureIoTHubConnectedService
         /// Authenticator object.
         /// Comes from Visual Studio.
         /// </summary>
-        private Authenticator Authenticator
+        internal Authenticator Authenticator
         {
             get
             {
