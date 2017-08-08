@@ -5,21 +5,43 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AzureIoTHubConnectedService"
              mc:Ignorable="d" 
+             xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
+        <Grid.Resources>
+            <CollectionViewSource Source="{Binding Devices}" x:Key="SortedDevices">
+                <CollectionViewSource.SortDescriptions>
+                    <scm:SortDescription PropertyName="Id"/>
+                </CollectionViewSource.SortDescriptions>
+            </CollectionViewSource>
+        </Grid.Resources>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Label Content="IoT Hub Connection String" Grid.Row="0" />
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Label Content="IoT Hub Connection String" Grid.Column="0" VerticalAlignment="Center" />
+            <Button Name="UpdateButton" Content="Update" Width="Auto"  Padding="10,3,10,3" Margin="5" Click="UpdateButton_Click" Visibility="Collapsed" Grid.Column="1" />
+            <Button Name="CancelButton" Content="Cancel" Width="Auto" Padding="10,3,10,3" Margin="5" Click="CancelButton_Click" Visibility="Collapsed" Grid.Column="2" />
+            <Button Name="ChangeButton" Content="Change" Width="Auto" Padding="10,3,10,3" Margin="5" Click="ChangeButton_Click" Grid.Column="3" />
+        </Grid>
         <TextBox Name="ConnectionString" Grid.Row="1" Margin="5" Text="{Binding Path=CurrentHub_ConnectionString, Mode=TwoWay, UpdateSourceTrigger=Explicit}" IsEnabled="False"/>
-        <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Right">
-            <Button Name="UpdateButton" Content="Update" Width="Auto"  Padding="10,3,10,3" Margin="5" Click="UpdateButton_Click" Visibility="Collapsed" />
-            <Button Name="CancelButton" Content="Cancel" Width="Auto" Padding="10,3,10,3" Margin="5" Click="CancelButton_Click" Visibility="Collapsed" />
-            <Button Name="ChangeButton" Content="Change" Width="Auto" Padding="10,3,10,3" Margin="5" Click="ChangeButton_Click" />
-        </StackPanel>
-        <Label Grid.Row="3" Margin="0" Padding="0" Content="{Binding Path=ErrorMessage, Mode=OneWay}" VerticalAlignment="Top" HorizontalAlignment="Left" Background="Red"/>
+        <Grid Grid.Row="3" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Content="Selected Device" Grid.Column="0" VerticalAlignment="Center" />
+            <ComboBox Grid.Column="1" Margin="5" SelectedItem="{Binding CurrentDevice}"  ItemsSource="{Binding Source={StaticResource SortedDevices}}" DisplayMemberPath="Id" />
+        </Grid>
     </Grid>
 </UserControl>
