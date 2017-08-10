@@ -342,7 +342,7 @@
     <Compile Include="CommandCloudToDeviceMsg.cs" />
     <Compile Include="CommandConfiguration.cs" />
     <Compile Include="CommandDeviceToCloudMsgs.cs" />
-    <Compile Include="CommandDeviceMethod.cs" />
+    <Compile Include="CommandDirectMethod.cs" />
     <Compile Include="CommandDeviceTestTool.cs" />
     <Compile Include="CommonFactory.cs" />
     <Compile Include="CommonResources.xaml.cs" />
@@ -381,7 +381,7 @@
     <Compile Include="UtilityWindowCloudToDeviceMsg.cs" />
     <Compile Include="UtilityWindowHubs.cs" />
     <Compile Include="UtilityWindowSummary.cs" />
-    <Compile Include="UtilityWindowDeviceMethod.cs" />
+    <Compile Include="UtilityWindowDirectMethod.cs" />
     <Compile Include="UtilityWindowDeviceTwin.cs" />
     <Compile Include="UtilityWindowReceiveMsgs.cs" />
     <Compile Include="UtilityWindowDevices.cs" />
@@ -406,12 +406,12 @@
     <Compile Include="ResourceGroup.cs" />
     <Compile Include="ResourceLocation.cs" />
     <Compile Include="ResourceTypeInfo.cs" />
-    <Compile Include="WizardPageDeviceMethod.cs" />
+    <Compile Include="WizardPageDirectMethod.cs" />
     <Compile Include="PageDirectMethodPreview.xaml.cs">
       <DependentUpon>PageDirectMethodPreview.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WizardPageDeviceMethodView.xaml.cs">
-      <DependentUpon>WizardPageDeviceMethodView.xaml</DependentUpon>
+    <Compile Include="WizardPageDirectMethodView.xaml.cs">
+      <DependentUpon>WizardPageDirectMethodView.xaml</DependentUpon>
     </Compile>
     <Compile Include="PageDeviceTwinPreview.xaml.cs">
       <DependentUpon>PageDeviceTwinPreview.xaml</DependentUpon>
@@ -480,7 +480,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="WizardPageDeviceMethodView.xaml">
+    <Page Include="WizardPageDirectMethodView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
