@@ -48,9 +48,9 @@ namespace AzureIoTHubConnectedService
             {
                 _CanExecute = !_DeviceTwinUpdating;
             }
-            else if (p == "DeviceMethodExecute")
+            else if (p == "DirectMethodExecute")
             {
-                _CanExecute = (DeviceMethodName != "") && !_DeviceMethodExecuting;
+                _CanExecute = (DirectMethodName != "") && !_DirectMethodExecuting;
             }
             else
             {
@@ -96,63 +96,63 @@ namespace AzureIoTHubConnectedService
             {
                 CloudToDeviceSend();
             }
-            else if (p == "DeviceMethodExecute")
+            else if (p == "DirectMethodExecute")
             {
-                DeviceMethodExecute();
+                DirectMethodExecute();
             }
         }
 
         //--------------------------------------------------------------------------------------------------------------------
-        // DEVICE METHOD EXECUTION RELATED CODE
+        // DIRECT METHOD EXECUTION RELATED CODE
         //--------------------------------------------------------------------------------------------------------------------
 
         /// <summary>
-        /// Device method name to be executed by DeviceMethodExecute
+        /// Direct method name to be executed by DirectMethodExecute
         /// </summary>
-        public string DeviceMethodName
+        public string DirectMethodName
         {
             set
             {
-                _DeviceMethodName = value;
-                OnPropertyChanged("DeviceMethodName");
+                _DirectMethodName = value;
+                OnPropertyChanged("DirectMethodName");
                 InvokeCanExecuteChanged(); ;
             }
-            get { return _DeviceMethodName; }
+            get { return _DirectMethodName; }
         }
 
         /// <summary>
-        /// Device method payload to be used by DeviceMethodExecute
+        /// Direct method payload to be used by DirectMethodExecute
         /// </summary>
-        public string DeviceMethodPayload
+        public string DirectMethodPayload
         {
-            set { _DeviceMethodPayload = value; OnPropertyChanged("DeviceMethodPayload"); }
-            get { return _DeviceMethodPayload; }
+            set { _DirectMethodPayload = value; OnPropertyChanged("DirectMethodPayload"); }
+            get { return _DirectMethodPayload; }
         }
 
         /// <summary>
-        /// Starus received by DeviceMethodExecute command.
+        /// Starus received by DirectMethodExecute command.
         /// </summary>
-        public string DeviceMethodReturnStatus
+        public string DirectMethodReturnStatus
         {
-            set { _DeviceMethodReturnStatus = value; OnPropertyChanged("DeviceMethodReturnStatus"); }
-            get { return _DeviceMethodReturnStatus; }
+            set { _DirectMethodReturnStatus = value; OnPropertyChanged("DirectMethodReturnStatus"); }
+            get { return _DirectMethodReturnStatus; }
         }
 
         /// <summary>
-        /// Payload received by DeviceMethodExecuteCommand.
+        /// Payload received by DirectMethodExecuteCommand.
         /// </summary>
-        public string DeviceMethodReturnPayload
+        public string DirectMethodReturnPayload
         {
-            set { _DeviceMethodReturnPayload = value; OnPropertyChanged("DeviceMethodReturnPayload"); }
-            get { return _DeviceMethodReturnPayload; }
+            set { _DirectMethodReturnPayload = value; OnPropertyChanged("DirectMethodReturnPayload"); }
+            get { return _DirectMethodReturnPayload; }
         }
 
         /// <summary>
-        /// Execute device method on currently selected device.
+        /// Execute direct method on currently selected device.
         /// </summary>
-        public async void DeviceMethodExecute()
+        public async void DirectMethodExecute()
         {
-            _DeviceMethodExecuting = true;
+            _DirectMethodExecuting = true;
             InvokeCanExecuteChanged(); ;
             double timeout = 60;
 
@@ -160,29 +160,29 @@ namespace AzureIoTHubConnectedService
             {
                 dynamic serviceClient = ServiceClient.CreateFromConnectionString(CurrentHub_ConnectionString);
 
-                Microsoft.Azure.Devices.CloudToDeviceMethod method = new Microsoft.Azure.Devices.CloudToDeviceMethod(DeviceMethodName, TimeSpan.FromSeconds(timeout));
+                Microsoft.Azure.Devices.CloudToDeviceMethod method = new Microsoft.Azure.Devices.CloudToDeviceMethod(DirectMethodName, TimeSpan.FromSeconds(timeout));
 
-                method = method.SetPayloadJson(DeviceMethodPayload);
+                method = method.SetPayloadJson(DirectMethodPayload);
 
                 dynamic result = await serviceClient.InvokeDeviceMethodAsync(CurrentDevice.Id, method, new CancellationToken());
 
-                DeviceMethodReturnStatus = result.Status;
-                DeviceMethodReturnPayload = result.GetPayloadAsJson();
+                DirectMethodReturnStatus = result.Status;
+                DirectMethodReturnPayload = result.GetPayloadAsJson();
             }
             catch (Exception ex)
             {
                 ErrorMessage = ex.Message;
             }
 
-            _DeviceMethodExecuting = false;
+            _DirectMethodExecuting = false;
             InvokeCanExecuteChanged(); ;
         }
 
-        private string _DeviceMethodName = "SampleMethod";
-        private string _DeviceMethodPayload = "";
-        private string _DeviceMethodReturnStatus = "";
-        private string _DeviceMethodReturnPayload = "";
-        private bool _DeviceMethodExecuting = false;
+        private string _DirectMethodName = "SampleMethod";
+        private string _DirectMethodPayload = "";
+        private string _DirectMethodReturnStatus = "";
+        private string _DirectMethodReturnPayload = "";
+        private bool _DirectMethodExecuting = false;
 
         //--------------------------------------------------------------------------------------------------------------------
         // CLOUD TO DEVICE MESSAGE RELATED CODE

@@ -75,13 +75,13 @@ namespace AzureIoTHubConnectedService
             return new AzureIoTHubConnectedServiceHandlerHelper(context);
         }
 
-        protected override void GenerateDeviceMethodCode(ConnectedServiceHandlerHelper helper, DeviceMethodDescription[] methods)
+        protected override void GenerateDirectMethodCode(ConnectedServiceHandlerHelper helper, DirectMethodDescription[] methods)
         {
             if (methods == null)
             {
-                helper.TokenReplacementValues.Add("deviceMethodCallbackDecl", "");
-                helper.TokenReplacementValues.Add("deviceMethodCallbackRegistration", "");
-                helper.TokenReplacementValues.Add("deviceMethodCode", "");
+                helper.TokenReplacementValues.Add("directMethodCallbackDecl", "");
+                helper.TokenReplacementValues.Add("directMethodCallbackRegistration", "");
+                helper.TokenReplacementValues.Add("directMethodCode", "");
                 return;
             }
 
@@ -95,7 +95,7 @@ namespace AzureIoTHubConnectedService
             bool first = true;
             string result = "";
 
-            foreach (DeviceMethodDescription method in methods)
+            foreach (DirectMethodDescription method in methods)
             {
                 result += "    ";
 
@@ -110,9 +110,9 @@ namespace AzureIoTHubConnectedService
             }
 
             result = t.Replace("$inner$", result);
-            helper.TokenReplacementValues.Add("deviceMethodCallbackDecl", "\r\nstatic int deviceMethodCallback(const char *methodName, const unsigned char* payload, size_t size, unsigned char** response, size_t *response_size, void* userContextCallback);");
-            helper.TokenReplacementValues.Add("deviceMethodCallbackRegistration", "    IoTHubClient_LL_SetDeviceMethodCallback(iothub_client_handle, deviceMethodCallback, NULL);\r\n");
-            helper.TokenReplacementValues.Add("deviceMethodCode", result);
+            helper.TokenReplacementValues.Add("directMethodCallbackDecl", "\r\nstatic int directMethodCallback(const char *methodName, const unsigned char* payload, size_t size, unsigned char** response, size_t *response_size, void* userContextCallback);");
+            helper.TokenReplacementValues.Add("directMethodCallbackRegistration", "    IoTHubClient_LL_SetDeviceMethodCallback(iothub_client_handle, deviceMethodCallback, NULL);\r\n");
+            helper.TokenReplacementValues.Add("directMethodCode", result);
         }
 
         protected override void GenerateDeviceTwinDesiredCode(ConnectedServiceHandlerHelper helper, DeviceTwinProperty[] properties)

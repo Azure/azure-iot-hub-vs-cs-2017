@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace AzureIoTHubConnectedService
 {
-    public class DeviceMethodDescription
+    public class DirectMethodDescription
     {
-        public DeviceMethodDescription(string name)
+        public DirectMethodDescription(string name)
         {
             Name = name;
         }

@@ -90,12 +90,12 @@
           <ButtonText>Device to Cloud Messages</ButtonText>
         </Strings>
       </Button>
-      <Button guid="guidAzureIoTHubConnectedServicePackageCmdSet" id="CommandIdDeviceMethod" priority="0x0003" type="Button">
+      <Button guid="guidAzureIoTHubConnectedServicePackageCmdSet" id="CommandIdDirectMethod" priority="0x0003" type="Button">
         <Parent guid="guidAzureIoTHubConnectedServicePackageCmdSet" id="SubMenuGroup" />
         <Icon guid="guidImages" id="bmpPic2" />
         <Strings>
-          <CommandName>Device Method</CommandName>
-          <ButtonText>Device Method</ButtonText>
+          <CommandName>Direct Method</CommandName>
+          <ButtonText>Direct Method</ButtonText>
         </Strings>
       </Button>
       <Button guid="guidAzureIoTHubConnectedServicePackageCmdSet" id="CommandIdConfiguration" priority="0x0000" type="Button">
@@ -142,7 +142,7 @@
       <IDSymbol name="CommandIdDeviceTwin" value="0x101" />
       <IDSymbol name="CommandIdCloudToDeviceMsg" value="0x102" />
       <IDSymbol name="CommandIdDeviceToCloudMsgs" value="0x103" />
-      <IDSymbol name="CommandIdDeviceMethod" value="0x104" />
+      <IDSymbol name="CommandIdDirectMethod" value="0x104" />
       <IDSymbol name="CommandIdConfiguration" value="0x105" />
       <IDSymbol name="CommandIdDeviceTestTool" value="0x106" />
     </GuidSymbol>

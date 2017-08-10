@@ -157,10 +157,6 @@
       <Link>WizardPageDeviceTwinView.xaml.cs</Link>
       <DependentUpon>WizardPageDeviceTwinView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="..\AzureIoTHubConnectedServiceLibrary\WizardPageHubSelectionView.xaml.cs">
-      <Link>WizardPageHubSelectionView.xaml.cs</Link>
-      <DependentUpon>WizardPageHubSelectionView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="..\AzureIoTHubConnectedServiceLibrary\WizardPageSummaryView.xaml.cs">
       <Link>WizardPageSummaryView.xaml.cs</Link>
       <DependentUpon>WizardPageSummaryView.xaml</DependentUpon>
@@ -210,11 +206,6 @@
     </Page>
     <Page Include="..\AzureIoTHubConnectedServiceLibrary\WizardPageDeviceTwinView.xaml">
       <Link>WizardPageDeviceTwinView.xaml</Link>
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="..\AzureIoTHubConnectedServiceLibrary\WizardPageHubSelectionView.xaml">
-      <Link>WizardPageHubSelectionView.xaml</Link>
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

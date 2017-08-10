@@ -21,7 +21,7 @@ $stdafx$
 //
 static const char* connection_string = "HostName=$iotHubUri$;DeviceId=$deviceId$;SharedAccessKey=$deviceKey$";
 
-const char *onSuccess = "\"Successfully invoked device method\"";
+const char *onSuccess = "\"Successfully invoked direct method\"";
 const char *notFound = "\"No method found\"";
 
 const char *fieldDeviceId = ";DeviceId=";
@@ -129,7 +129,7 @@ const char AzureIoTCertificatesX[] =
 "-----END CERTIFICATE-----\r\n";
 
 static void sendMessageCallback(IOTHUB_CLIENT_CONFIRMATION_RESULT result, void* context);
-static IOTHUBMESSAGE_DISPOSITION_RESULT receiveMessageCallback(IOTHUB_MESSAGE_HANDLE message, void* context);$deviceTwinCallbackDecl$$deviceMethodCallbackDecl$
+static IOTHUBMESSAGE_DISPOSITION_RESULT receiveMessageCallback(IOTHUB_MESSAGE_HANDLE message, void* context);$deviceTwinCallbackDecl$$directMethodCallbackDecl$
 
 #define MAX_CONNECTION_STRING_SIZE 128
 
@@ -163,7 +163,7 @@ bool clientConnect(void)
 
 	// set callbacks
 	IoTHubClient_LL_SetMessageCallback(iothub_client_handle, receiveMessageCallback, NULL);
-$deviceMethodCallbackRegistration$$deviceTwinCallbackRegistration$
+$directMethodCallbackRegistration$$deviceTwinCallbackRegistration$
 
 	return true;
 }
@@ -267,7 +267,7 @@ static IOTHUBMESSAGE_DISPOSITION_RESULT receiveMessageCallback(IOTHUB_MESSAGE_HA
 	return IOTHUBMESSAGE_ACCEPTED;
 }
 
-$deviceMethodCode$
+$directMethodCode$
 
 $deviceTwinCodeDesired$
 

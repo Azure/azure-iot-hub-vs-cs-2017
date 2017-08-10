@@ -275,26 +275,26 @@ namespace AzureIoTHubConnectedService
         /// <summary>
         /// Is direct method functionality enabled by the user?
         /// </summary>
-        public bool DeviceMethodEnabled
+        public bool DirectMethodEnabled
         {
             get
             {
-                return _DeviceMethodEnabled;
+                return _DirectMethodEnabled;
             }
             set
             {
-                _DeviceMethodEnabled = value;
-                OnPropertyChanged("DeviceMethodEnabled");
+                _DirectMethodEnabled = value;
+                OnPropertyChanged("DirectMethodEnabled");
             }
         }
 
         /// <summary>
-        /// List of device methods
+        /// List of direct methods
         /// </summary>
-        public ObservableCollection<DeviceMethodDescription> DeviceMethods { get { return _DeviceMethods; } }
+        public ObservableCollection<DirectMethodDescription> DirectMethods { get { return _DirectMethods; } }
 
-        private bool _DeviceMethodEnabled = true;
-        private ObservableCollection<DeviceMethodDescription> _DeviceMethods = new ObservableCollection<DeviceMethodDescription>();
+        private bool _DirectMethodEnabled = true;
+        private ObservableCollection<DirectMethodDescription> _DirectMethods = new ObservableCollection<DirectMethodDescription>();
 
         //--------------------------------------------------------------------------------------------------------------------
         // NEW IOT HUB CREATION RELATED CODE

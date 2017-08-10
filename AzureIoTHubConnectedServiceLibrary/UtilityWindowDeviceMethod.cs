@@ -23,24 +23,24 @@ namespace AzureIoTHubConnectedService
     /// </para>
     /// </remarks>
     [Guid("d92ea20f-0517-48bf-bbde-4737a099be90")]
-    public class UtilityWindowDeviceMethod : ToolWindowPane
+    public class UtilityWindowDirectMethod : ToolWindowPane
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="UtilityWindowDevices"/> class.
         /// </summary>
-        public UtilityWindowDeviceMethod() : base(null)
+        public UtilityWindowDirectMethod() : base(null)
         {
-            this.Caption = "Device Method";
+            this.Caption = "Direct Method";
 
             // This is the user control hosted by the tool window; Note that, even if this class implements IDisposable,
             // we are not calling Dispose on this object. This is because ToolWindowPane calls Dispose on
             // the object returned by the Content property.
-            this.Content = new PageDeviceMethod();
+            this.Content = new PageDirectMethod();
         }
 
         public void SetModel(WizardMain model)
         {
-            (this.Content as PageDeviceMethod).DataContext = model;
+            (this.Content as PageDirectMethod).DataContext = model;
         }
         public override void OnToolWindowCreated()
         {

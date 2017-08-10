@@ -71,7 +71,7 @@
                         </TextBlock>
                     </StackPanel>
                 </CheckBox>
-                <CheckBox Margin="2" IsChecked="{Binding DeviceMethodEnabled}" >
+                <CheckBox Margin="2" IsChecked="{Binding DirectMethodEnabled}" >
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{x:Static local:Resource.DeviceOptionDirectMethod}" />
                         <TextBlock Margin="5,0,0,0">(<Hyperlink NavigateUri="{Binding Source={x:Static local:Resource.DeviceOptionDirectMethodLink}}" RequestNavigate="Hyperlink_RequestNavigate"><TextBlock Text="{x:Static local:Resource.MoreInfoLink}"/></Hyperlink>)

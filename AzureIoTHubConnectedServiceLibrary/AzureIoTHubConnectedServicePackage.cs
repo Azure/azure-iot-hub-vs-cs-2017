@@ -43,7 +43,7 @@ namespace AzureIoTHubConnectedService
     [ProvideToolWindow(typeof(UtilityWindowDevices))]
     [ProvideToolWindow(typeof(UtilityWindowHubs))]
     [ProvideToolWindow(typeof(UtilityWindowSummary))]
-    [ProvideToolWindow(typeof(UtilityWindowDeviceMethod))]
+    [ProvideToolWindow(typeof(UtilityWindowDirectMethod))]
     [ProvideToolWindow(typeof(UtilityWindowDeviceTwin))]
     [ProvideToolWindow(typeof(UtilityWindowReceiveMsgs))]
     [ProvideToolWindow(typeof(UtilityWindowCloudToDeviceMsg))]
@@ -81,7 +81,7 @@ namespace AzureIoTHubConnectedService
             base.Initialize();
             CommandDeviceTwin.Initialize(this);
             CommandDeviceToCloudMsgs.Initialize(this);
-            CommandDeviceMethod.Initialize(this);
+            CommandDirectMethod.Initialize(this);
             CommandConfiguration.Initialize(this);
             CommandCloudToDeviceMsg.Initialize(this);
             CommandDeviceTestTool.Initialize(this);

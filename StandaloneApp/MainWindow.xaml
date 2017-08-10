@@ -8,15 +8,15 @@
         mc:Ignorable="d"
         Title="Generic Azure IoT Hub Tools" Height="350" Width="525">
     <TabControl>
-        <TabItem Header="Config">
+        <!--<TabItem Header="Config">
             <iot:PageHubConnectionString x:Name="Config" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
-        </TabItem>
+        </TabItem>-->
         <TabItem Header="Summary">
             <iot:WizardPageSummaryView x:Name="Summary" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
         </TabItem>
-        <TabItem Header="Hubs">
+        <!--<TabItem Header="Hubs">
             <iot:WizardPageHubSelectionView x:Name="HubSelection" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
-        </TabItem>
+        </TabItem>-->
         <TabItem Header="Devices">
             <iot:WizardPageDeviceSelectionView x:Name="DeviceSelection" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
         </TabItem>
@@ -26,8 +26,8 @@
         <TabItem Header="D2C Messages">
             <iot:PageReceiveMessages x:Name="D2CMessages" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
         </TabItem>
-        <TabItem Header="Device Method">
-            <iot:PageDeviceMethod x:Name="DeviceMethod" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+        <TabItem Header="Direct Method">
+            <iot:PageDirectMethod x:Name="DirectMethod" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
         </TabItem>
         <TabItem Header="Device Twin">
             <iot:PageDeviceTwin x:Name="DeviceTwin" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />

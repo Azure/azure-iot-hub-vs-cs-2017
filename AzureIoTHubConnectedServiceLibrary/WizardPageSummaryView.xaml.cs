@@ -30,7 +30,7 @@ namespace AzureIoTHubConnectedService
             if (DataContext != null)
             {
                 dynamic d = DataContext;
-                d.SummaryVisible = (e.NewValue as bool?) ?? false;
+                //d.SummaryVisible = (e.NewValue as bool?) ?? false;
             }
         }
     }

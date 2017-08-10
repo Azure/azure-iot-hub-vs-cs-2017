@@ -15,7 +15,7 @@ namespace AzureIoTHubConnectedService
     /// <summary>
     /// Command handler
     /// </summary>
-    internal sealed class CommandDeviceMethod
+    internal sealed class CommandDirectMethod
     {
         /// <summary>
         /// Command ID.
@@ -37,7 +37,7 @@ namespace AzureIoTHubConnectedService
         /// Adds our command handlers for menu (commands must exist in the command table file)
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
-        private CommandDeviceMethod(Package package)
+        private CommandDirectMethod(Package package)
         {
             if (package == null)
             {
@@ -58,7 +58,7 @@ namespace AzureIoTHubConnectedService
         /// <summary>
         /// Gets the instance of the command.
         /// </summary>
-        public static CommandDeviceMethod Instance
+        public static CommandDirectMethod Instance
         {
             get;
             private set;
@@ -81,7 +81,7 @@ namespace AzureIoTHubConnectedService
         /// <param name="package">Owner package, not null.</param>
         public static void Initialize(Package package)
         {
-            Instance = new CommandDeviceMethod(package);
+            Instance = new CommandDirectMethod(package);
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace AzureIoTHubConnectedService
         /// <param name="e">Event args.</param>
         private void MenuItemCallback(object sender, EventArgs ea)
         {
-            DisplayWindow(typeof(UtilityWindowDeviceMethod));
+            DisplayWindow(typeof(UtilityWindowDirectMethod));
         }
 
         private void DisplayWindow(Type type)

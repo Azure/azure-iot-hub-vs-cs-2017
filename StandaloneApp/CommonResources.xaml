@@ -8,5 +8,19 @@
            TargetType="ListViewItem" >
     </Style>
 
+    <Style x:Uid="Style_1"
+           x:Key="ConnectedServicesCommonDialogStyle"
+           TargetType="Window">
+    </Style>
 
+    <Style x:Uid="Style_2"
+           x:Key="ConnectedServicesInteractiveDialogStyle"
+           TargetType="Window"
+           BasedOn="{StaticResource ConnectedServicesCommonDialogStyle}">
+    </Style>
+
+    <Style x:Uid="NavigationButtonStyle"
+           x:Key="NavigationButtonStyle"
+           TargetType="Button">
+    </Style>
 </ResourceDictionary>

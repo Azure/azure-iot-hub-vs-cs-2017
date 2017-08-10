@@ -61,7 +61,7 @@ namespace AzureIoTHubConnectedService
         {
             return context.HandlerHelper;
         }
-        protected override void GenerateDeviceMethodCode(ConnectedServiceHandlerHelper helper, DeviceMethodDescription[] methods)
+        protected override void GenerateDirectMethodCode(ConnectedServiceHandlerHelper helper, DirectMethodDescription[] methods)
         {
             // for now we will ignore real methods as they are fixed
             string methodCode = (methods != null) ? LoadResource("CSharp/DirectMethod.inc") : "";

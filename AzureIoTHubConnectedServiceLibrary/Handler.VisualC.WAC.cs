@@ -44,7 +44,7 @@ namespace AzureIoTHubConnectedService
             return new AzureIoTHubConnectedServiceHandlerHelper(context);
         }
 
-        protected override void GenerateDeviceMethodCode(ConnectedServiceHandlerHelper helper, DeviceMethodDescription[] methods)
+        protected override void GenerateDirectMethodCode(ConnectedServiceHandlerHelper helper, DirectMethodDescription[] methods)
         {
         }
 

@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace AzureIoTHubConnectedService
 {
     /// <summary>
-    /// Interaction logic for PageDeviceMethod.xaml
+    /// Interaction logic for PageDirectMethod.xaml
     /// </summary>
-    public partial class PageDeviceMethod : UserControl
+    public partial class PageDirectMethod : UserControl
     {
-        public PageDeviceMethod()
+        public PageDirectMethod()
         {
             InitializeComponent();
         }

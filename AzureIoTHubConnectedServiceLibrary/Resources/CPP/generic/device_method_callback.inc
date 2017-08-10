@@ -1,7 +1,7 @@
 ﻿/// <summary>
-/// Callback when device method is called.
+/// Callback when direct method is called.
 /// </summary>
-static int deviceMethodCallback(const char *methodName,
+static int directMethodCallback(const char *methodName,
 	const unsigned char *payload,
 	size_t size,
 	unsigned char **response,

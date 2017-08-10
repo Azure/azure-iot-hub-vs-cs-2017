@@ -8,16 +8,16 @@ using Microsoft.VisualStudio.ConnectedServices;
 
 namespace AzureIoTHubConnectedService
 {
-    public class WizardPageDeviceMethod : ConnectedServiceWizardPage
+    public class WizardPageDirectMethod : ConnectedServiceWizardPage
     {
-        internal WizardPageDeviceMethod(WizardMain wizard)
+        internal WizardPageDirectMethod(WizardMain wizard)
         {
             this.Title = Resource.WizardPageTitle;
-            this.Legend = "Device Method";
-            this.Description = "Device Method";
+            this.Legend = "Direct Method";
+            this.Description = "Direct Method";
             this.IsEnabled = false;
 
-            this.View = new WizardPageDeviceMethodView();
+            this.View = new WizardPageDirectMethodView();
             this.View.DataContext = wizard;
         }
     }

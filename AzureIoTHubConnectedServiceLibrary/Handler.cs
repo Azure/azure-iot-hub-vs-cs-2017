@@ -29,7 +29,7 @@ namespace AzureIoTHubConnectedService
         private IVsPackageInstallerServices PackageInstallerServices { get; set; }
 
 
-        protected abstract void GenerateDeviceMethodCode(ConnectedServiceHandlerHelper helper, DeviceMethodDescription[] methods);
+        protected abstract void GenerateDirectMethodCode(ConnectedServiceHandlerHelper helper, DirectMethodDescription[] methods);
         protected abstract void GenerateDeviceTwinReportedCode(ConnectedServiceHandlerHelper helper, DeviceTwinProperty[] properties);
         protected abstract void GenerateDeviceTwinDesiredCode(ConnectedServiceHandlerHelper helper, DeviceTwinProperty[] properties);
 
@@ -68,7 +68,7 @@ namespace AzureIoTHubConnectedService
                 bool isDeviceProvisioned = ((context.ServiceInstance.Metadata["ProvisionedDevice"] as bool?) == true);
 
                 object methods = null;
-                try { methods = context.ServiceInstance.Metadata["DeviceMethods"]; } catch (Exception) {}
+                try { methods = context.ServiceInstance.Metadata["DirectMethods"]; } catch (Exception) {}
                 object properties = null;
                 try { properties = context.ServiceInstance.Metadata["DeviceTwinProperties"]; } catch (Exception) {}
 
@@ -87,7 +87,7 @@ namespace AzureIoTHubConnectedService
                     handlerHelper.TokenReplacementValues.Add("iotHubOwnerPrimaryKey", primaryKeys.IoTHubOwner);
                     handlerHelper.TokenReplacementValues.Add("servicePrimaryKey", primaryKeys.Service);
 
-                    GenerateDeviceMethodCode(handlerHelper, methods as DeviceMethodDescription[]);
+                    GenerateDirectMethodCode(handlerHelper, methods as DirectMethodDescription[]);
                     GenerateDeviceTwinDesiredCode(handlerHelper, properties as DeviceTwinProperty[]);
                     GenerateDeviceTwinReportedCode(handlerHelper, properties as DeviceTwinProperty[]);
                 }

@@ -57,7 +57,7 @@ namespace AzureIoTHubConnectedService
             _PageHubSelection = new WizardPageHubSelection(this);
             _PageDeviceSelection = new WizardPageDeviceSelection(this);
             _PageDeviceTwin = new WizardPageDeviceTwin(this);
-            _PageDeviceMethod = new WizardPageDeviceMethod(this);
+            _PageDirectMethod = new WizardPageDirectMethod(this);
             _PageInjectConnectionString = new WizardPageInjectConnectionString(this);
             _PageSummary = new WizardPageSummary(this);
 
@@ -71,8 +71,8 @@ namespace AzureIoTHubConnectedService
             _DeviceTwinProperties.Add(new DeviceTwinProperty("SampleProperty1", "Desired", "String"));
             _DeviceTwinProperties.Add(new DeviceTwinProperty("SampleProperty2", "Reported", "String"));
 
-            _DeviceMethods.Add(new DeviceMethodDescription("SampleMethod1"));
-            _DeviceMethods.Add(new DeviceMethodDescription("SampleMethod2"));
+            _DirectMethods.Add(new DirectMethodDescription("SampleMethod1"));
+            _DirectMethods.Add(new DirectMethodDescription("SampleMethod2"));
         }
 
         /// <summary>
@@ -201,9 +201,9 @@ namespace AzureIoTHubConnectedService
                   instance.Metadata.Add("TPM", Mode == WizardMode.UseTpm);
                   instance.Metadata.Add("ProvisionedDevice", _WizardMode == WizardMode.ProvisionConnectionString);
 
-                  if (DeviceMethodEnabled)
+                  if (DirectMethodEnabled)
                   {
-                      instance.Metadata.Add("DeviceMethods", DeviceMethods.ToArray<DeviceMethodDescription>());
+                      instance.Metadata.Add("DirectMethods", DirectMethods.ToArray<DirectMethodDescription>());
                   }
 
                   if (DeviceTwinEnabled)
@@ -443,7 +443,7 @@ namespace AzureIoTHubConnectedService
                 _PageDeviceSelection.IsEnabled = (CurrentHub_Name != "");
                 _PageDeviceTwin.IsEnabled = (CurrentDevice_Id != "");
 
-                _PageDeviceMethod.IsEnabled = (CurrentDevice_Id != "");
+                _PageDirectMethod.IsEnabled = (CurrentDevice_Id != "");
                 _PageInjectConnectionString.IsEnabled = (CurrentDevice_Id != "");
                 _PageSummary.IsEnabled = (CurrentDevice_Id != "") && (_ProvisioningState == ProvisioningState.Provisioned || _ProvisioningState == ProvisioningState.Disabled);
             }
@@ -494,7 +494,7 @@ namespace AzureIoTHubConnectedService
         private WizardPageHubSelection _PageHubSelection = null;
         private WizardPageDeviceSelection _PageDeviceSelection = null;
         private WizardPageDeviceTwin _PageDeviceTwin = null;
-        private WizardPageDeviceMethod _PageDeviceMethod = null;
+        private WizardPageDirectMethod _PageDirectMethod = null;
         private WizardPageInjectConnectionString _PageInjectConnectionString = null;
         private WizardPageSummary _PageSummary = null;
 
