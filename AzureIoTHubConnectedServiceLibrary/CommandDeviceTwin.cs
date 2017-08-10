@@ -104,12 +104,9 @@ namespace AzureIoTHubConnectedService
                 throw new NotSupportedException("Cannot create tool window");
             }
 
-            object model = (this.package as AzureIoTHubConnectedServicePackage).MainModel;
-
-            if (null == model)
+            if (null == (this.package as AzureIoTHubConnectedServicePackage).MainModel)
             {
-                // [ZKK] this needs to be refactored
-                model = new WizardMain(null, null, false);
+                (this.package as AzureIoTHubConnectedServicePackage).MainModel = new WizardMain(null, null, false);
             }
 
             window.SetModel((this.package as AzureIoTHubConnectedServicePackage).MainModel);

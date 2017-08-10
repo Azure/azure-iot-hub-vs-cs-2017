@@ -48,6 +48,16 @@ namespace AzureIoTHubConnectedService
         /// <param name="canUseTpm"></param>
         public WizardMain(IAzureIoTHubAccountManager accountManager, IServiceProvider serviceProvider, bool canUseTpm)
         {
+            // should be moved to generic
+            _DeviceTwinProperties.Add(new DeviceTwinProperty("SampleProperty1", "Desired", "String"));
+            _DeviceTwinProperties.Add(new DeviceTwinProperty("SampleProperty2", "Reported", "String"));
+
+            _DirectMethods.Add(new DirectMethodDescription("SampleMethod1"));
+            _DirectMethods.Add(new DirectMethodDescription("SampleMethod2"));
+        }
+
+        public void ApplyWizardSettings(IAzureIoTHubAccountManager accountManager, IServiceProvider serviceProvider, bool canUseTpm)
+        {
             this._IoTHubAccountManager = accountManager;
             this._ServiceProvider = serviceProvider;
 
@@ -66,13 +76,6 @@ namespace AzureIoTHubConnectedService
             this.Pages.Add(_PageDeviceSelection);
             this.Pages.Add(_PageInjectConnectionString);
             this.Pages.Add(_PageSummary);
-
-            // should be moved to generic
-            _DeviceTwinProperties.Add(new DeviceTwinProperty("SampleProperty1", "Desired", "String"));
-            _DeviceTwinProperties.Add(new DeviceTwinProperty("SampleProperty2", "Reported", "String"));
-
-            _DirectMethods.Add(new DirectMethodDescription("SampleMethod1"));
-            _DirectMethods.Add(new DirectMethodDescription("SampleMethod2"));
         }
 
         /// <summary>
