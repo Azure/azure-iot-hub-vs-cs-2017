@@ -458,6 +458,6 @@ namespace AzureIoTHubConnectedService
         private string _DeviceTwinTags = "";
         private string _DeviceTwinReportedProperties = "";
         private string _DeviceTwinDesiredProperties = "";
-        private string _DeviceTwinUpdate = "{ 'properties': { 'reported': { 'param': 'value' }}}";
+        private string _DeviceTwinUpdate = "{ 'properties': { 'desired': { 'param': 'value' }}}";
     }
 }
