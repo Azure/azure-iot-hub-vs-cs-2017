@@ -9,6 +9,7 @@ namespace AzureIoTHubConnectedService
     using System;
     using System.Runtime.InteropServices;
     using Microsoft.VisualStudio.Shell;
+    using Microsoft.VisualStudio.Shell.Interop;
 
     /// <summary>
     /// This class implements the tool window exposed by this package and hosts a user control.
@@ -35,6 +36,20 @@ namespace AzureIoTHubConnectedService
             // we are not calling Dispose on this object. This is because ToolWindowPane calls Dispose on
             // the object returned by the Content property.
             this.Content = new WizardPageHubSelectionView();
+        }
+        public override void OnToolWindowCreated()
+        {
+            IVsWindowFrame windowFrame = (IVsWindowFrame)Frame;
+
+            windowFrame.SetProperty((int)__VSFPROPID.VSFPROPID_FrameMode, VSFRAMEMODE.VSFM_Dock);
+            //windowFrame.SetProperty((int)__VSFPROPID.VSFPROPID_IsWindowTabbed, __VSTABBEDMODE.VSTABBEDMODE_SelectedTab);
+
+            //object varFlags;
+            //windowFrame.GetProperty((int)__VSFPROPID.VSFPROPID_CreateToolWinFlags, out varFlags);
+            //int flags = (int)varFlags | (int)__VSCREATETOOLWIN2.CTW_fDocumentLikeTool;
+            //windowFrame.SetProperty((int)__VSFPROPID.VSFPROPID_CreateToolWinFlags, flags);
+
+            base.OnToolWindowCreated();
         }
     }
 }

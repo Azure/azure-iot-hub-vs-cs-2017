@@ -9,6 +9,7 @@ namespace AzureIoTHubConnectedService
     using System;
     using System.Runtime.InteropServices;
     using Microsoft.VisualStudio.Shell;
+    using Microsoft.VisualStudio.Shell.Interop;
 
     /// <summary>
     /// This class implements the tool window exposed by this package and hosts a user control.
@@ -40,6 +41,20 @@ namespace AzureIoTHubConnectedService
         public void SetModel(WizardMain model)
         {
             (this.Content as PageCloudToDeviceMsg).DataContext = model;
+        }
+        public override void OnToolWindowCreated()
+        {
+            IVsWindowFrame windowFrame = (IVsWindowFrame)Frame;
+
+            windowFrame.SetProperty((int)__VSFPROPID.VSFPROPID_FrameMode, VSFRAMEMODE.VSFM_Dock);
+            //windowFrame.SetProperty((int)__VSFPROPID.VSFPROPID_IsWindowTabbed, __VSTABBEDMODE.VSTABBEDMODE_SelectedTab);
+
+            //object varFlags;
+            //windowFrame.GetProperty((int)__VSFPROPID.VSFPROPID_CreateToolWinFlags, out varFlags);
+            //int flags = (int)varFlags | (int)__VSCREATETOOLWIN2.CTW_fDocumentLikeTool;
+            //windowFrame.SetProperty((int)__VSFPROPID.VSFPROPID_CreateToolWinFlags, flags);
+
+            base.OnToolWindowCreated();
         }
     }
 }

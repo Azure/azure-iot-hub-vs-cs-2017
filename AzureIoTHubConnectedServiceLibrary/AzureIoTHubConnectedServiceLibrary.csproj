@@ -384,7 +384,6 @@
     <Compile Include="UtilityWindowDeviceMethod.cs" />
     <Compile Include="UtilityWindowDeviceTwin.cs" />
     <Compile Include="UtilityWindowReceiveMsgs.cs" />
-    <Compile Include="UtilityWindowCommand.cs" />
     <Compile Include="UtilityWindowDevices.cs" />
     <Compile Include="WizardMainVisualStudio.cs" />
     <Compile Include="AzureIoTHubConnectedServicePackage.cs" />

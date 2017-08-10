@@ -116,15 +116,6 @@ namespace AzureIoTHubConnectedService
 
             
             IVsWindowFrame windowFrame = (IVsWindowFrame)window.Frame;
-            
-            windowFrame.SetProperty((int)__VSFPROPID.VSFPROPID_FrameMode, VSFRAMEMODE.VSFM_Dock);
-            windowFrame.SetProperty((int)__VSFPROPID.VSFPROPID_IsWindowTabbed, __VSTABBEDMODE.VSTABBEDMODE_SelectedTab);
-
-            object varFlags;
-            windowFrame.GetProperty((int)__VSFPROPID.VSFPROPID_CreateToolWinFlags, out varFlags);
-            int flags = (int)varFlags | (int)__VSCREATETOOLWIN2.CTW_fDocumentLikeTool;
-            windowFrame.SetProperty((int)__VSFPROPID.VSFPROPID_CreateToolWinFlags, flags);
-
             Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(windowFrame.Show());
         }
     }
