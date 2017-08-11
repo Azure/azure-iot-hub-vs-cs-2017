@@ -66,8 +66,8 @@ namespace AzureIoTHubConnectedService
             if (_PageLogin == null) Pages.Add(_PageLogin = new WizardPageLogin(this, Authenticator));
             if (_PageHubSelection == null) Pages.Add(_PageHubSelection = new WizardPageHubSelection(this));
             if (_PageDeviceSelection == null) Pages.Add(_PageDeviceSelection = new WizardPageDeviceSelection(this));
-            if (_PageDeviceTwin == null) Pages.Add(_PageDeviceTwin = new WizardPageDeviceTwin(this));
-            if (_PageDirectMethod == null) Pages.Add(_PageDirectMethod = new WizardPageDirectMethod(this));
+            //if (_PageDeviceTwin == null) Pages.Add(_PageDeviceTwin = new WizardPageDeviceTwin(this));
+            //if (_PageDirectMethod == null) Pages.Add(_PageDirectMethod = new WizardPageDirectMethod(this));
             if (_PageInjectConnectionString == null) Pages.Add(_PageInjectConnectionString = new WizardPageInjectConnectionString(this));
             if (_PageSummary == null) Pages.Add(_PageSummary = new WizardPageSummary(this));
         }
@@ -455,9 +455,9 @@ namespace AzureIoTHubConnectedService
                 Authenticator.View.IsEnabled = true;
                 _PageHubSelection.IsEnabled = Authenticator.IsAuthenticated;
                 _PageDeviceSelection.IsEnabled = (CurrentHub_Name != "");
-                _PageDeviceTwin.IsEnabled = (CurrentDevice_Id != "");
+                //_PageDeviceTwin.IsEnabled = (CurrentDevice_Id != "");
 
-                _PageDirectMethod.IsEnabled = (CurrentDevice_Id != "");
+                //_PageDirectMethod.IsEnabled = (CurrentDevice_Id != "");
                 _PageInjectConnectionString.IsEnabled = (CurrentDevice_Id != "");
                 _PageSummary.IsEnabled = (CurrentDevice_Id != "") && (_ProvisioningState == ProvisioningState.Provisioned || _ProvisioningState == ProvisioningState.Disabled);
             }
@@ -507,8 +507,8 @@ namespace AzureIoTHubConnectedService
         private WizardPageLogin _PageLogin = null;
         private WizardPageHubSelection _PageHubSelection = null;
         private WizardPageDeviceSelection _PageDeviceSelection = null;
-        private WizardPageDeviceTwin _PageDeviceTwin = null;
-        private WizardPageDirectMethod _PageDirectMethod = null;
+        //private WizardPageDeviceTwin _PageDeviceTwin = null;
+        //private WizardPageDirectMethod _PageDirectMethod = null;
         private WizardPageInjectConnectionString _PageInjectConnectionString = null;
         private WizardPageSummary _PageSummary = null;
 
