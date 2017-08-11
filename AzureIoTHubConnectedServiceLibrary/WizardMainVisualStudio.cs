@@ -63,19 +63,13 @@ namespace AzureIoTHubConnectedService
 
             CanUseTPM = canUseTpm;
 
-            _PageLogin = new WizardPageLogin(this, Authenticator);
-            _PageHubSelection = new WizardPageHubSelection(this);
-            _PageDeviceSelection = new WizardPageDeviceSelection(this);
-            _PageDeviceTwin = new WizardPageDeviceTwin(this);
-            _PageDirectMethod = new WizardPageDirectMethod(this);
-            _PageInjectConnectionString = new WizardPageInjectConnectionString(this);
-            _PageSummary = new WizardPageSummary(this);
-
-            this.Pages.Add(_PageLogin);
-            this.Pages.Add(_PageHubSelection);
-            this.Pages.Add(_PageDeviceSelection);
-            this.Pages.Add(_PageInjectConnectionString);
-            this.Pages.Add(_PageSummary);
+            if (_PageLogin == null) Pages.Add(_PageLogin = new WizardPageLogin(this, Authenticator));
+            if (_PageHubSelection == null) Pages.Add(_PageHubSelection = new WizardPageHubSelection(this));
+            if (_PageDeviceSelection == null) Pages.Add(_PageDeviceSelection = new WizardPageDeviceSelection(this));
+            if (_PageDeviceTwin == null) Pages.Add(_PageDeviceTwin = new WizardPageDeviceTwin(this));
+            if (_PageDirectMethod == null) Pages.Add(_PageDirectMethod = new WizardPageDirectMethod(this));
+            if (_PageInjectConnectionString == null) Pages.Add(_PageInjectConnectionString = new WizardPageInjectConnectionString(this));
+            if (_PageSummary == null) Pages.Add(_PageSummary = new WizardPageSummary(this));
         }
 
         /// <summary>
