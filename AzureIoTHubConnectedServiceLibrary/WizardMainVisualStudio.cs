@@ -307,6 +307,23 @@ namespace AzureIoTHubConnectedService
         private bool _CanUseTPM = false;
 
         /// <summary>
+        /// Can device be provisioned?
+        /// </summary>
+        public bool CanProvisionDevice
+        {
+            get
+            {
+                return _CanProvisionDevice;
+            }
+            set
+            {
+                _CanProvisionDevice = value;
+            }
+        }
+
+        private bool _CanProvisionDevice = false;
+
+        /// <summary>
         /// Subscriptions.
         /// </summary>
         public ObservableCollection<string> Subscriptions

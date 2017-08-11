@@ -48,7 +48,7 @@
                 </StackPanel>
             </RadioButton>
 
-            <RadioButton x:Name="rbProvision" Checked="rbProvision_Checked">
+            <RadioButton x:Name="rbProvision" Checked="rbProvision_Checked" IsEnabled="{Binding MainModel.CanProvisionDevice}" >
                 <StackPanel>
                     <TextBlock FontWeight="Bold" Text="{x:Static local:Resource.WizardOptionProvision}" Style="{StaticResource TextStyle}"/>
                     <TextBlock TextWrapping="Wrap" Text="{x:Static local:Resource.WizardOptionProvisionDescription}" Style="{StaticResource TextStyle}"/>
