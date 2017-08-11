@@ -6,6 +6,9 @@
              xmlns:local="clr-namespace:AzureIoTHubConnectedService"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <local:StringToBoolConverter x:Key="StringToBoolConverter"/>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -26,13 +29,13 @@
             </TabItem>
             <TabItem Header="Update Properties">
                 <Grid>
-                    <TextBox TextWrapping="NoWrap" AcceptsReturn="True" Text="{Binding Path=DeviceTwinUpdate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox TextWrapping="NoWrap" AcceptsReturn="True" Text="{Binding Path=DeviceTwinUpdate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=CurrentDevice_Id, Converter={StaticResource StringToBoolConverter}}"/>
                 </Grid>
             </TabItem>
         </TabControl>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Name="ButtonUpdate" Content="Update" Margin="5" Padding="10,3,10,3" Width="Auto" HorizontalAlignment="Right" Command="{Binding Path=ExecuteCmd}" CommandParameter="DeviceTwinUpdateDesired" />
-            <Button Name="ButtonRefresh" Content="Refresh" Margin="5" Padding="10,3,10,3" Width="Auto" HorizontalAlignment="Right" Command="{Binding Path=ExecuteCmd}" CommandParameter="DeviceTwinRefresh" />
+            <Button Name="ButtonUpdate" Content="Update" Margin="5" Padding="10,3,10,3" Width="Auto" HorizontalAlignment="Right" Command="{Binding Path=ExecuteCmd}" CommandParameter="DeviceTwinUpdateDesired" IsEnabled="{Binding Path=CurrentDevice_Id, Converter={StaticResource StringToBoolConverter}}"/>
+            <Button Name="ButtonRefresh" Content="Refresh" Margin="5" Padding="10,3,10,3" Width="Auto" HorizontalAlignment="Right" Command="{Binding Path=ExecuteCmd}" CommandParameter="DeviceTwinRefresh" IsEnabled="{Binding Path=CurrentDevice_Id, Converter={StaticResource StringToBoolConverter}}"/>
         </StackPanel>
     </Grid>
 </UserControl>

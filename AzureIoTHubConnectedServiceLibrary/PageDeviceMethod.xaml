@@ -6,6 +6,9 @@
              xmlns:local="clr-namespace:AzureIoTHubConnectedService"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <local:StringToBoolConverter x:Key="StringToBoolConverter"/>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -27,12 +30,12 @@
 
         <Label Content="Return Payload" Grid.Column="0" Grid.Row="4" />
 
-        <TextBox Grid.Column="1" Grid.Row="0" Margin="5" Text="{Binding Path=DirectMethodName, UpdateSourceTrigger=PropertyChanged}" />
-        <TextBox Grid.Column="1" Grid.Row="1" Margin="5" Text="{Binding Path=DirectMethodPayload, UpdateSourceTrigger=PropertyChanged}"/>
-        <TextBox Grid.Column="1" Grid.Row="3" Margin="5" Text="{Binding Path=DirectMethodReturnStatus, Mode=OneWay}" IsReadOnly="True" IsReadOnlyCaretVisible="True"/>
-        <TextBox Grid.Column="1" Grid.Row="4" Margin="5" Text="{Binding Path=DirectMethodReturnPayload, Mode=OneWay}" IsReadOnly="True" IsReadOnlyCaretVisible="True"/>
+        <TextBox Grid.Column="1" Grid.Row="0" Margin="5" Text="{Binding Path=DirectMethodName, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=CurrentDevice_Id, Converter={StaticResource StringToBoolConverter}}" />
+        <TextBox Grid.Column="1" Grid.Row="1" Margin="5" Text="{Binding Path=DirectMethodPayload, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Path=CurrentDevice_Id, Converter={StaticResource StringToBoolConverter}}"/>
+        <TextBox Grid.Column="1" Grid.Row="3" Margin="5" Text="{Binding Path=DirectMethodReturnStatus, Mode=OneWay}" IsReadOnly="True" IsReadOnlyCaretVisible="True" IsEnabled="{Binding Path=CurrentDevice_Id, Converter={StaticResource StringToBoolConverter}}"/>
+        <TextBox Grid.Column="1" Grid.Row="4" Margin="5" Text="{Binding Path=DirectMethodReturnPayload, Mode=OneWay}" IsReadOnly="True" IsReadOnlyCaretVisible="True" IsEnabled="{Binding Path=CurrentDevice_Id, Converter={StaticResource StringToBoolConverter}}"/>
 
-        <Button Grid.Column="1" Grid.Row="2" Content="Send" Width="Auto" HorizontalAlignment="Right" Padding="10,3,10,3" Margin="5" Command="{Binding Path=ExecuteCmd}" CommandParameter="DirectMethodExecute" />
+        <Button Grid.Column="1" Grid.Row="2" Content="Send" Width="Auto" HorizontalAlignment="Right" Padding="10,3,10,3" Margin="5" Command="{Binding Path=ExecuteCmd}" CommandParameter="DirectMethodExecute" IsEnabled="{Binding Path=CurrentDevice_Id, Converter={StaticResource StringToBoolConverter}}"/>
 
         <Label Grid.Row="5" Grid.ColumnSpan="2" Margin="0" Padding="0" Content="{Binding Path=ErrorMessage, Mode=OneWay}" VerticalAlignment="Top" HorizontalAlignment="Left" Background="Red"/>
 

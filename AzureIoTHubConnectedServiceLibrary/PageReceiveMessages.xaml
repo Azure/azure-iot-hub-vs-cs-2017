@@ -6,6 +6,9 @@
              xmlns:local="clr-namespace:AzureIoTHubConnectedService"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <local:StringToBoolConverter x:Key="StringToBoolConverter"/>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -13,9 +16,9 @@
         </Grid.RowDefinitions>
         <TextBox Grid.Row="0" Name="eventHubTextBox" HorizontalAlignment="Stretch" Margin="5" TextWrapping="Wrap" VerticalAlignment="Stretch" Text="{Binding Path=ReceiveMsgOutput, Mode=OneWay}" IsReadOnly="True" IsReadOnlyCaretVisible="True" />
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Content="Start" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5" Padding="10,3,10,3" Command="{Binding Path=ExecuteCmd}" CommandParameter="ReceiveMsgStart" />
-            <Button Content="End" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5" Padding="10,3,10,3" Command="{Binding Path=ExecuteCmd}" CommandParameter="ReceiveMsgEnd" />
-            <Button Content="Clear" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5" Padding="10,3,10,3" Command="{Binding Path=ExecuteCmd}" CommandParameter="ReceiveMsgClear" />
+            <Button Content="Start" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5" Padding="10,3,10,3" Command="{Binding Path=ExecuteCmd}" CommandParameter="ReceiveMsgStart" IsEnabled="{Binding Path=CurrentDevice_Id, Converter={StaticResource StringToBoolConverter}}"/>
+            <Button Content="End" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5" Padding="10,3,10,3" Command="{Binding Path=ExecuteCmd}" CommandParameter="ReceiveMsgEnd" IsEnabled="{Binding Path=CurrentDevice_Id, Converter={StaticResource StringToBoolConverter}}"/>
+            <Button Content="Clear" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5" Padding="10,3,10,3" Command="{Binding Path=ExecuteCmd}" CommandParameter="ReceiveMsgClear" IsEnabled="{Binding Path=CurrentDevice_Id, Converter={StaticResource StringToBoolConverter}}"/>
         </StackPanel>
     </Grid>
 </UserControl>
