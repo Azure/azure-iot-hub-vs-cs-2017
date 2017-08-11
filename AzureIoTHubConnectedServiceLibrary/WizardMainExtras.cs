@@ -69,6 +69,7 @@ namespace AzureIoTHubConnectedService
             if (p == "ReceiveMsgStart")
             {
                 _MonitorCancellationTokenSource = new CancellationTokenSource();
+
                 MonitorEventHubAsync(_MonitorCancellationTokenSource.Token, "$Default");
             }
             else if (p == "ReceiveMsgEnd")
@@ -258,60 +259,30 @@ namespace AzureIoTHubConnectedService
             _IsMonitoring = true;
             InvokeCanExecuteChanged(); ;
 
-            EventHubClient eventHubClient = null;
-            EventHubReceiver eventHubReceiver = null;
-
-            try
+            await Task.Run(() =>
             {
-                string selectedDevice = CurrentDevice.Id;
-                eventHubClient = EventHubClient.CreateFromConnectionString(_CurrentHub_ConnectionString, "messages/events");
-                ReceiveMsgOutput = "Receiving events...\r\n";
-                int eventHubPartitionsCount = eventHubClient.GetRuntimeInformation().PartitionCount;
-                string partition = EventHubPartitionKeyResolver.ResolveToPartition(selectedDevice, eventHubPartitionsCount);
-                eventHubReceiver = eventHubClient.GetConsumerGroup(consumerGroupName).CreateReceiver(partition);
+                EventHubClient eventHubClient = null;
+                EventHubReceiver eventHubReceiver = null;
 
-                //receive the events from startTime until current time in a single call and process them
-                var events = await eventHubReceiver.ReceiveAsync(int.MaxValue, TimeSpan.FromSeconds(20));
-
-                foreach (var eventData in events)
+                try
                 {
-                    var data = Encoding.UTF8.GetString(eventData.GetBytes());
-                    var enqueuedTime = eventData.EnqueuedTimeUtc.ToLocalTime();
-                    var connectionDeviceId = eventData.SystemProperties["iothub-connection-device-id"].ToString();
+                    string selectedDevice = CurrentDevice.Id;
+                    eventHubClient = EventHubClient.CreateFromConnectionString(_CurrentHub_ConnectionString, "messages/events");
+                    ReceiveMsgOutput = "Receiving events...\r\n";
+                    int eventHubPartitionsCount = eventHubClient.GetRuntimeInformation().PartitionCount;
+                    string partition = EventHubPartitionKeyResolver.ResolveToPartition(selectedDevice, eventHubPartitionsCount);
+                    eventHubReceiver = eventHubClient.GetConsumerGroup(consumerGroupName).CreateReceiver(partition);
 
-                    if (string.CompareOrdinal(selectedDevice.ToUpper(), connectionDeviceId.ToUpper()) == 0)
-                    {
-                        ReceiveMsgOutput += $"{enqueuedTime}> Device: [{connectionDeviceId}], Data:[{data}]";
+                    // receive the events from startTime until current time in a single call and process them
+                    var events = eventHubReceiver.ReceiveAsync(int.MaxValue, TimeSpan.FromSeconds(1)).ConfigureAwait(false).GetAwaiter().GetResult();
 
-                        if (eventData.Properties.Count > 0)
-                        {
-                            ReceiveMsgOutput += "Properties:\r\n";
-                            foreach (var property in eventData.Properties)
-                            {
-                                ReceiveMsgOutput += $"'{property.Key}': '{property.Value}'\r\n";
-                            }
-                        }
-                        ReceiveMsgOutput += "\r\n";
-
-                    }
-                }
-
-                //having already received past events, monitor current events in a loop
-                while (true)
-                {
-                    ct.ThrowIfCancellationRequested();
-
-                    var eventData = await eventHubReceiver.ReceiveAsync(TimeSpan.FromSeconds(1));
-
-                    if (eventData != null)
+                    foreach (var eventData in events)
                     {
                         var data = Encoding.UTF8.GetString(eventData.GetBytes());
                         var enqueuedTime = eventData.EnqueuedTimeUtc.ToLocalTime();
-
-                        // Display only data from the selected device; otherwise, skip.
                         var connectionDeviceId = eventData.SystemProperties["iothub-connection-device-id"].ToString();
 
-                        if (string.CompareOrdinal(selectedDevice, connectionDeviceId) == 0)
+                        if (string.CompareOrdinal(selectedDevice.ToUpper(), connectionDeviceId.ToUpper()) == 0)
                         {
                             ReceiveMsgOutput += $"{enqueuedTime}> Device: [{connectionDeviceId}], Data:[{data}]";
 
@@ -323,23 +294,56 @@ namespace AzureIoTHubConnectedService
                                     ReceiveMsgOutput += $"'{property.Key}': '{property.Value}'\r\n";
                                 }
                             }
-
                             ReceiveMsgOutput += "\r\n";
+
+                        }
+                    }
+
+                    //having already received past events, monitor current events in a loop
+                    while (true)
+                    {
+                        ct.ThrowIfCancellationRequested();
+
+                        var eventData = eventHubReceiver.ReceiveAsync(TimeSpan.FromSeconds(1)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                        if (eventData != null)
+                        {
+                            var data = Encoding.UTF8.GetString(eventData.GetBytes());
+                            var enqueuedTime = eventData.EnqueuedTimeUtc.ToLocalTime();
+
+                            // Display only data from the selected device; otherwise, skip.
+                            var connectionDeviceId = eventData.SystemProperties["iothub-connection-device-id"].ToString();
+
+                            if (string.CompareOrdinal(selectedDevice, connectionDeviceId) == 0)
+                            {
+                                ReceiveMsgOutput += $"{enqueuedTime}> Device: [{connectionDeviceId}], Data:[{data}]";
+
+                                if (eventData.Properties.Count > 0)
+                                {
+                                    ReceiveMsgOutput += "Properties:\r\n";
+                                    foreach (var property in eventData.Properties)
+                                    {
+                                        ReceiveMsgOutput += $"'{property.Key}': '{property.Value}'\r\n";
+                                    }
+                                }
+
+                                ReceiveMsgOutput += "\r\n";
+                            }
                         }
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                if (ct.IsCancellationRequested)
+                catch (Exception ex)
                 {
-                    ReceiveMsgOutput += $"Stopped Monitoring events. {ex.Message}\r\n";
+                    if (ct.IsCancellationRequested)
+                    {
+                        ReceiveMsgOutput += $"Stopped Monitoring events. {ex.Message}\r\n";
+                    }
+                    else
+                    {
+                        ErrorMessage = ex.Message;
+                    }
                 }
-                else
-                {
-                    ErrorMessage = ex.Message;
-                }
-            }
+            });
 
             _IsMonitoring = false;
             InvokeCanExecuteChanged(); ;
