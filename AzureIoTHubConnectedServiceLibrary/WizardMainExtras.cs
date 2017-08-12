@@ -71,6 +71,7 @@ namespace AzureIoTHubConnectedService
                 _MonitorCancellationTokenSource = new CancellationTokenSource();
 
                 MonitorEventHubAsync(_MonitorCancellationTokenSource.Token, "$Default");
+                Microsoft.VisualStudio.Telemetry.TelemetryService.DefaultSession.PostEvent("vs/iothubcs/ExtraMonitorD2CStart");
             }
             else if (p == "ReceiveMsgEnd")
             {
@@ -79,27 +80,33 @@ namespace AzureIoTHubConnectedService
                     _MonitorCancellationTokenSource.Cancel();
                     _MonitorCancellationTokenSource.Dispose();
                     _MonitorCancellationTokenSource = null;
+                    Microsoft.VisualStudio.Telemetry.TelemetryService.DefaultSession.PostEvent("vs/iothubcs/ExtraMonitorD2CStop");
                 }
             }
             else if (p == "ReceiveMsgClear")
             {
                 this.ReceiveMsgOutput = "";
+                Microsoft.VisualStudio.Telemetry.TelemetryService.DefaultSession.PostEvent("vs/iothubcs/ExtraMonitorD2CClear");
             }
             else if (p == "DeviceTwinUpdateDesired")
             {
+                Microsoft.VisualStudio.Telemetry.TelemetryService.DefaultSession.PostEvent("vs/iothubcs/ExtraDeviceTwinUpdateDesired");
                 DeviceTwinUpdateDesired();
             }
             else if (p == "DeviceTwinRefresh")
             {
+                Microsoft.VisualStudio.Telemetry.TelemetryService.DefaultSession.PostEvent("vs/iothubcs/ExtraDeviceTwinRefresh");
                 GetDeviceTwinData();
             }
             else if (p == "CloudToDeviceSend")
             {
+                Microsoft.VisualStudio.Telemetry.TelemetryService.DefaultSession.PostEvent("vs/iothubcs/ExtraCloudToDeviceSend");
                 CloudToDeviceSend();
             }
             else if (p == "DirectMethodExecute")
             {
                 DirectMethodExecute();
+                Microsoft.VisualStudio.Telemetry.TelemetryService.DefaultSession.PostEvent("vs/iothubcs/ExtraDirectMethodExecute");
             }
         }
 

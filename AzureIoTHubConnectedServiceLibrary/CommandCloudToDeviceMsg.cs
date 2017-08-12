@@ -93,6 +93,7 @@ namespace AzureIoTHubConnectedService
         /// <param name="e">Event args.</param>
         private void MenuItemCallback(object sender, EventArgs ea)
         {
+            Microsoft.VisualStudio.Telemetry.TelemetryService.DefaultSession.PostEvent("vs/iothubcs/ExtraDisplaySendC2D");
             DisplayWindow(typeof(UtilityWindowCloudToDeviceMsg));
         }
 
