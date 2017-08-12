@@ -242,9 +242,6 @@ namespace AzureIoTHubConnectedService
                 // insert hub into the list
                 AddHub(hub);
 
-                // select hub automatically
-                _PageHubSelection.SelectHub(hub);
-
                 Microsoft.VisualStudio.Telemetry.TelemetryService.DefaultSession.PostEvent("vs/iothubcs/IoTHubCreated");
             }
             catch (Exception ex)
@@ -368,6 +365,8 @@ namespace AzureIoTHubConnectedService
 
             ConfigurePages();
             PopulateDevices();
+
+            _PageHubSelection.HubSelected();
         }
 
         /// <summary>
@@ -376,6 +375,9 @@ namespace AzureIoTHubConnectedService
         private void HandleDeviceSelected()
         {
             ConfigurePages();
+
+            // switch tab in Select Device page
+            _PageDeviceSelection.DeviceSelected();
         }
 
         /// <summary>

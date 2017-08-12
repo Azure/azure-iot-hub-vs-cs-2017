@@ -36,5 +36,9 @@ namespace AzureIoTHubConnectedService
             Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
             e.Handled = true;
         }
+        public void DeviceSelected()
+        {
+            Tabs.SelectedIndex = 0;
+        }
     }
 }

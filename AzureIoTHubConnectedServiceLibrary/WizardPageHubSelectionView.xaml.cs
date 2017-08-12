@@ -26,9 +26,8 @@ namespace AzureIoTHubConnectedService
             InitializeComponent();
         }
 
-        public void SelectHub(IAzureIoTHub hub)
+        public void HubSelected()
         {
-            HubListView.SelectedItem = hub;
             Tabs.SelectedIndex = 0;
         }
 

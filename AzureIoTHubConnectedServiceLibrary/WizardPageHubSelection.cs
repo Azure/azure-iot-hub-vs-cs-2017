@@ -23,9 +23,9 @@ namespace AzureIoTHubConnectedService
             this.View.DataContext = wizard;
         }
 
-        public void SelectHub(IAzureIoTHub hub)
+        public void HubSelected()
         {
-            (this.View as WizardPageHubSelectionView).SelectHub(hub);
+            (this.View as WizardPageHubSelectionView).HubSelected();
         }
     }
 }

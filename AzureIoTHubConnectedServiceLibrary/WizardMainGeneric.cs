@@ -78,6 +78,12 @@ namespace AzureIoTHubConnectedService
             set
             {
                 _CurrentHub = value;
+
+                OnPropertyChanged("CurrentHub");
+                OnPropertyChanged("CurrentHub_Subscription");
+                OnPropertyChanged("CurrentHub_Name");
+                OnPropertyChanged("CurrentHub_HostName");
+                OnPropertyChanged("CurrentHub_ConnectionString");
                 HandleHubSelected();
             }
         }
@@ -194,10 +200,6 @@ namespace AzureIoTHubConnectedService
                     _CurrentDevice_SecondaryConnectionString = "";
                 }
 
-                OnPropertyChanged("CurrentHub_Subscription");
-                OnPropertyChanged("CurrentHub_Name");
-                OnPropertyChanged("CurrentHub_HostName");
-                OnPropertyChanged("CurrentHub_ConnectionString");
                 OnPropertyChanged("CurrentDevice_Id");
                 OnPropertyChanged("CurrentDevice_PrimaryConnectionString");
                 OnPropertyChanged("CurrentDevice_SecondaryConnectionString");
@@ -329,7 +331,7 @@ namespace AzureIoTHubConnectedService
             set
             {
                 _NewHub_FieldsEnabled = value;
-                OnPropertyChanged("Create_FieldsEnabled");
+                OnPropertyChanged("NewHub_FieldsEnabled");
                 NewHub_Validate();
             }
         }

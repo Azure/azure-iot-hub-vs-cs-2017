@@ -22,5 +22,10 @@ namespace AzureIoTHubConnectedService
             this.View.DataContext = wizard;
             this.IsEnabled = false;
         }
+
+        public void DeviceSelected()
+        {
+            (this.View as WizardPageDeviceSelectionView).DeviceSelected();
+        }
     }
 }
