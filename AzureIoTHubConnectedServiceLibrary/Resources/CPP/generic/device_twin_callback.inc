@@ -14,7 +14,7 @@ static void twinCallback(DEVICE_TWIN_UPDATE_STATE updateState,
 		return;
 	}
 
-	for (int i = 0; i < size; i++)
+	for (int i = 0; i < (int)size; i++)
 	{
 		temp[i] = (char)(payLoad[i]);
 	}
