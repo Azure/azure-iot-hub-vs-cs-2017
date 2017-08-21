@@ -40,7 +40,7 @@ namespace AzureIoTHubConnectedService
             }
 
             // Linux and Windows source code is almost identical
-            manifest.Files.Add(new FileToAdd("CPP/generic/azure_iot_hub.cpp"));
+            manifest.Files.Add(new FileToAdd("CPP/generic/azure_iot_hub.c"));
             manifest.Files.Add(new FileToAdd("CPP/generic/azure_iot_hub.h"));
             return manifest;
         }
@@ -87,7 +87,7 @@ namespace AzureIoTHubConnectedService
 
             string t = "";
             var uriPrefix = "pack://application:,,/" + System.Reflection.Assembly.GetAssembly(this.GetType()).ToString() + ";component/Resources/";
-            using (var streamReader = new StreamReader(System.Windows.Application.GetResourceStream(new Uri(uriPrefix + "CPP/generic/device_method_callback.inc")).Stream, System.Text.Encoding.ASCII))
+            using (var streamReader = new StreamReader(System.Windows.Application.GetResourceStream(new Uri(uriPrefix + "CPP/generic/direct_method_callback.inc")).Stream, System.Text.Encoding.ASCII))
             {
                 t = streamReader.ReadToEnd();
             }
@@ -110,8 +110,8 @@ namespace AzureIoTHubConnectedService
             }
 
             result = t.Replace("$inner$", result);
-            helper.TokenReplacementValues.Add("directMethodCallbackDecl", "\r\nstatic int directMethodCallback(const char *methodName, const unsigned char* payload, size_t size, unsigned char** response, size_t *response_size, void* userContextCallback);");
-            helper.TokenReplacementValues.Add("directMethodCallbackRegistration", "    IoTHubClient_LL_SetDeviceMethodCallback(iothub_client_handle, deviceMethodCallback, NULL);\r\n");
+            helper.TokenReplacementValues.Add("directMethodCallbackDecl", "\r\nstatic int directMethodCallbackh(const char *methodName, const unsigned char* payload, size_t size, unsigned char** response, size_t *response_size, void* userContextCallback);");
+            helper.TokenReplacementValues.Add("directMethodCallbackRegistration", "    IoTHubClient_LL_SetDeviceMethodCallback(iothub_client_handle, directMethodCallback, NULL);\r\n");
             helper.TokenReplacementValues.Add("directMethodCode", result);
         }
 
