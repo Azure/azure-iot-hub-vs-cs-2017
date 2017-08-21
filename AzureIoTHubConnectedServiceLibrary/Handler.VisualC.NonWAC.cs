@@ -48,8 +48,8 @@ namespace AzureIoTHubConnectedService
         protected override AddServiceInstanceResult CreateAddServiceInstanceResult(ConnectedServiceHandlerContext context)
         {
             return new AddServiceInstanceResult(
-                "", // context.ServiceInstance.Name,
-                null //new Uri(m_isLinuxProject ? "http://aka.ms/azure-iot-hub-vs-cs-c-linux" : "http://aka.ms/azure-iot-hub-vs-cs-c")
+                context.ServiceInstance.Name,
+                new Uri(m_isLinuxProject ? "http://aka.ms/azure-iot-hub-vs-2017-cs-c-linux" : "http://aka.ms/azure-iot-hub-vs-cs-2017-c")
                 );
         }
 
