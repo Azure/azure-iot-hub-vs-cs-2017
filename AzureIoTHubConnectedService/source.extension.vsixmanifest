@@ -22,7 +22,6 @@
         <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="File" Path="AzureIoTHubConnectedServiceLibrary.pkgdef" />
     </Assets>
     <Prerequisites>
-        <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[15.0,16.0)" DisplayName="Visual Studio core editor" />
-        <Prerequisite Id="Microsoft.VisualStudio.ComponentGroup.Azure.Prerequisites" DisplayName="Azure development prerequisites" Version="[15.0.26323.1,16.0)" />
+        <Prerequisite Id="Microsoft.VisualStudio.ConnectedServices.Core" Version="[15.0,16.0)" DisplayName="Microsoft Connected Services" />
     </Prerequisites>
 </PackageManifest>
